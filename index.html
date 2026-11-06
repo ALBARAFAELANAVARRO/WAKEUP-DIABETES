@@ -5,123 +5,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WAKEUP DIABETES</title>
 <style>
-body{font-family:Arial,sans-serif;background:#eaf6ff;margin:0;padding:15px;color:#333}
-.card{background:white;border-radius:18px;padding:18px;margin-bottom:15px;box-shadow:0 2px 10px rgba(0,0,0,0.08);text-align:center}
-h1{color:#0077b6;font-size:26px}
-h2{color:#0077b6;font-size:19px;margin:5px 0 10px}
-input{width:90%;padding:12px;border-radius:10px;border:1px solid #ccc;margin:6px 0;font-size:16px;text-align:center}
-button{background:#00a8e8;color:white;border:none;padding:12px 20px;border-radius:12px;font-size:16px;cursor:pointer;margin:5px}
-.gluc-img{width:150px;border-radius:15px}
-.circulo{width:130px;height:130px;background:#90e0ef;border-radius:50%;margin:15px auto;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;transition:transform 4s}
-.vaso{font-size:32px;cursor:pointer;opacity:0.3}
+body{font-family:Arial,sans-serif;background:#eaf6ff;margin:0;padding:8px;color:#333;max-width:480px;margin:0 auto}
+.card{background:white;border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 1px 6px rgba(0,0,0,0.07);text-align:center}
+h1{color:#0077b6;font-size:21px;margin:3px}
+h2{color:#0077b6;font-size:15px;margin:3px 0 8px}
+p{font-size:13px;margin:4px 0;line-height:1.4}
+input,select,textarea{width:94%;padding:9px;border-radius:9px;border:1px solid #ccc;margin:4px 0;font-size:14px;text-align:center;background:white;box-sizing:border-box}
+textarea{text-align:left;height:70px}
+button{background:#00a8e8;color:white;border:none;padding:9px 16px;border-radius:10px;font-size:14px;cursor:pointer;margin:4px}
+button.rojo{background:#e63946} button.verde{background:#2a9d8f} button.gris{background:#888} button.morado{background:#6a4c93}
+.gluc-img{width:95px;border-radius:12px}
+.circulo{width:90px;height:90px;background:#90e0ef;border-radius:50%;margin:10px auto;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;transition:transform 4s}
+.vaso{font-size:24px;cursor:pointer;opacity:0.3}
 .vaso.activo{opacity:1}
-.remedio{background:#fffbe6;border:1px solid #ffe08a;border-radius:12px;padding:12px;margin:8px 0;text-align:left}
-.aviso{background:#ffe8e8;padding:10px;border-radius:10px;font-size:13px}
+.remedio{background:#fffbe6;border:1px solid #ffe08a;border-radius:10px;padding:9px;margin:6px 0;text-align:left;font-size:12.5px}
+.aviso{background:#ffe8e8;padding:8px;border-radius:8px;font-size:12px}
+.historial{background:#f1f8ff;border-radius:8px;padding:8px;font-size:12px;text-align:left;max-height:140px;overflow:auto;margin-top:6px}
 </style>
 </head>
 <body>
 <div class="card">
 <h1>💙 WAKEUP DIABETES</h1>
 <p>¡Despierta! Hoy te cuidas con amor</p>
-<img class="gluc-img" src="https://images.unsplash.com/photo-1579684385129-1ef15d508118?w=400" alt="Glucómetro">
+<img class="gluc-img" src="https://images.unsplash.com/photo-1579684385129-1ef15d508118?w=400">
+<p id="saludo" style="font-weight:bold;color:#6a4c93;font-size:13px"></p>
 </div>
 <div class="card">
 <h2>👤 MIS DATOS</h2>
-<p>Esto solo se guarda en TU celular.</p>
-<input id="nombre" placeholder="Escribe tu nombre">
-<input id="emergencia" placeholder="Número de emergencia" type="tel">
-<br><button onclick="guardarDatos()">💾 GUARDAR MIS DATOS</button>
-<p id="msgDatos" style="color:green"></p>
+<input id="nombre" placeholder="Tu nombre">
+<input id="emergencia" placeholder="Número de emergencia de TU familiar" type="tel">
+<br><button onclick="guardarDatos()">💾 Guardar</button>
+<p id="msgDatos" style="color:green;font-size:12px"></p>
+<a id="btnLlamar" href="#" style="display:none"><button class="rojo">🚨 LLAMAR A EMERGENCIA</button></a>
 </div>
 <div class="card">
 <h2>🩸 MI GLUCOSA</h2>
 <input id="glucosa" placeholder="Ej: 110" type="number">
+<select id="momentoGlucosa">
+<option value="En ayunas">🌅 En ayunas</option>
+<option value="Antes de comer">🍽️ Antes de comer</option>
+<option value="2h Después de comer">⏰ 2h Después de comer</option>
+<option value="Antes de dormir">🌙 Antes de dormir</option>
+</select>
 <br><button onclick="guardarGlucosa()">Guardar glucosa</button>
-<p id="msgGlucosa"></p>
-<p id="historialGlucosa" style="font-size:13px"></p>
+<p id="msgGlucosa" style="font-weight:bold;font-size:13px"></p>
+<div id="historialGlucosa" class="historial">Sin registros todavía</div>
+<button class="gris" onclick="borrarGlucosa()">Borrar historial</button>
+</div>
+<div class="card">
+<h2>🍽️ MIS COMIDAS</h2>
+<select id="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select>
+<input id="queComi" placeholder="¿Qué comiste? Ej: arroz, pollo">
+<br><button class="verde" onclick="guardarComida()">Guardar comida</button>
+<div id="historialComida" class="historial">Sin comidas hoy</div>
+</div>
+<div class="card">
+<h2>💊 MIS MEDICAMENTOS</h2>
+<input id="medicamento" placeholder="Ej: Metformina 500mg">
+<select id="dosisTomada"><option>Tomada ✅</option><option>Olvidada ❌</option></select>
+<br><button class="verde" onclick="guardarMedicamento()">Guardar</button>
+<div id="historialMed" class="historial">Sin medicamentos hoy</div>
 </div>
 <div class="card">
 <h2>🌬️ RESPIRACIÓN</h2>
 <div id="circulo" class="circulo">Respira</div>
 <button onclick="respirar()">▶ Empezar</button>
-<p id="textoRespira">Toca Empezar y sigue el círculo</p>
+<p id="textoRespira" style="font-size:12px">Toca Empezar y sigue el círculo</p>
 </div>
 <div class="card">
-<h2>💧 MI AGUA DE HOY</h2>
+<h2>💧 MI AGUA</h2>
 <div id="vasos">
-<span class="vaso" onclick="tomarAgua(0)">🥤</span>
-<span class="vaso" onclick="tomarAgua(1)">🥤</span>
-<span class="vaso" onclick="tomarAgua(2)">🥤</span>
-<span class="vaso" onclick="tomarAgua(3)">🥤</span>
-<span class="vaso" onclick="tomarAgua(4)">🥤</span>
-<span class="vaso" onclick="tomarAgua(5)">🥤</span>
-<span class="vaso" onclick="tomarAgua(6)">🥤</span>
-<span class="vaso" onclick="tomarAgua(7)">🥤</span>
+<span class="vaso" onclick="tomarAgua(0)">🥤</span><span class="vaso" onclick="tomarAgua(1)">🥤</span><span class="vaso" onclick="tomarAgua(2)">🥤</span><span class="vaso" onclick="tomarAgua(3)">🥤</span><span class="vaso" onclick="tomarAgua(4)">🥤</span><span class="vaso" onclick="tomarAgua(5)">🥤</span><span class="vaso" onclick="tomarAgua(6)">🥤</span><span class="vaso" onclick="tomarAgua(7)">🥤</span>
 </div>
-<p id="msgAgua"></p>
-<button onclick="reiniciarAgua()">Reiniciar agua</button>
+<p id="msgAgua" style="font-size:12px"></p>
+<button class="gris" onclick="reiniciarAgua()">Reiniciar</button>
 </div>
 <div class="card">
 <h2>✨ MANTRA DEL DÍA</h2>
-<p id="mantra" style="font-size:19px;font-weight:bold;color:#6a4c93"></p>
-<button onclick="escucharMantra()">🔊 ESCUCHAR MANTRA</button>
+<p id="mantra" style="font-size:15px;font-weight:bold;color:#6a4c93"></p>
+<button onclick="escucharMantra()">🔊 Escuchar</button>
 </div>
 <div class="card">
-<h2>🌿 REMEDIOS CASEROS OPCIONALES</h2>
-<p class="aviso">⚠️ OPCIONAL. Pregunta primero a tu doctor.</p>
-<div class="remedio"><b>1. PARA LOS RIÑONES</b><br>Té de cebolla, romero y flor de jamaica, con cúrcuma y sumo de limón agrio.<br><i>Si la orina está espumosa, agregar hoja de lengua de suegra.</i></div>
-<div class="remedio"><b>2. PARA LA GLICEMIA ALTA</b><br>Sumo de papa. Guayar la papa cruda y exprimir.</div>
-<div class="remedio"><b>3. PARA EL HÍGADO GRASO</b><br>Ajo machacado, limón, miel de abeja y aceite verde.</div>
+<h2>🌿 REMEDIOS OPCIONALES</h2>
+<p class="aviso">⚠️ Pregunta primero a tu doctor.</p>
+<div class="remedio"><b>1. RIÑONES</b><br>Té de cebolla, romero y flor de jamaica, con cúrcuma y limón agrio.<br><i>Si orina espumosa, agregar lengua de suegra.</i></div>
+<div class="remedio"><b>2. GLICEMIA ALTA</b><br>Sumo de papa. Guayar papa cruda y exprimir.</div>
+<div class="remedio"><b>3. HÍGADO GRASO</b><br>Ajo machacado, limón, miel y aceite verde.</div>
+</div>
+<div class="card" style="border:2px solid #6a4c93">
+<h2>💌 CUÉNTAME TU EXPERIENCIA</h2>
+<p>¿Te ayudó la app? ¿Qué le agregarías?</p>
+<input id="nombreSuger" placeholder="Tu nombre">
+<textarea id="textoSuger" placeholder="Escribe aquí tu sugerencia o tu experiencia con WAKEUP DIABETES..."></textarea>
+<br><button class="morado" onclick="enviarSugerencia()">📩 ENVIAR MI EXPERIENCIA</button>
+<p id="msgSuger" style="color:green;font-size:12px"></p>
+<p style="font-size:11px;color:#888">Tu mensaje queda guardado para mejorar la app.</p>
+</div>
+<div class="card">
+<p style="font-size:11px;color:#888">WAKEUP DIABETES 💙 No sustituye a tu doctor. Si te sientes mal, llama a emergencia.</p>
 </div>
 <script>
-let nombreGuardado = localStorage.getItem('miNombre') || '';
-let emerGuardado = localStorage.getItem('miEmergencia') || '';
-document.getElementById('nombre').value = nombreGuardado;
-document.getElementById('emergencia').value = emerGuardado;
-if(nombreGuardado) document.getElementById('msgDatos').innerText = 'Hola '+nombreGuardado+' 💙 Tus datos están guardados';
-function guardarDatos(){
-  let n = document.getElementById('nombre').value;
-  let e = document.getElementById('emergencia').value;
-  localStorage.setItem('miNombre', n);
-  localStorage.setItem('miEmergencia', e);
-  document.getElementById('msgDatos').innerText = '¡Guardado! Hola '+n+' 💙';
-}
-function guardarGlucosa(){
-  let v = document.getElementById('glucosa').value;
-  if(!v) return;
-  let hoy = new Date().toLocaleString();
-  let hist = localStorage.getItem('histGlucosa') || '';
-  hist = hoy + ' - ' + v + '<br>' + hist;
-  localStorage.setItem('histGlucosa', hist);
-  document.getElementById('msgGlucosa').innerText = 'Guardado: '+v;
-  document.getElementById('historialGlucosa').innerHTML = hist;
-}
-document.getElementById('historialGlucosa').innerHTML = localStorage.getItem('histGlucosa') || '';
-function respirar(){
-  let c = document.getElementById('circulo');
-  let t = document.getElementById('textoRespira');
-  t.innerText = 'Inhala... 4 segundos';
-  c.style.transform = 'scale(1.4)'; c.innerText = 'Inhala';
-  setTimeout(()=>{ t.innerText = 'Exhala... 4 segundos'; c.style.transform = 'scale(1)'; c.innerText = 'Exhala'; },4000);
-}
-let vasosTomados = parseInt(localStorage.getItem('vasos')||'0');
-function pintarVasos(){
-  let vasos = document.querySelectorAll('.vaso');
-  vasos.forEach((v,i)=>{ if(i<vasosTomados) v.classList.add('activo'); else v.classList.remove('activo'); });
-  document.getElementById('msgAgua').innerText = 'Llevas '+vasosTomados+' de 8 vasos 💧';
-}
-function tomarAgua(i){ vasosTomados = i+1; localStorage.setItem('vasos', vasosTomados); pintarVasos(); }
-function reiniciarAgua(){ vasosTomados=0; localStorage.setItem('vasos','0'); pintarVasos(); }
-pintarVasos();
-let mantras = ["Hoy me cuido con amor y con calma.","Mi cuerpo es mi templo, lo trato con cariño.","Respiro paz, suelto el miedo.","Hoy elijo salud, hoy elijo vida.","Soy fuerte, soy valiente, me estoy sanando.","Con cada respiro, me siento mejor.","Hoy me doy lo que necesito: agua, calma y amor."];
-let dia = new Date().getDate();
-let mantraHoy = mantras[dia % mantras.length];
-document.getElementById('mantra').innerText = '"'+mantraHoy+'"';
-function escucharMantra(){
-  let voz = new SpeechSynthesisUtterance(mantraHoy);
-  voz.lang = 'es-ES'; voz.rate = 0.85;
-  speechSynthesis.speak(voz);
-}
+function actualizarSaludo(){ let n=localStorage.getItem('miNombre')||''; document.getElementById('saludo').innerText=n?'Hola '+n+' 💙':''; document.getElementById('nombre').value=n; document.getElementById('emergencia').value=localStorage.getItem('miEmergencia')||''; let em=localStorage.getItem('miEmergencia')||''; if(em){ document.getElementById('btnLlamar').style.display='inline'; document.getElementById('btnLlamar').href='tel:'+em; } if(n) document.getElementById('msgDatos').innerText='Guardado'; }
+actualizarSaludo();
+function guardarDatos(){ let n=document.getElementById('nombre').value; let e=document.getElementById('emergencia').value; localStorage.setItem('miNombre',n); localStorage.setItem('miEmergencia',e); document.getElementById('msgDatos').innerText='¡Guardado! Hola '+n+' 💙'; actualizarSaludo(); }
+function pintarGlucosa(){ document.getElementById('historialGlucosa').innerHTML=localStorage.getItem('histGlucosa')||'Sin registros todavía'; } pintarGlucosa();
+function guardarGlucosa(){ let v=document.getElementById('glucosa').value; let m=document.getElementById('momentoGlucosa').value; if(!v) return alert('Escribe tu glucosa'); let hoy=new Date().toLocaleString(); let color=v<70?'🔴 MUY BAJA':v<=180?'🟢 Bien':'🟡 Alta'; document.getElementById('msgGlucosa').innerText=v+' - '+m+' '+color; let hist=localStorage.getItem('histGlucosa')||''; hist='• '+hoy+' - <b>'+v+'</b> ('+m+') '+color+'<br>'+hist; localStorage.setItem('histGlucosa',hist); pintarGlucosa(); document.getElementById('glucosa').value=''; }
+function borrarGlucosa(){ if(confirm('¿Borrar historial?')){ localStorage.removeItem('histGlucosa'); pintarGlucosa(); } }
+function pintarComida(){ document.getElementById('historialComida').innerHTML=localStorage.getItem('histComida')||'Sin comidas hoy'; } pintarComida();
+function guardarComida(){ let t=document.getElementById('tipoComida').value; let q=document.getElementById('queComi').value; if(!q) return alert('Escribe qué comiste'); let hoy=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); let h=localStorage.getItem('histComida')||''; h='• '+hoy+' - <b>'+t+':</b> '+q+'<br>'+h; localStorage.setItem('histComida',h); pintarComida(); document.getElementById('queComi').value=''; }
+function pintarMed(){ document.getElementById('historialMed').innerHTML=localStorage.getItem('histMed')||'Sin medicamentos hoy'; } pintarMed();
+function guardarMedicamento(){ let med=document.getElementById('medicamento').value; let d=document.getElementById('dosisTomada').value; if(!med) return alert('Escribe tu medicamento'); let hoy=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); let h=localStorage.getItem('histMed')||''; h='• '+hoy+' - <b>'+med+'</b> - '+d+'<br>'+h; localStorage.setItem('histMed',h); pintarMed(); document.getElementById('medicamento').value=''; }
+function respirar(){ let c=document.getElementById('circulo'); let t=document.getElementById('textoRespira'); t.innerText='Inhala... 4 segundos'; c.style.transform='scale(1.4)'; c.innerText='Inhala'; setTimeout(()=>{ t.innerText='Exhala... 4 segundos'; c.style.transform='scale(1)'; c.innerText='Exhala'; },4000); }
+let vasosTomados=parseInt(localStorage.getItem('vasos')||'0');
+function pintarVasos(){ let vasos=document.querySelectorAll('.vaso'); vasos.forEach((v,i)=>{ if(i<vasosTomados) v.classList.add('activo'); else v.classList.remove('activo'); }); document.getElementById('msgAgua').innerText='Llevas '+vasosTomados+' de 8 vasos 💧'; }
+function tomarAgua(i){ vasosTomados=i+1; localStorage.setItem('vasos',vasosTomados); pintarVasos(); }
+function reiniciarAgua(){ vasosTomados=0; localStorage.setItem('vasos','0'); pintarVasos(); } pintarVasos();
+let mantras=["Hoy me cuido con amor y con calma.","Mi cuerpo es mi templo, lo trato con cariño.","Respiro paz, suelto el miedo.","Hoy elijo salud, hoy elijo vida.","Soy fuerte, soy valiente, me estoy sanando.","Con cada respiro, me siento mejor.","Hoy me doy lo que necesito: agua, calma y amor."]; let dia=new Date().getDate(); let mantraHoy=mantras[dia % mantras.length]; document.getElementById('mantra').innerText='"'+mantraHoy+'"'; function escucharMantra(){ let voz=new SpeechSynthesisUtterance(mantraHoy); voz.lang='es-ES'; voz.rate=0.85; speechSynthesis.speak(voz); }
+function enviarSugerencia(){ let nom=document.getElementById('nombreSuger').value||'Anónimo'; let txt=document.getElementById('textoSuger').value; if(!txt) return alert('Escribe tu sugerencia primero 💙'); let h=localStorage.getItem('sugerencias')||''; h='• '+new Date().toLocaleString()+' - '+nom+': '+txt+'<br>'+h; localStorage.setItem('sugerencias',h); document.getElementById('msgSuger').innerText='¡Gracias '+nom+'! Tu experiencia quedó guardada 💙'; document.getElementById('textoSuger').value=''; }
 </script>
 </body>
 </html>
