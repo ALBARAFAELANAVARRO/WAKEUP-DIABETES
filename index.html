@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WAKEUP DIABETES</title>
+<style>
+body{font-family:Arial,sans-serif;background:#eaf6ff;margin:0;padding:15px;color:#333}
+.card{background:white;border-radius:18px;padding:18px;margin-bottom:15px;box-shadow:0 2px 10px rgba(0,0,0,0.08);text-align:center}
+h1{color:#0077b6;font-size:26px}
+h2{color:#0077b6;font-size:19px;margin:5px 0 10px}
+input{width:90%;padding:12px;border-radius:10px;border:1px solid #ccc;margin:6px 0;font-size:16px;text-align:center}
+button{background:#00a8e8;color:white;border:none;padding:12px 20px;border-radius:12px;font-size:16px;cursor:pointer;margin:5px}
+.gluc-img{width:150px;border-radius:15px}
+.circulo{width:130px;height:130px;background:#90e0ef;border-radius:50%;margin:15px auto;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;transition:transform 4s}
+.vaso{font-size:32px;cursor:pointer;opacity:0.3}
+.vaso.activo{opacity:1}
+.remedio{background:#fffbe6;border:1px solid #ffe08a;border-radius:12px;padding:12px;margin:8px 0;text-align:left}
+.aviso{background:#ffe8e8;padding:10px;border-radius:10px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>💙 WAKEUP DIABETES</h1>
+<p>¡Despierta! Hoy te cuidas con amor</p>
+<img class="gluc-img" src="https://images.unsplash.com/photo-1579684385129-1ef15d508118?w=400" alt="Glucómetro">
+</div>
+<div class="card">
+<h2>👤 MIS DATOS</h2>
+<p>Esto solo se guarda en TU celular.</p>
+<input id="nombre" placeholder="Escribe tu nombre">
+<input id="emergencia" placeholder="Número de emergencia" type="tel">
+<br><button onclick="guardarDatos()">💾 GUARDAR MIS DATOS</button>
+<p id="msgDatos" style="color:green"></p>
+</div>
+<div class="card">
+<h2>🩸 MI GLUCOSA</h2>
+<input id="glucosa" placeholder="Ej: 110" type="number">
+<br><button onclick="guardarGlucosa()">Guardar glucosa</button>
+<p id="msgGlucosa"></p>
+<p id="historialGlucosa" style="font-size:13px"></p>
+</div>
+<div class="card">
+<h2>🌬️ RESPIRACIÓN</h2>
+<div id="circulo" class="circulo">Respira</div>
+<button onclick="respirar()">▶ Empezar</button>
+<p id="textoRespira">Toca Empezar y sigue el círculo</p>
+</div>
+<div class="card">
+<h2>💧 MI AGUA DE HOY</h2>
+<div id="vasos">
+<span class="vaso" onclick="tomarAgua(0)">🥤</span>
+<span class="vaso" onclick="tomarAgua(1)">🥤</span>
+<span class="vaso" onclick="tomarAgua(2)">🥤</span>
+<span class="vaso" onclick="tomarAgua(3)">🥤</span>
+<span class="vaso" onclick="tomarAgua(4)">🥤</span>
+<span class="vaso" onclick="tomarAgua(5)">🥤</span>
+<span class="vaso" onclick="tomarAgua(6)">🥤</span>
+<span class="vaso" onclick="tomarAgua(7)">🥤</span>
+</div>
+<p id="msgAgua"></p>
+<button onclick="reiniciarAgua()">Reiniciar agua</button>
+</div>
+<div class="card">
+<h2>✨ MANTRA DEL DÍA</h2>
+<p id="mantra" style="font-size:19px;font-weight:bold;color:#6a4c93"></p>
+<button onclick="escucharMantra()">🔊 ESCUCHAR MANTRA</button>
+</div>
+<div class="card">
+<h2>🌿 REMEDIOS CASEROS OPCIONALES</h2>
+<p class="aviso">⚠️ OPCIONAL. Pregunta primero a tu doctor.</p>
+<div class="remedio"><b>1. PARA LOS RIÑONES</b><br>Té de cebolla, romero y flor de jamaica, con cúrcuma y sumo de limón agrio.<br><i>Si la orina está espumosa, agregar hoja de lengua de suegra.</i></div>
+<div class="remedio"><b>2. PARA LA GLICEMIA ALTA</b><br>Sumo de papa. Guayar la papa cruda y exprimir.</div>
+<div class="remedio"><b>3. PARA EL HÍGADO GRASO</b><br>Ajo machacado, limón, miel de abeja y aceite verde.</div>
+</div>
+<script>
+let nombreGuardado = localStorage.getItem('miNombre') || '';
+let emerGuardado = localStorage.getItem('miEmergencia') || '';
+document.getElementById('nombre').value = nombreGuardado;
+document.getElementById('emergencia').value = emerGuardado;
+if(nombreGuardado) document.getElementById('msgDatos').innerText = 'Hola '+nombreGuardado+' 💙 Tus datos están guardados';
+function guardarDatos(){
+  let n = document.getElementById('nombre').value;
+  let e = document.getElementById('emergencia').value;
+  localStorage.setItem('miNombre', n);
+  localStorage.setItem('miEmergencia', e);
+  document.getElementById('msgDatos').innerText = '¡Guardado! Hola '+n+' 💙';
+}
+function guardarGlucosa(){
+  let v = document.getElementById('glucosa').value;
+  if(!v) return;
+  let hoy = new Date().toLocaleString();
+  let hist = localStorage.getItem('histGlucosa') || '';
+  hist = hoy + ' - ' + v + '<br>' + hist;
+  localStorage.setItem('histGlucosa', hist);
+  document.getElementById('msgGlucosa').innerText = 'Guardado: '+v;
+  document.getElementById('historialGlucosa').innerHTML = hist;
+}
+document.getElementById('historialGlucosa').innerHTML = localStorage.getItem('histGlucosa') || '';
+function respirar(){
+  let c = document.getElementById('circulo');
+  let t = document.getElementById('textoRespira');
+  t.innerText = 'Inhala... 4 segundos';
+  c.style.transform = 'scale(1.4)'; c.innerText = 'Inhala';
+  setTimeout(()=>{ t.innerText = 'Exhala... 4 segundos'; c.style.transform = 'scale(1)'; c.innerText = 'Exhala'; },4000);
+}
+let vasosTomados = parseInt(localStorage.getItem('vasos')||'0');
+function pintarVasos(){
+  let vasos = document.querySelectorAll('.vaso');
+  vasos.forEach((v,i)=>{ if(i<vasosTomados) v.classList.add('activo'); else v.classList.remove('activo'); });
+  document.getElementById('msgAgua').innerText = 'Llevas '+vasosTomados+' de 8 vasos 💧';
+}
+function tomarAgua(i){ vasosTomados = i+1; localStorage.setItem('vasos', vasosTomados); pintarVasos(); }
+function reiniciarAgua(){ vasosTomados=0; localStorage.setItem('vasos','0'); pintarVasos(); }
+pintarVasos();
+let mantras = ["Hoy me cuido con amor y con calma.","Mi cuerpo es mi templo, lo trato con cariño.","Respiro paz, suelto el miedo.","Hoy elijo salud, hoy elijo vida.","Soy fuerte, soy valiente, me estoy sanando.","Con cada respiro, me siento mejor.","Hoy me doy lo que necesito: agua, calma y amor."];
+let dia = new Date().getDate();
+let mantraHoy = mantras[dia % mantras.length];
+document.getElementById('mantra').innerText = '"'+mantraHoy+'"';
+function escucharMantra(){
+  let voz = new SpeechSynthesisUtterance(mantraHoy);
+  voz.lang = 'es-ES'; voz.rate = 0.85;
+  speechSynthesis.speak(voz);
+}
+</script>
+</body>
+</html>
