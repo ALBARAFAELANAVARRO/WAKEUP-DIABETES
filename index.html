@@ -78,13 +78,79 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 </div>
 
 <div class="card">
-<h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
-<p style="font-size:12px">Inhala 4 - Sostén 4 - Exhala 6</p>
-<div id="circulo" class="circulo">Respira</div>
-<button onclick="respirar()">▶ Empezar</button>
-<button onclick="sonidoRespirar()">🔊 Sonido: ON</button>
-<p id="textoRespira" style="font-size:12px">Toca Empezar y sigue el círculo</p>
+  <h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
+  <p style="font-size:13px; color:#555;">Respira conmigo, despacito, mi capitana 💜</p>
+  <p id="textoRespira" style="font-size:16px; font-weight:bold;">Pulsa COMENZAR para respirar conmigo 💙</p>
+
+  <div id="circuloRespira" style="width:120px; height:120px; background:#A569BD; border-radius:50%; margin:15px auto; display:flex; align-items:center; justify-content:center; color:white; font-size:30px; transition: all 4s ease;">😊</div>
+
+  <button id="btnRespira" onclick="iniciarRespira()" style="background:#8E44AD; color:white; padding:12px 25px; border-radius:20px; border:none; font-weight:bold; font-size:16px;">▶️ COMENZAR</button>
+  <button onclick="pararRespira()" style="background:#888; color:white; padding:12px 20px; border-radius:20px; border:none;">⏹️ Parar</button>
+
+  <p style="font-size:12px; color:#777; margin-top:10px;">Inhala 4 segundos • Exhala 4 segundos<br>Tu cuerpo se calma, tu mente descansa</p>
 </div>
+
+<script>
+let respiActivo = false;
+let pasoRespira = 0;
+
+function sonidoRespira(tipo) {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var o = ctx.createOscillator();
+    var g = ctx.createGain();
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.type = 'sine';
+    if (tipo === 'inhala') {
+      o.frequency.setValueAtTime(400, ctx.currentTime);
+      o.frequency.linearRampToValueAtTime(700, ctx.currentTime + 1);
+    } else {
+      o.frequency.setValueAtTime(700, ctx.currentTime);
+      o.frequency.linearRampToValueAtTime(300, ctx.currentTime + 1);
+    }
+    g.gain.setValueAtTime(0.2, ctx.currentTime);
+    o.start();
+    o.stop(ctx.currentTime + 1);
+  } catch(e){}
+}
+
+function iniciarRespira() {
+  if (respiActivo) return;
+  respiActivo = true;
+  document.getElementById('btnRespira').textContent = '💜 Respirando...';
+  cicloRespira();
+}
+
+function cicloRespira() {
+  if (!respiActivo) return;
+  var circulo = document.getElementById('circuloRespira');
+  var texto = document.getElementById('textoRespira');
+  if (pasoRespira === 0) {
+    texto.textContent = '🌬️ INHALA... 4 segundos';
+    circulo.style.width = '180px';
+    circulo.style.height = '180px';
+    circulo.textContent = '🌬️';
+    sonidoRespira('inhala');
+    pasoRespira = 1;
+    setTimeout(cicloRespira, 4000);
+  } else {
+    texto.textContent = '😮‍💨 EXHALA... 4 segundos';
+    circulo.style.width = '120px';
+    circulo.style.height = '120px';
+    circulo.textContent = '😊';
+    sonidoRespira('exhala');
+    pasoRespira = 0;
+    setTimeout(cicloRespira, 4000);
+  }
+}
+
+function pararRespira() {
+  respiActivo = false;
+  document.getElementById('btnRespira').textContent = '▶️ COMENZAR';
+  document.getElementById('textoRespira').textContent = '¡Muy bien, mi capitana! Respiraste consciente 💙';
+}
+</script>
 
 <div style="text-align:center; background:#D6EAF8; padding:15px; border-radius:15px; border:2px solid #AED6F1;">
   <h2>💧 MI AGUA</h2>
