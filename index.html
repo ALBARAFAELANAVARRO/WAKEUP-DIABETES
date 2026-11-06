@@ -390,5 +390,34 @@ document.getElementById('btnPararRespira').addEventListener('click', function() 
   document.getElementById('textoRespira').textContent = '¡Muy bien, mi capitana! Respiraste consciente 💙';
 });
 </script>
+  <script>
+// CAMBIAR CAPITANA POR EL NOMBRE QUE SE REGISTRE
+function actualizarNombre() {
+  var campo = document.getElementById('nombre');
+  var nombre = '';
+  if (campo) {
+    nombre = campo.value.trim();
+  }
+  if (!nombre) {
+    nombre = localStorage.getItem('nombreUsuario') || 'mi capitana';
+  } else {
+    localStorage.setItem('nombreUsuario', nombre);
+  }
+
+  var todos = document.querySelectorAll('.nombreUser');
+  for (var i = 0; i < todos.length; i++) {
+    todos[i].textContent = nombre;
+  }
+}
+
+// Cuando escriba su nombre, cambia en vivo
+var campoNombre = document.getElementById('nombre');
+if (campoNombre) {
+  campoNombre.addEventListener('input', actualizarNombre);
+}
+
+// Cuando abra la página, si ya se registró antes, pone su nombre
+actualizarNombre();
+</script>
 </body>
 </html>
