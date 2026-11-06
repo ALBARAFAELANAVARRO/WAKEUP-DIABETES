@@ -86,12 +86,49 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 <p id="textoRespira" style="font-size:12px">Toca Empezar y sigue el círculo</p>
 </div>
 
-<div class="card">
-<h2>💧 MI AGUA</h2>
-<div id="vasos"><span class="vaso" onclick="tomarAgua(0)">🥤</span><span class="vaso" onclick="tomarAgua(1)">🥤</span><span class="vaso" onclick="tomarAgua(2)">🥤</span><span class="vaso" onclick="tomarAgua(3)">🥤</span><span class="vaso" onclick="tomarAgua(4)">🥤</span><span class="vaso" onclick="tomarAgua(5)">🥤</span><span class="vaso" onclick="tomarAgua(6)">🥤</span><span class="vaso" onclick="tomarAgua(7)">🥤</span></div>
-<p id="msgAgua" style="font-size:12px"></p>
-<button class="gris" onclick="reiniciarAgua()">Reiniciar</button>
+<div style="text-align:center; background:#f0f8ff; padding:15px; border-radius:15px;">
+  <h2>💧 MI AGUA</h2>
+  <div id="vasos" style="font-size:35px;">
+    <span onclick="marcarVaso(this)">🥤</span>
+    <span onclick="marcarVaso(this)">🥤</span>
+    <span onclick="marcarVaso(this)">🥤</span>
+    <span onclick="marcarVaso(this)">🥤</span>
+    <span onclick="marcarVaso(this)">🥤</span>
+    <span onclick="marcarVaso(this)">🥤</span>
+    <span onclick="marcarVaso(this)">🥤</span>
+    <span onclick="marcarVaso(this)">🥤</span>
+  </div>
+  <p id="textoAgua">Llevas 0 de 8 vasos 💧</p>
+  <button onclick="reiniciarVasos()" style="background:#888; color:white; padding:10px 20px; border-radius:15px; border:none;">Reiniciar</button>
 </div>
+
+<script>
+let vasosTomados = 0;
+
+function sonidoAgua() {
+  var audio = new Audio('https://www.soundjay.com/nature/sounds/water-splash-1.mp3');
+  audio.play();
+}
+
+function marcarVaso(vaso) {
+  if (vaso.textContent === '🥤') {
+    vaso.textContent = '💧';
+    vasosTomados++;
+    sonidoAgua();
+  } else {
+    vaso.textContent = '🥤';
+    vasosTomados--;
+  }
+  document.getElementById('textoAgua').textContent = 'Llevas ' + vasosTomados + ' de 8 vasos 💧';
+}
+
+function reiniciarVasos() {
+  vasosTomados = 0;
+  var todos = document.querySelectorAll('#vasos span');
+  todos.forEach(function(v) { v.textContent = '🥤'; });
+  document.getElementById('textoAgua').textContent = 'Llevas 0 de 8 vasos 💧';
+}
+</script>
 
 <div class="card">
 <h2>✨ MANTRA DEL DÍA</h2>
