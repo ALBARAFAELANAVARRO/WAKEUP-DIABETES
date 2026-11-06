@@ -148,8 +148,8 @@ function cicloRespira() {
 function pararRespira() {
   respiActivo = false;
   document.getElementById('btnRespira').textContent = '▶️ COMENZAR';
-  document.getElementById('textoRespira').textContent = '¡Muy bien, mi capitana! Respiraste consciente 💙';
-}
+var nomRespira = localStorage.getItem('nombreUsuario') || 'mi capitana';
+document.getElementById('textoRespira').textContent = '¡Muy bien, ' + nomRespira + '! Respiraste consciente 💙';}
 </script>
 
 <div style="text-align:center; background:#D6EAF8; padding:15px; border-radius:15px; border:2px solid #AED6F1;">
