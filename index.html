@@ -106,8 +106,20 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 let vasosTomados = 0;
 
 function sonidoAgua() {
-  var audio = new Audio('https://www.soundjay.com/nature/sounds/water-splash-1.mp3');
-  audio.play();
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var o = ctx.createOscillator();
+    var g = ctx.createGain();
+    o.connect(g);
+    g.connect(ctx.destination);
+    o.type = 'sine';
+    o.frequency.setValueAtTime(600, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.3);
+    g.gain.setValueAtTime(0.3, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+    o.start();
+    o.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
 }
 
 function marcarVaso(vaso) {
@@ -130,11 +142,19 @@ function reiniciarVasos() {
 }
 </script>
 
-<div class="card">
-<h2>✨ MANTRA DEL DÍA</h2>
-<p id="mantra" style="font-size:15px;font-weight:bold;color:#6a4c93"></p>
-<button onclick="escucharMantra()">🔊 Escuchar</button>
+<div style="text-align:center; background:#fff8e1; padding:15px; border-radius:15px; margin-top:15px;">
+  <h2>✨ MANTRA DEL DÍA</h2>
+  <p id="textoMantra">"Hoy me doy lo que necesito: agua, calma y amor."</p>
+  <button onclick="escucharMantra()" style="background:#2196F3; color:white; padding:10px 20px; border-radius:15px; border:none;">🔊 Escuchar Mantra</button>
 </div>
+
+<script>
+function escucharMantra() {
+  var voz = new SpeechSynthesisUtterance("Hoy me doy lo que necesito: agua, calma y amor.");
+  voz.lang = 'es-ES';
+  speechSynthesis.speak(voz);
+}
+</script>
 
 <div class="card">
 <h2>🥗 RECETAS SALUDABLES</h2>
