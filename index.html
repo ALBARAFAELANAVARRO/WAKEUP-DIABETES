@@ -329,5 +329,66 @@ function enviarSugerenciaCorreo(){
   document.getElementById('textoSuger').value='';
 }
 </script>
+  <script>
+let respiActivo = false;
+let pasoRespira = 0;
+
+function sonidoRespira(tipo) {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var o = ctx.createOscillator();
+    var g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = 'sine';
+    if (tipo === 'inhala') {
+      o.frequency.setValueAtTime(400, ctx.currentTime);
+      o.frequency.linearRampToValueAtTime(700, ctx.currentTime + 1);
+    } else {
+      o.frequency.setValueAtTime(700, ctx.currentTime);
+      o.frequency.linearRampToValueAtTime(300, ctx.currentTime + 1);
+    }
+    g.gain.setValueAtTime(0.2, ctx.currentTime);
+    o.start(); o.stop(ctx.currentTime + 1);
+  } catch(e){}
+}
+
+function cicloRespira() {
+  if (!respiActivo) return;
+  var circulo = document.getElementById('circuloRespira');
+  var texto = document.getElementById('textoRespira');
+  if (pasoRespira === 0) {
+    texto.textContent = '🌬️ INHALA... 4 segundos';
+    circulo.style.transition = 'all 4s ease';
+    circulo.style.width = '180px';
+    circulo.style.height = '180px';
+    circulo.textContent = '🌬️';
+    sonidoRespira('inhala');
+    pasoRespira = 1;
+    setTimeout(cicloRespira, 4000);
+  } else {
+    texto.textContent = '😮‍💨 EXHALA... 4 segundos';
+    circulo.style.transition = 'all 4s ease';
+    circulo.style.width = '120px';
+    circulo.style.height = '120px';
+    circulo.textContent = '😊';
+    sonidoRespira('exhala');
+    pasoRespira = 0;
+    setTimeout(cicloRespira, 4000);
+  }
+}
+
+document.getElementById('btnRespira').addEventListener('click', function() {
+  if (respiActivo) return;
+  respiActivo = true;
+  document.getElementById('btnRespira').textContent = '💜 Respirando...';
+  cicloRespira();
+});
+
+document.getElementById('btnPararRespira').addEventListener('click', function() {
+  respiActivo = false;
+  document.getElementById('btnRespira').textContent = '▶️ COMENZAR';
+  document.getElementById('textoRespira').textContent = '¡Muy bien, mi capitana! Respiraste consciente 💙';
+});
+</script>
 </body>
 </html>
