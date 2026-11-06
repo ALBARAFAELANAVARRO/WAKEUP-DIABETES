@@ -88,7 +88,11 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 
 <div style="text-align:center; background:#f0f8ff; padding:15px; border-radius:15px;">
   <h2>💧 MI AGUA</h2>
-  <div id="vasos" style="font-size:35px;">
+  <p id="mensajeAgua">Pulsa COMENZAR para empezar tu día de agua 💙</p>
+  
+  <button id="btnIniciar" onclick="iniciarAgua()" style="background:#2196F3; color:white; padding:12px 25px; border-radius:20px; border:none; font-size:16px; font-weight:bold;">▶️ COMENZAR</button>
+
+  <div id="vasos" style="font-size:45px; margin-top:15px; opacity:0.3;">
     <span onclick="marcarVaso(this)">🥤</span>
     <span onclick="marcarVaso(this)">🥤</span>
     <span onclick="marcarVaso(this)">🥤</span>
@@ -99,11 +103,12 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
     <span onclick="marcarVaso(this)">🥤</span>
   </div>
   <p id="textoAgua">Llevas 0 de 8 vasos 💧</p>
-  <button onclick="reiniciarVasos()" style="background:#888; color:white; padding:10px 20px; border-radius:15px; border:none;">Reiniciar</button>
+  <button onclick="reiniciarVasos()" style="background:#888; color:white; padding:10px 20px; border-radius:15px; border:none;">🔄 Reiniciar</button>
 </div>
 
 <script>
 let vasosTomados = 0;
+let yaEmpezo = false;
 
 function sonidoAgua() {
   try {
@@ -122,7 +127,24 @@ function sonidoAgua() {
   } catch(e) {}
 }
 
+function iniciarAgua() {
+  yaEmpezo = true;
+  vasosTomados = 0;
+  document.getElementById('vasos').style.opacity = '1';
+  document.getElementById('mensajeAgua').textContent = '¡Vamos capitana! Toca un vaso cada vez que tomes agua 💙';
+  document.getElementById('btnIniciar').textContent = '✅ ¡YA EMPEZAMOS!';
+  document.getElementById('btnIniciar').style.background = '#4CAF50';
+  var todos = document.querySelectorAll('#vasos span');
+  todos.forEach(function(v){ v.textContent = '🥤'; });
+  document.getElementById('textoAgua').textContent = 'Llevas 0 de 8 vasos 💧';
+  sonidoAgua();
+}
+
 function marcarVaso(vaso) {
+  if (!yaEmpezo) {
+    document.getElementById('mensajeAgua').textContent = 'Primero pulsa COMENZAR, mi capitana 👆💙';
+    return;
+  }
   if (vaso.textContent === '🥤') {
     vaso.textContent = '💧';
     vasosTomados++;
@@ -132,12 +154,20 @@ function marcarVaso(vaso) {
     vasosTomados--;
   }
   document.getElementById('textoAgua').textContent = 'Llevas ' + vasosTomados + ' de 8 vasos 💧';
+  if (vasosTomados === 8) {
+    document.getElementById('mensajeAgua').textContent = '¡LO LOGRASTE CAPITANA! ¡8 VASOS! 🎉💙💧';
+  }
 }
 
 function reiniciarVasos() {
+  yaEmpezo = false;
   vasosTomados = 0;
+  document.getElementById('vasos').style.opacity = '0.3';
+  document.getElementById('mensajeAgua').textContent = 'Pulsa COMENZAR para empezar tu día de agua 💙';
+  document.getElementById('btnIniciar').textContent = '▶️ COMENZAR';
+  document.getElementById('btnIniciar').style.background = '#2196F3';
   var todos = document.querySelectorAll('#vasos span');
-  todos.forEach(function(v) { v.textContent = '🥤'; });
+  todos.forEach(function(v){ v.textContent = '🥤'; });
   document.getElementById('textoAgua').textContent = 'Llevas 0 de 8 vasos 💧';
 }
 </script>
