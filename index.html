@@ -30,8 +30,17 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 <div class="card" style="background:#0077b6;color:white">
 <h1 style="color:white">💙 WAKEUP DIABETES</h1>
 <p style="color:white">¡Despierta! Hoy te cuidas con amor</p>
-<img class="gluc-img" src="glucosa.png">
-<p id="saludo" style="font-weight:bold;color:#6a4c93;font-size:13px"></p>
+<img class="gluc-img" src="glucometer.png">
+<p id="saludo" style="font-weight:bold;color:white;font-size:13px"></p>
+</div>
+
+<div class="card">
+<h2>👤 MIS DATOS</h2>
+<input id="nombre" placeholder="Tu nombre">
+<input id="emergencia" placeholder="Número de emergencia de TU familiar" type="tel">
+<br><button onclick="guardarDatos()">💾 Guardar</button>
+<p id="msgDatos" style="color:green;font-size:12px"></p>
+<a id="btnLlamar" href="#" style="display:none"><button class="rojo">🚨 LLAMAR A EMERGENCIA</button></a>
 </div>
 
 <div class="card">
