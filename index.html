@@ -145,13 +145,16 @@ function cicloRespira() {
   }
 }
 
+<script>
 function pararRespira() {
-  respiActivo = false;
+  clearInterval(intervaloRespira);
+  enRespiracion = false;
   document.getElementById('btnRespira').textContent = '▶️ COMENZAR';
-var nomRespira = localStorage.getItem('nombreUsuario') || 'mi capitana';
-document.getElementById('textoRespira').textContent = '¡Muy bien, ' + nomRespira + '! Respiraste consciente 💙';}
+  var nomRespira = localStorage.getItem('nombreUsuario') || 'mi capitana';
+  document.getElementById('textoRespira').textContent = '¡Muy bien, ' + nomRespira + '! Respiraste consciente 💙';
+  document.getElementById('circuloRespira').textContent = '💙';
+}
 </script>
-
 <div style="text-align:center; background:#D6EAF8; padding:15px; border-radius:15px; border:2px solid #AED6F1;">
   <h2>💧 MI AGUA</h2>
   <p id="mensajeAgua" style="font-size:14px; color:#1A5276;">Pulsa COMENZAR para empezar tu día de agua 💙</p>
