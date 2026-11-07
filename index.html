@@ -432,6 +432,25 @@ if (campoNombre) {
 
 // Cuando abra la página, si ya se registró antes, pone su nombre
 actualizarNombre();
-</script>
+function guardarGlucosa(){
+  let valor = document.getElementById('glucosa').value;
+  let momento = document.getElementById('momentoGlucosa').value;
+  if(!valor){
+    document.getElementById('msgGlucosa').innerText = "Mi capitana, escribe tu glucosa primero 💙";
+    return;
+  }
+  let lista = JSON.parse(localStorage.getItem('glucosaAlba') || '[]');
+  lista.unshift(valor + " - " + momento);
+  localStorage.setItem('glucosaAlba', JSON.stringify(lista));
+  document.getElementById('msgGlucosa').innerText = "¡Guardado, mi capitana! " + valor;
+  document.getElementById('glucosa').value = "";
+  document.getElementById('historialGlucosa').innerHTML = lista.join("<br>");
+}
+function borrarGlucosa(){
+  localStorage.removeItem('glucosaAlba');
+  document.getElementById('historialGlucosa').innerHTML = "Sin registros todavía";
+  document.getElementById('msgGlucosa').innerText = "";
+}
+  </script>
 </body>
 </html>
