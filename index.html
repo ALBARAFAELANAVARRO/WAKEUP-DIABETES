@@ -556,7 +556,13 @@ function mostrarMeds(){
   if(lista.length==0){ div.innerText='Sin medicamentos todavía'; return; }
   div.innerHTML=lista.map(m=>'<p>💊 '+m+'</p>').join('');
 }
-mostrarComidas();
+function borrarHistorialMed(){
+  localStorage.removeItem('misMeds');
+  document.getElementById('medicamento').value = '';
+  mostrarMeds();
+  alert('Historial borrado ✅');
+}
+      mostrarComidas();
 mostrarMeds();
   </script>
 </body>
