@@ -325,8 +325,15 @@ function escucharMantra() {
 <div class="card"><p style="font-size:11px;color:#888">WAKEUP DIABETES 💙 No sustituye a tu doctor. Si te sientes mal, llama a emergencia.</p></div>
 
 <script>
-function actualizarSaludo(){ let n=localStorage.getItem('miNombre')||''; document.getElementById('saludo').innerText=n?'Hola '+n+' 💙':''; document.getElementById('nombre').value=n; document.getElementById('emergencia').value=localStorage.getItem('miEmergencia')||''; let em=localStorage.getItem('miEmergencia')||''; if(em){ document.getElementById('btnLlamar').style.display='inline'; document.getElementById('btnLlamar').href='tel:'+em; } }
+function actualizarSaludo(){ 
+  let n=localStorage.getItem('miNombre')||''; 
+  document.getElementById('saludo').innerText=n?'Hola '+n+' 💙':''; 
+  document.getElementById('nombre').value=n; 
+  document.getElementById('emergencia').value=localStorage.getItem('miEmergencia')||''; 
+  cambiarPais();
+}
 actualizarSaludo();
+
 function guardarDatos(){ 
   let n=document.getElementById('nombre').value; 
   let e=document.getElementById('emergencia').value; 
@@ -334,7 +341,22 @@ function guardarDatos(){
   localStorage.setItem('miEmergencia',e); 
   document.getElementById('msgDatos').innerText='¡Guardado! Hola '+n+' 💙'; 
   actualizarSaludo(); 
-}function pintarGlucosa(){ document.getElementById('historialGlucosa').innerHTML=localStorage.getItem('histGlucosa')||'Sin registros todavía'; } pintarGlucosa();
+  cambiarPais();
+}
+
+function cambiarPais(){
+  let numero=document.getElementById('pais').value;
+  let boton=document.getElementById('btnLlamar');
+  boton.href='tel:'+numero;
+  boton.innerText='🚨 EMERGENCIA '+numero;
+}
+
+function enviarSugerenciaCorreo(){
+  let n=document.getElementById('nombreSuger').value;
+  let t=document.getElementById('textoSuger').value;
+  window.location.href='mailto:TU_CORREO_AQUI@gmail.com?subject=Sugerencia WakeUp de '+n+'&body='+encodeURIComponent(t);
+  document.getElementById('msgSuger').innerText='¡Gracias! Se abrió tu correo 💙';
+}}function pintarGlucosa(){ document.getElementById('historialGlucosa').innerHTML=localStorage.getItem('histGlucosa')||'Sin registros todavía'; } pintarGlucosa();
 function guardarGlucosa(){ let v=document.getElementById('glucosa').value; let m=document.getElementById('momentoGlucosa').value; if(!v) return alert('Escribe tu glucosa'); let hoy=new Date().toLocaleString(); let color=v<70?'🔴 MUY BAJA':v<=180?'🟢 Bien':'🟡 Alta'; document.getElementById('msgGlucosa').innerText=v+' - '+m+' '+color; let hist=localStorage.getItem('histGlucosa')||''; hist='• '+hoy+' - <b>'+v+'</b> ('+m+') '+color+'<br>'+hist; localStorage.setItem('histGlucosa',hist); pintarGlucosa(); document.getElementById('glucosa').value=''; }
 function borrarGlucosa(){ if(confirm('¿Borrar historial?')){ localStorage.removeItem('histGlucosa'); pintarGlucosa(); } }
 function pintarComida(){ document.getElementById('historialComida').innerHTML=localStorage.getItem('histComida')||'Sin comidas hoy'; } pintarComida();
