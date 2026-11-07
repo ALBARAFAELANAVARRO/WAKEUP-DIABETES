@@ -552,6 +552,10 @@ function borrarHistorialComidas(){
 }
 function borrarHistorialMed(){
   localStorage.removeItem('misMeds');
+  localStorage.removeItem('meds');
+  localStorage.removeItem('medicamentos');
+  localStorage.removeItem('historialMed');
+  localStorage.removeItem('misMedicamentos');
   document.getElementById('historialMed').innerHTML = "Sin medicamentos todavía";
   document.getElementById('medicamento').value = "";
   alert('Historial borrado ✅');
