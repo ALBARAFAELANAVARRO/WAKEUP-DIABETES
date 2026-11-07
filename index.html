@@ -536,7 +536,11 @@ function mostrarComidas(){
   if(lista.length==0){ div.innerText='Sin comidas todavía'; return; }
   div.innerHTML=lista.map(c=>'<p>🍽️ '+c+'</p>').join('');
 }
-function guardarMedicamento(){
+function borrarHistorialComidas(){
+  localStorage.removeItem('misComidas');
+  document.getElementById('historialComidas').innerText = 'Sin comidas todavía';
+}
+      function guardarMedicamento(){
   let med=document.getElementById('medicamento').value;
   let dosis=document.getElementById('dosisTomada').value;
   if(!med){ alert('Escribe tu medicamento, mi capitana 💙'); return; }
