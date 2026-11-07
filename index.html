@@ -489,6 +489,42 @@ function borrarGlucosa(){
   document.getElementById('historialGlucosa').innerHTML = "Sin registros todavía";
   document.getElementById('msgGlucosa').innerText = "";
 }
+  function guardarComida(){
+  let tipo=document.getElementById('tipoComida').value;
+  let que=document.getElementById('queComi').value;
+  if(!que){ alert('Escribe qué comiste, mi capitana 💙'); return; }
+  let lista=JSON.parse(localStorage.getItem('misComidas')||'[]');
+  let hora=new Date().toLocaleString();
+  lista.push(hora+' - '+tipo+': '+que);
+  localStorage.setItem('misComidas',JSON.stringify(lista));
+  document.getElementById('queComi').value='';
+  mostrarComidas();
+}
+function mostrarComidas(){
+  let lista=JSON.parse(localStorage.getItem('misComidas')||'[]');
+  let div=document.getElementById('historialComida');
+  if(lista.length==0){ div.innerText='Sin comidas todavía'; return; }
+  div.innerHTML=lista.map(c=>'<p>🍽️ '+c+'</p>').join('');
+}
+function guardarMedicamento(){
+  let med=document.getElementById('medicamento').value;
+  let dosis=document.getElementById('dosisTomada').value;
+  if(!med){ alert('Escribe tu medicamento, mi capitana 💙'); return; }
+  let lista=JSON.parse(localStorage.getItem('misMeds')||'[]');
+  let hora=new Date().toLocaleString();
+  lista.push(hora+' - '+med+' ('+dosis+')');
+  localStorage.setItem('misMeds',JSON.stringify(lista));
+  document.getElementById('medicamento').value='';
+  mostrarMeds();
+}
+function mostrarMeds(){
+  let lista=JSON.parse(localStorage.getItem('misMeds')||'[]');
+  let div=document.getElementById('historialMed');
+  if(lista.length==0){ div.innerText='Sin medicamentos todavía'; return; }
+  div.innerHTML=lista.map(m=>'<p>💊 '+m+'</p>').join('');
+}
+mostrarComidas();
+mostrarMeds();
   </script>
 </body>
 </html>
