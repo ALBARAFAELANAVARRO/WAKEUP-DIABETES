@@ -80,7 +80,8 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 
 <div class="card">
   <h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
-<p style="font-size:13px; color:#555;">Respira conmigo, despacito, <span class="nombreUser">mi capitana</span> 💜</p>  <p id="textoRespira" style="font-size:16px; font-weight:bold;">Pulsa COMENZAR para respirar conmigo 💙</p>
+  <p style="font-size:13px; color:#555;">Respira conmigo, despacito, <span class="nombreUser">mi capitana</span> 💜</p>
+  <p id="textoRespira" style="font-size:16px; font-weight:bold;">Pulsa COMENZAR para respirar conmigo 💙</p>
 
   <div id="circuloRespira" style="width:120px; height:120px; background:#A569BD; border-radius:50%; margin:15px auto; display:flex; align-items:center; justify-content:center; color:white; font-size:30px; transition: all 4s ease;">😊</div>
 
@@ -89,10 +90,11 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 
   <p style="font-size:12px; color:#777; margin-top:10px;">Inhala 4 segundos • Exhala 4 segundos<br>Tu cuerpo se calma, tu mente descansa</p>
 </div>
-} 
+
 <script>
 let respiActivo = false;
 let pasoRespira = 0;
+let tiempoRespira = null;
 
 function sonidoRespira(tipo) {
   try {
@@ -133,7 +135,7 @@ function cicloRespira() {
     circulo.textContent = '🌬️';
     sonidoRespira('inhala');
     pasoRespira = 1;
-    setTimeout(cicloRespira, 4000);
+    tiempoRespira = setTimeout(cicloRespira, 4000);
   } else {
     texto.textContent = '😮‍💨 EXHALA... 4 segundos';
     circulo.style.width = '120px';
@@ -141,20 +143,27 @@ function cicloRespira() {
     circulo.textContent = '😊';
     sonidoRespira('exhala');
     pasoRespira = 0;
-    setTimeout(cicloRespira, 4000);
+    tiempoRespira = setTimeout(cicloRespira, 4000);
   }
+}
 
 function pararRespira() {
-  clearInterval(intervaloRespira);
-  enRespiracion = false;
+  respiActivo = false;
+  pasoRespira = 0;
+  if (tiempoRespira) {
+    clearTimeout(tiempoRespira);
+    tiempoRespira = null;
+  }
   document.getElementById('btnRespira').textContent = '▶️ COMENZAR';
   var primerNombre = document.querySelector('.nombreUser');
   var nomRespira = primerNombre ? primerNombre.textContent : (localStorage.getItem('nombreUsuario') || 'mi capitana');
   document.getElementById('textoRespira').textContent = '¡Muy bien, ' + nomRespira + '! Respiraste consciente 💙';
-  document.getElementById('circuloRespira').textContent = '💙';
+  var circulo = document.getElementById('circuloRespira');
+  circulo.textContent = '💙';
+  circulo.style.width = '120px';
+  circulo.style.height = '120px';
 }
-</script>
-<div style="text-align:center; background:#D6EAF8; padding:15px; border-radius:15px; border:2px solid #AED6F1;">
+</script><div style="text-align:center; background:#D6EAF8; padding:15px; border-radius:15px; border:2px solid #AED6F1;">
   <h2>💧 MI AGUA</h2>
   <p id="mensajeAgua" style="font-size:14px; color:#1A5276;">Pulsa COMENZAR para empezar tu día de agua 💙</p>
   
