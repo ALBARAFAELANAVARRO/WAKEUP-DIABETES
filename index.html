@@ -365,11 +365,33 @@ function enviarSugerenciaCorreo(){
   let t=document.getElementById('textoSuger').value;
   window.location.href='mailto:TU_CORREO_AQUI@gmail.com?subject=Sugerencia WakeUp de '+n+'&body='+encodeURIComponent(t);
   document.getElementById('msgSuger').innerText='¡Gracias! Se abrió tu correo 💙';
-}}function pintarGlucosa(){ document.getElementById('historialGlucosa').innerHTML=localStorage.getItem('histGlucosa')||'Sin registros todavía'; } pintarGlucosa();
+function pintarGlucosa(){ document.getElementById('historialGlucosa').innerHTML=localStorage.getItem('histGlucosa')||'Sin registros todavía'; } pintarGlucosa();
 function guardarGlucosa(){ let v=document.getElementById('glucosa').value; let m=document.getElementById('momentoGlucosa').value; if(!v) return alert('Escribe tu glucosa'); let hoy=new Date().toLocaleString(); let color=v<70?'🔴 MUY BAJA':v<=180?'🟢 Bien':'🟡 Alta'; document.getElementById('msgGlucosa').innerText=v+' - '+m+' '+color; let hist=localStorage.getItem('histGlucosa')||''; hist='• '+hoy+' - <b>'+v+'</b> ('+m+') '+color+'<br>'+hist; localStorage.setItem('histGlucosa',hist); pintarGlucosa(); document.getElementById('glucosa').value=''; }
 function borrarGlucosa(){ if(confirm('¿Borrar historial?')){ localStorage.removeItem('histGlucosa'); pintarGlucosa(); } }
 function pintarComida(){ document.getElementById('historialComida').innerHTML=localStorage.getItem('histComida')||'Sin comidas hoy'; } pintarComida();
-function guardarComida(){ let t=document.getElementById('tipoComida').value; let q=document.getElementById('queComi').value; if(!q) return alert('Escribe qué comiste'); let hoy=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); let h=localStorage.getItem('histComida')||''; h='• '+hoy+' - <b>'+t+':</b> '+q+'<br>'+h; localStorage.setItem('histComida',h); pintarComida(); document.getElementById('queComi').value=''; }
+function agregarComidaInput(){
+  let div = document.createElement('div');
+  div.className = 'filaComida';
+  div.innerHTML = '<select class="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select> <input class="queComi" placeholder="¿Qué comiste?">';
+  document.getElementById('listaComidasInputs').appendChild(div);
+}
+function guardarComida(){
+  let filas = document.querySelectorAll('.filaComida');
+  let hoy = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  let nuevo = '';
+  filas.forEach(f => {
+    let t = f.querySelector('.tipoComida').value;
+    let q = f.querySelector('.queComi').value;
+    if(q) nuevo += '• ' + hoy + ' - <b>' + t + ':</b> ' + q + '<br>';
+  });
+  if(!nuevo) return alert('Escribe qué comiste');
+  let h = localStorage.getItem('histComida') || '';
+  h = nuevo + h;
+  localStorage.setItem('histComida', h);
+  pintarComida();
+  let lista = document.getElementById('listaComidasInputs');
+  lista.innerHTML = '<div class="filaComida"><select class="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select> <input class="queComi" placeholder="¿Qué comiste? Ej: arroz, pollo"></div>';
+}
 function pintarMed(){ document.getElementById('historialMed').innerHTML=localStorage.getItem('histMed')||'Sin medicamentos hoy'; } pintarMed();
 function guardarMedicamento(){ let med=document.getElementById('medicamento').value; let d=document.getElementById('dosisTomada').value; if(!med) return alert('Escribe tu medicamento'); let hoy=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); let h=localStorage.getItem('histMed')||''; h='• '+hoy+' - <b>'+med+'</b> - '+d+'<br>'+h; localStorage.setItem('histMed',h); pintarMed(); document.getElementById('medicamento').value=''; }
 function respirar(){ let c=document.getElementById('circulo'); let t=document.getElementById('textoRespira'); t.innerText='Inhala... 4 segundos'; c.style.transform='scale(1.3)'; c.innerText='Inhala 4'; setTimeout(()=>{ t.innerText='Sostén... 4 segundos'; c.innerText='Sostén 4'; },4000); setTimeout(()=>{ t.innerText='Exhala... 6 segundos'; c.style.transform='scale(1)'; c.innerText='Exhala 6'; },8000); setTimeout(()=>{ t.innerText='¡Muy bien! Repite si quieres 💙'; c.innerText='Respira'; },14000); }
@@ -388,8 +410,7 @@ function enviarSugerenciaCorreo(){
   window.location.href='mailto:'+correo+'?subject='+encodeURIComponent(asunto)+'&body='+encodeURIComponent(cuerpo);
   document.getElementById('msgSuger').innerText='¡Gracias '+nom+'! Se abrió tu correo para enviar 💙';
   document.getElementById('textoSuger').value='';
-}
-</script>
+}</script>
   <script>
 respiActivo = false;
 let pasoRespira = 0;
