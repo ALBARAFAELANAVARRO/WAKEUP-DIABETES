@@ -74,10 +74,15 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 
 <div class="card">
 <h2>🍽️ MIS COMIDAS</h2>
-<select id="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select>
-<input id="queComi" placeholder="¿Qué comiste? Ej: arroz, pollo">
-<br><button class="verde" onclick="guardarComida()">Guardar comida</button>
-<div id="historialComida" class="historial">Sin comidas hoy</div>
+<div id="listaComidasInputs">
+  <div class="filaComida">
+    <select class="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select>
+    <input class="queComi" placeholder="¿Qué comiste? Ej: arroz, pollo">
+  </div>
+</div>
+<button onclick="agregarComidaInput()" style="background:#4CAF50">+ AGREGAR OTRA COMIDA</button>
+<br><button class="verde" onclick="guardarComida()">Guardar comidas</button>
+<div id="historialComida" class="historial">Sin comidas todavía</div>
 </div>
 
 <div class="card">
