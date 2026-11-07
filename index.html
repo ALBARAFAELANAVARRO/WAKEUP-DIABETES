@@ -550,11 +550,11 @@ function borrarHistorialComidas(){
   document.getElementById('medicamento').value='';
   mostrarMeds();
 }
-function mostrarMeds(){
-  let lista=JSON.parse(localStorage.getItem('misMeds')||'[]');
-  let div=document.getElementById('historialMed');
-  if(lista.length==0){ div.innerText='Sin medicamentos todavía'; return; }
-  div.innerHTML=lista.map(m=>'<p>💊 '+m+'</p>').join('');
+function borrarHistorialMed(){
+  localStorage.removeItem('misMeds');
+  document.getElementById('historialMed').innerHTML = "Sin medicamentos todavía";
+  document.getElementById('medicamento').value = "";
+  alert('Historial borrado ✅');
 }
 function borrarHistorialMed(){
   localStorage.removeItem('misMeds');
