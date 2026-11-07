@@ -82,12 +82,16 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 
 <div class="card">
 <h2>💊 MIS MEDICAMENTOS</h2>
-<input id="medicamento" placeholder="Ej: Metformina 500mg">
-<select id="dosisTomada"><option>Tomada ✅</option><option>Olvidada ❌</option></select>
-<br><button class="verde" onclick="guardarMedicamento()">Guardar</button>
-<div id="historialMed" class="historial">Sin medicamentos hoy</div>
+<div id="listaMedsInputs">
+  <div class="filaMed">
+    <input class="nombreMed" placeholder="Ej: Metformina">
+    <select class="dosisMed"><option>Tomada ✅</option><option>No tomada ❌</option></select>
+  </div>
 </div>
-
+<button onclick="agregarMedInput()" style="background:#4CAF50">+ AGREGAR OTRO MEDICAMENTO</button>
+<br><button class="verde" onclick="guardarMedicamento()">Guardar medicamentos</button>
+<div id="historialMed" class="historial">Sin medicamentos todavía</div>
+</div>
 <div class="card" style="background:#E8DAEF;">
   <h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
   <p style="font-size:13px; color:#555;">Respira conmigo, despacito, <span class="nombreUser">mi capitana</span> 💜</p>
