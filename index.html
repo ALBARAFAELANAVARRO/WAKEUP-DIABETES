@@ -40,7 +40,17 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 <input id="emergencia" placeholder="Número de emergencia de TU familiar" type="tel">
 <br><button onclick="guardarDatos()">💾 Guardar</button>
 <p id="msgDatos" style="color:green;font-size:12px"></p>
-<a id="btnLlamar" href="#" style="display:none"><button class="rojo">🚨 LLAMAR A EMERGENCIA</button></a>
+
+<label style="font-weight:bold; font-size:14px;">🌍 ¿En qué país estás?</label>
+<select id="pais" onchange="cambiarPais()" style="width:100%; padding:12px; font-size:16px; border-radius:10px; margin-top:5px;">
+  <option value="911">República Dominicana - 911</option>
+  <option value="911">USA / México - 911</option>
+  <option value="112">España / Europa - 112</option>
+  <option value="999">Inglaterra - 999</option>
+  <option value="123">Colombia - 123</option>
+</select>
+
+<a id="btnLlamar" href="tel:911" style="display:block; background:red; color:white; text-align:center; padding:15px; font-size:20px; font-weight:bold; border-radius:10px; text-decoration:none; margin-top:10px;">🚨 EMERGENCIA 911</a>
 </div>
 
 <div class="card">
