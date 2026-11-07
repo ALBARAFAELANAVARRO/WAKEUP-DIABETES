@@ -86,15 +86,15 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
   <div id="circuloRespira" style="width:120px; height:120px; background:#A569BD; border-radius:50%; margin:15px auto; display:flex; align-items:center; justify-content:center; color:white; font-size:30px; transition: all 4s ease;">😊</div>
 
   <button id="btnRespira" onclick="iniciarRespira()" style="background:#8E44AD; color:white; padding:12px 25px; border-radius:20px; border:none; font-weight:bold; font-size:16px;">▶️ COMENZAR</button>
-  <button onclick="pararRespira()" style="background:#888; color:white; padding:12px 20px; border-radius:20px; border:none;">⏹️ Parar</button>
+  <button id="btnPararRespira" style="background:#888; color:white; padding:12px 20px; border-radius:20px; border:none;">⏹️ Parar</button>
 
   <p style="font-size:12px; color:#777; margin-top:10px;">Inhala 4 segundos • Exhala 4 segundos<br>Tu cuerpo se calma, tu mente descansa</p>
 </div>
 
 <script>
-let respiActivo = false;
-let pasoRespira = 0;
-let tiempoRespira = null;
+var respiActivo = false;
+var pasoRespira = 0;
+var tiempoRespira = null;
 
 function sonidoRespira(tipo) {
   try {
@@ -150,20 +150,23 @@ function cicloRespira() {
 function pararRespira() {
   respiActivo = false;
   pasoRespira = 0;
-  if (tiempoRespira) {
-    clearTimeout(tiempoRespira);
-    tiempoRespira = null;
-  }
+  clearTimeout(tiempoRespira);
+  tiempoRespira = null;
   document.getElementById('btnRespira').textContent = '▶️ COMENZAR';
   var primerNombre = document.querySelector('.nombreUser');
-  var nomRespira = primerNombre ? primerNombre.textContent : (localStorage.getItem('nombreUsuario') || 'mi capitana');
+  var nomRespira = primerNombre ? primerNombre.textContent : 'mi capitana';
   document.getElementById('textoRespira').textContent = '¡Muy bien, ' + nomRespira + '! Respiraste consciente 💙';
   var circulo = document.getElementById('circuloRespira');
   circulo.textContent = '💙';
   circulo.style.width = '120px';
   circulo.style.height = '120px';
 }
-</script><div style="text-align:center; background:#D6EAF8; padding:15px; border-radius:15px; border:2px solid #AED6F1;">
+
+window.pararRespira = pararRespira;
+window.iniciarRespira = iniciarRespira;
+document.getElementById('btnPararRespira').addEventListener('click', pararRespira);
+</script>
+<div style="text-align:center; background:#D6EAF8; padding:15px; border-radius:15px; border:2px solid #AED6F1;">
   <h2>💧 MI AGUA</h2>
   <p id="mensajeAgua" style="font-size:14px; color:#1A5276;">Pulsa COMENZAR para empezar tu día de agua 💙</p>
   
