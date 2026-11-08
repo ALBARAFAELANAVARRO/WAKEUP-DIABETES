@@ -350,28 +350,29 @@ function escucharMantra() {
 
 <script>
 function actualizarSaludo(){ 
-  let n=localStorage.getItem('miNombre')||''; 
-  document.getElementById('saludo').innerText=n?'Hola '+n+' 💙':''; 
-  document.getElementById('nombre').value=n; 
-  document.getElementById('emergencia').value=localStorage.getItem('miEmergencia')||''; 
+  let n = localStorage.getItem('miNombre') || ''; 
+  // Si es afiliado con nombre, sale su nombre. Si no tiene nombre, sale solo Bienvenid@
+  document.getElementById('saludo').innerHTML = n ? 'Bienvenid@, ' + n + ' <span style="font-size:35px;">💙</span>' : 'Bienvenid@ <span style="font-size:35px;">💙</span>'; 
+  document.querySelectorAll('.nombreUser').forEach(el => el.textContent = n);
+  document.getElementById('nombre').value = n; 
+  document.getElementById('emergencia').value = localStorage.getItem('miEmergencia') || ''; 
   cambiarPais();
 }
 actualizarSaludo();
 
 function guardarDatos(){ 
-  let n=document.getElementById('nombre').value; 
-  let sangre=document.getElementById('tipoSangre').value;
-  let medico=document.getElementById('nombreMedico').value;
-  let telMedico=document.getElementById('telefonoMedico').value;
-  localStorage.setItem('miNombre',n); 
-  localStorage.setItem('miSangre',sangre);
-  localStorage.setItem('miMedico',medico);
-  localStorage.setItem('miTelMedico',telMedico);
-  document.getElementById('msgDatos').innerText='¡Guardado! Hola '+n+' 💙'; 
+  let n = document.getElementById('nombre').value.trim(); 
+  let sangre = document.getElementById('tipoSangre').value;
+  let medico = document.getElementById('nombreMedico').value;
+  let telMedico = document.getElementById('telefonoMedico').value;
+  localStorage.setItem('miNombre', n); 
+  localStorage.setItem('miSangre', sangre);
+  localStorage.setItem('miMedico', medico);
+  localStorage.setItem('miTelMedico', telMedico);
+  document.getElementById('msgDatos').innerText = n ? '¡Guardado! Bienvenid@, ' + n + ' 💙' : '¡Guardado! Bienvenid@ 💙'; 
   actualizarSaludo(); 
   cambiarPais();
-}
-function cambiarPais(){
+}function cambiarPais(){
   let numero=document.getElementById('pais').value;
   let boton=document.getElementById('btnLlamar');
   boton.href='tel:'+numero;
