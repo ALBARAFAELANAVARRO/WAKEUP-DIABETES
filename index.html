@@ -547,6 +547,17 @@ function guardarGlucosa(){
   document.getElementById('msgGlucosa').innerText = '';
   document.getElementById('glucosa').value = '';
   document.getElementById('historialGlucosa').innerHTML = lista.join("<br>");
+}
+
+function borrarGlucosa(){
+  if(!confirm('¿Seguro que quieres borrar tu historial de glucosa?')){
+    return;
+  }
+  localStorage.removeItem('glucosaAlba');
+  document.getElementById('historialGlucosa').innerHTML = 'Sin registros todavía';
+  document.getElementById('msgGlucosa').innerText = '';
+  alert('¡Listo! Historial de glucosa borrado 💙');
+}
 }  function guardarComida(){
   let tipo=document.getElementById('tipoComida').value;
   let que=document.getElementById('queComi').value;
