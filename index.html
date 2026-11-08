@@ -434,8 +434,43 @@ function pintarVasos(){
   if(m) m.innerText = 'Llevas ' + vasosTomados + ' de 8 vasos 💧';
 }function tomarAgua(i){ vasosTomados=i+1; localStorage.setItem('vasos',vasosTomados); pintarVasos(); }
 function reiniciarAgua(){ vasosTomados=0; localStorage.setItem('vasos','0'); pintarVasos(); } pintarVasos();
-let elMantra=document.getElementById('mantra'); if(elMantra) elMantra.innerText='"'+mantraHoy+'"';function enviarSugerenciaCorreo(){
-  let nom=document.getElementById('nombreSuger').value||'Anónimo';
+let mantras=[
+"Hoy me cuido con amor y con calma.",
+"Mi cuerpo es mi templo, lo trato con amor.",
+"Hoy elijo cuidarme, un paso a la vez.",
+"Hoy soy fuerte y constante.",
+"Mi salud es mi prioridad.",
+"Hoy bebo agua, me muevo y respiro.",
+"Yo puedo con mi diabetes.",
+"Hoy no me rindo, sigo adelante.",
+"Me amo, me cuido, me respeto.",
+"Hoy es un nuevo día para estar bien.",
+"Mi constancia me hace fuerte.",
+"Hoy elijo alimentos que me sanan.",
+"Yo controlo mi día, no mi diabetes.",
+"Hoy camino hacia mi mejor versión.",
+"Respiro, sonrío y sigo.",
+"Hoy me doy amor en cada decisión.",
+"Soy disciplinado y me siento orgulloso.",
+"Hoy mi cuerpo me agradece que lo cuide.",
+"Cada día que me cuido, gano salud.",
+"Hoy me levanto con energía y fe.",
+"Yo merezco estar sano y feliz.",
+"Hoy tomo decisiones que me hacen bien.",
+"Mi esfuerzo de hoy es mi salud de mañana.",
+"Hoy celebro cada pequeño logro.",
+"Soy capaz de cambiar mi vida.",
+"Hoy me cuido porque me amo.",
+"Mi meta es cuidarme, no ser perfecto.",
+"Hoy elijo la calma, no el estrés.",
+"Dios me da fuerza para cuidarme hoy.",
+"Hoy soy ejemplo para mi familia.",
+"Hoy termino el mes orgulloso de mí."
+];
+let diaHoy = new Date().getDate();
+let mantraHoy = mantras[diaHoy - 1];
+let elMantra = document.getElementById('mantra');
+if(elMantra) elMantra.innerText = '"' + mantraHoy + '"';  let nom=document.getElementById('nombreSuger').value||'Anónimo';
   let txt=document.getElementById('textoSuger').value;
   if(!txt) return alert('Escribe tu sugerencia primero 💙');
   let correo='navarroalba66@gmail.com';
