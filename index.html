@@ -361,14 +361,17 @@ actualizarSaludo();
 
 function guardarDatos(){ 
   let n=document.getElementById('nombre').value; 
-  let e=document.getElementById('emergencia').value; 
+  let sangre=document.getElementById('tipoSangre').value;
+  let medico=document.getElementById('nombreMedico').value;
+  let telMedico=document.getElementById('telefonoMedico').value;
   localStorage.setItem('miNombre',n); 
-  localStorage.setItem('miEmergencia',e); 
+  localStorage.setItem('miSangre',sangre);
+  localStorage.setItem('miMedico',medico);
+  localStorage.setItem('miTelMedico',telMedico);
   document.getElementById('msgDatos').innerText='¡Guardado! Hola '+n+' 💙'; 
   actualizarSaludo(); 
   cambiarPais();
 }
-
 function cambiarPais(){
   let numero=document.getElementById('pais').value;
   let boton=document.getElementById('btnLlamar');
