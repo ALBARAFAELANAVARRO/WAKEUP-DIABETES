@@ -434,8 +434,7 @@ function pintarVasos(){
   if(m) m.innerText = 'Llevas ' + vasosTomados + ' de 8 vasos 💧';
 }function tomarAgua(i){ vasosTomados=i+1; localStorage.setItem('vasos',vasosTomados); pintarVasos(); }
 function reiniciarAgua(){ vasosTomados=0; localStorage.setItem('vasos','0'); pintarVasos(); } pintarVasos();
-let mantras=["Hoy me cuido con amor y con calma.","Mi cuerpo es mi templo, lo trato con cariño.","Respiro paz, suelto el miedo.","Hoy elijo salud, hoy elijo vida.","Soy fuerte, soy valiente, me estoy sanando.","Con cada respiro, me siento mejor.","Hoy me doy lo que necesito: agua, calma y amor."]; let dia=new Date().getDate(); let mantraHoy=mantras[dia % mantras.length]; document.getElementById('mantra').innerText='"'+mantraHoy+'"'; function escucharMantra(){ let voz=new SpeechSynthesisUtterance(mantraHoy); voz.lang='es-ES'; voz.rate=0.85; speechSynthesis.speak(voz); }
-function enviarSugerenciaCorreo(){
+let elMantra=document.getElementById('mantra'); if(elMantra) elMantra.innerText='"'+mantraHoy+'"';function enviarSugerenciaCorreo(){
   let nom=document.getElementById('nombreSuger').value||'Anónimo';
   let txt=document.getElementById('textoSuger').value;
   if(!txt) return alert('Escribe tu sugerencia primero 💙');
