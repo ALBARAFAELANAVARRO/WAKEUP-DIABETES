@@ -424,8 +424,15 @@ function borrarComida(){
 }
 }function respirar(){ let c=document.getElementById('circulo'); let t=document.getElementById('textoRespira'); t.innerText='Inhala... 4 segundos'; c.style.transform='scale(1.3)'; c.innerText='Inhala 4'; setTimeout(()=>{ t.innerText='Sostén... 4 segundos'; c.innerText='Sostén 4'; },4000); setTimeout(()=>{ t.innerText='Exhala... 6 segundos'; c.style.transform='scale(1)'; c.innerText='Exhala 6'; },8000); setTimeout(()=>{ t.innerText='¡Muy bien! Repite si quieres 💙'; c.innerText='Respira'; },14000); }
 vasosTomados=parseInt(localStorage.getItem('vasos')||'0');
-function pintarVasos(){ let vasos=document.querySelectorAll('.vaso'); vasos.forEach((v,i)=>{ if(i<vasosTomados) v.classList.add('activo'); else v.classList.remove('activo'); }); document.getElementById('msgAgua').innerText='Llevas '+vasosTomados+' de 8 vasos 💧'; }
-function tomarAgua(i){ vasosTomados=i+1; localStorage.setItem('vasos',vasosTomados); pintarVasos(); }
+function pintarVasos(){
+  let vasos = document.querySelectorAll('.vaso');
+  vasos.forEach((v,i)=>{
+    if(i < vasosTomados) v.classList.add('activo');
+    else v.classList.remove('activo');
+  });
+  let m = document.getElementById('msgAgua');
+  if(m) m.innerText = 'Llevas ' + vasosTomados + ' de 8 vasos 💧';
+}function tomarAgua(i){ vasosTomados=i+1; localStorage.setItem('vasos',vasosTomados); pintarVasos(); }
 function reiniciarAgua(){ vasosTomados=0; localStorage.setItem('vasos','0'); pintarVasos(); } pintarVasos();
 let mantras=["Hoy me cuido con amor y con calma.","Mi cuerpo es mi templo, lo trato con cariño.","Respiro paz, suelto el miedo.","Hoy elijo salud, hoy elijo vida.","Soy fuerte, soy valiente, me estoy sanando.","Con cada respiro, me siento mejor.","Hoy me doy lo que necesito: agua, calma y amor."]; let dia=new Date().getDate(); let mantraHoy=mantras[dia % mantras.length]; document.getElementById('mantra').innerText='"'+mantraHoy+'"'; function escucharMantra(){ let voz=new SpeechSynthesisUtterance(mantraHoy); voz.lang='es-ES'; voz.rate=0.85; speechSynthesis.speak(voz); }
 function enviarSugerenciaCorreo(){
