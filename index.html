@@ -412,7 +412,7 @@ function agregarComidaInput(){
   div.innerHTML = '<select class="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select> <input class="queComi" placeholder="¿Qué comiste?">';
   document.getElementById('listaComidasInputs').appendChild(div);
 }
-function borrarComida(){
+function borrarComidas(){
   localStorage.removeItem('histComida');
   // Esta es tu misma función que usas para pintar, mi capitán
   if(typeof pintarComida === 'function'){
