@@ -537,24 +537,17 @@ actualizarNombre();
 function guardarGlucosa(){
   let valor = document.getElementById('glucosa').value;
   let momento = document.getElementById('momentoGlucosa').value;
-  let n = localStorage.getItem('miNombre') || '';
-  let saludo = n ? 'Bienvenid@, ' + n + ' 💙' : 'Bienvenid@ 💙';
   if(!valor){
-    document.getElementById('msgGlucosa').innerText = saludo + ' escribe tu glucosa primero 💙';
+    document.getElementById('msgGlucosa').innerText = 'Escribe tu glucosa por favor';
     return;
   }
   let lista = JSON.parse(localStorage.getItem('glucosaAlba') || '[]');
   lista.unshift(valor + " - " + momento);
   localStorage.setItem('glucosaAlba', JSON.stringify(lista));
-  document.getElementById('msgGlucosa').innerText = "¡Guardado! " + saludo + " Glucosa: " + valor;
-  document.getElementById('glucosa').value = "";
+  document.getElementById('msgGlucosa').innerText = '';
+  document.getElementById('glucosa').value = '';
   document.getElementById('historialGlucosa').innerHTML = lista.join("<br>");
-}function borrarGlucosa(){
-  localStorage.removeItem('glucosaAlba');
-  document.getElementById('historialGlucosa').innerHTML = "Sin registros todavía";
-  document.getElementById('msgGlucosa').innerText = "";
-}
-  function guardarComida(){
+}  function guardarComida(){
   let tipo=document.getElementById('tipoComida').value;
   let que=document.getElementById('queComi').value;
   if(!que){ alert('Escribe qué comiste, mi capitana 💙'); return; }
