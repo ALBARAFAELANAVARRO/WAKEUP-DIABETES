@@ -539,18 +539,19 @@ actualizarNombre();
 function guardarGlucosa(){
   let valor = document.getElementById('glucosa').value;
   let momento = document.getElementById('momentoGlucosa').value;
+  let n = localStorage.getItem('miNombre') || '';
+  let saludo = n ? 'Bienvenid@, ' + n + ' 💙' : 'Bienvenid@ 💙';
   if(!valor){
-    document.getElementById('msgGlucosa').innerText = "Mi capitana, escribe tu glucosa primero 💙";
+    document.getElementById('msgGlucosa').innerText = saludo + ' escribe tu glucosa primero 💙';
     return;
   }
   let lista = JSON.parse(localStorage.getItem('glucosaAlba') || '[]');
   lista.unshift(valor + " - " + momento);
   localStorage.setItem('glucosaAlba', JSON.stringify(lista));
-  document.getElementById('msgGlucosa').innerText = "¡Guardado, mi capitana! " + valor;
+  document.getElementById('msgGlucosa').innerText = "¡Guardado! " + saludo + " Glucosa: " + valor;
   document.getElementById('glucosa').value = "";
   document.getElementById('historialGlucosa').innerHTML = lista.join("<br>");
-}
-function borrarGlucosa(){
+}function borrarGlucosa(){
   localStorage.removeItem('glucosaAlba');
   document.getElementById('historialGlucosa').innerHTML = "Sin registros todavía";
   document.getElementById('msgGlucosa').innerText = "";
