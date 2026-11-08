@@ -558,6 +558,13 @@ function borrarHistorialComidas(){
   
   input.style.border = "";
   mostrarMeds();
+}function mostrarMeds(){
+  let lista = JSON.parse(localStorage.getItem('misMeds') || "[]");
+  let donde = document.getElementById('historialMed');
+  if(donde){
+    donde.innerHTML = lista.join("<br>");
+  }
+}
 }function borrarHistorialMed(){
   localStorage.removeItem('misMeds');
   localStorage.removeItem('meds');
