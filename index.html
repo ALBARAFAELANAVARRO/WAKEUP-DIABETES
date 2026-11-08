@@ -553,12 +553,12 @@ function borrarHistorialComidas(){
 
   let lista = JSON.parse(localStorage.getItem('misMeds') || "[]");
   let hora = new Date().toLocaleString();
-  lista.push(hora + ' - ' + med + ' (' + dosis + ')');
+  lista.unshift(hora + ' - ' + med + ' (' + dosis + ')');
+  localStorage.setItem('misMeds', JSON.stringify(lista));
   
   input.style.border = "";
   mostrarMeds();
-}
-function borrarHistorialMed(){
+}function borrarHistorialMed(){
   localStorage.removeItem('misMeds');
   localStorage.removeItem('meds');
   localStorage.removeItem('medicamentos');
