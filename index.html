@@ -391,8 +391,6 @@ function guardarComida(){
   let lista = document.getElementById('listaComidasInputs');
   lista.innerHTML = '<div class="filaComida"><select class="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select> <input class="queComi" placeholder="¿Qué comiste? Ej: arroz, pollo"></div>';
 }
-function pintarMed(){ document.getElementById('historialMed').innerHTML=localStorage.getItem('histMed')||'Sin medicamentos hoy'; } pintarMed();
-function guardarMedicamento(){ let med=document.getElementById('medicamento').value; let d=document.getElementById('dosisTomada').value; if(!med) return alert('Escribe tu medicamento'); let hoy=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); let h=localStorage.getItem('histMed')||''; h='• '+hoy+' - <b>'+med+'</b> - '+d+'<br>'+h; localStorage.setItem('histMed',h); pintarMed(); document.getElementById('medicamento').value=''; }
 function respirar(){ let c=document.getElementById('circulo'); let t=document.getElementById('textoRespira'); t.innerText='Inhala... 4 segundos'; c.style.transform='scale(1.3)'; c.innerText='Inhala 4'; setTimeout(()=>{ t.innerText='Sostén... 4 segundos'; c.innerText='Sostén 4'; },4000); setTimeout(()=>{ t.innerText='Exhala... 6 segundos'; c.style.transform='scale(1)'; c.innerText='Exhala 6'; },8000); setTimeout(()=>{ t.innerText='¡Muy bien! Repite si quieres 💙'; c.innerText='Respira'; },14000); }
 vasosTomados=parseInt(localStorage.getItem('vasos')||'0');
 function pintarVasos(){ let vasos=document.querySelectorAll('.vaso'); vasos.forEach((v,i)=>{ if(i<vasosTomados) v.classList.add('activo'); else v.classList.remove('activo'); }); document.getElementById('msgAgua').innerText='Llevas '+vasosTomados+' de 8 vasos 💧'; }
