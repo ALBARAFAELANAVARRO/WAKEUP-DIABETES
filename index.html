@@ -542,8 +542,8 @@ function borrarHistorialComidas(){
       function guardarMedicamento(){
   let input = document.getElementById('medicamento');
   let med = input.value.trim();
-  let dosis = document.getElementById('dosisTomada').value;
-
+let dosisEl = document.getElementById('dosisTomada');
+let dosis = dosisEl ? dosisEl.value : "";
   if(!med){
     input.style.border = "2px solid red";
     input.placeholder = "Escribe tu medicamento aquí, genio querido";
