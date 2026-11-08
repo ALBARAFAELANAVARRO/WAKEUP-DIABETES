@@ -37,10 +37,24 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 <h2>👤 MIS DATOS</h2>
 <p style="font-size:13px; color:#555;">Hola, <span class="nombreUser">mi capitana</span> 💙</p>
 <input id="nombre" placeholder="Tu nombre">
-<input id="emergencia" placeholder="Número de emergencia de TU familiar" type="tel">
+
+<select id="tipoSangre" style="width:100%; padding:10px; margin:5px 0; border-radius:10px; border:1px solid #ccc;">
+  <option value="">Tipo de sangre</option>
+  <option value="O+">O+</option>
+  <option value="O-">O-</option>
+  <option value="A+">A+</option>
+  <option value="A-">A-</option>
+  <option value="B+">B+</option>
+  <option value="B-">B-</option>
+  <option value="AB+">AB+</option>
+  <option value="AB-">AB-</option>
+</select>
+
+<input id="nombreMedico" placeholder="Nombre de tu médico">
+<input id="telefonoMedico" placeholder="Teléfono del médico o centro asistencial" type="tel">
 <br><button onclick="guardarDatos()">💾 Guardar</button>
 <p id="msgDatos" style="color:green;font-size:12px"></p>
-
+</div>
 <label style="font-weight:bold; font-size:14px;">🌍 ¿En qué país estás?</label>
 <select id="pais" onchange="cambiarPais()" style="width:100%; padding:12px; font-size:16px; border-radius:10px; margin-top:5px;">
   <option value="911">República Dominicana - 911</option>
