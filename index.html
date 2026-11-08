@@ -360,6 +360,23 @@ function actualizarSaludo(){
 }
 actualizarSaludo();
 
+function tocarFanfarria(){
+  try{
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    var notas = [523, 659, 784, 1046]; // Do - Mi - Sol - Do
+    notas.forEach(function(f, i){
+      var o = ctx.createOscillator();
+      var g = ctx.createGain();
+      o.type = 'triangle';
+      o.frequency.value = f;
+      g.gain.value = 0.15;
+      o.connect(g); g.connect(ctx.destination);
+      o.start(ctx.currentTime + i * 0.15);
+      o.stop(ctx.currentTime + i * 0.15 + 0.35);
+    });
+  }catch(e){}
+}
+
 function guardarDatos(){ 
   let n = document.getElementById('nombre').value.trim(); 
   let sangre = document.getElementById('tipoSangre').value;
@@ -371,14 +388,16 @@ function guardarDatos(){
   localStorage.setItem('miTelMedico', telMedico);
   document.getElementById('msgDatos').innerText = n ? '¡Guardado! Bienvenid@, ' + n + ' 💙' : '¡Guardado! Bienvenid@ 💙'; 
   actualizarSaludo(); 
+  if(n) tocarFanfarria();
   cambiarPais();
-}function cambiarPais(){
+}
+
+function cambiarPais(){
   let numero=document.getElementById('pais').value;
   let boton=document.getElementById('btnLlamar');
   boton.href='tel:'+numero;
   boton.innerText='🚨 EMERGENCIA '+numero;
 }
-
 function enviarSugerenciaCorreo(){
   let n=document.getElementById('nombreSuger').value;
   let t=document.getElementById('textoSuger').value;
