@@ -540,14 +540,23 @@ function borrarHistorialComidas(){
   document.getElementById('historialComidas').innerText = 'Sin comidas todavía';
 }
       function guardarMedicamento(){
-  let med=document.getElementById('medicamento').value;
-  let dosis=document.getElementById('dosisTomada').value;
-  if(!med){ alert('Escribe tu medicamento, mi capitana 💙'); return; }
-  let lista=JSON.parse(localStorage.getItem('misMeds')||'[]');
-  let hora=new Date().toLocaleString();
-  lista.push(hora+' - '+med+' ('+dosis+')');
-  localStorage.setItem('misMeds',JSON.stringify(lista));
-  document.getElementById('medicamento').value='';
+  let input = document.getElementById('medicamento');
+  let med = input.value.trim();
+  let dosis = document.getElementById('dosisTomada').value;
+
+  if(!med){
+    input.style.border = "2px solid red";
+    input.placeholder = "Escribe tu medicamento aquí, genio querido";
+    input.focus();
+    return;
+  }
+
+  let lista = JSON.parse(localStorage.getItem('misMeds') || "[]");
+  let hora = new Date().toLocaleString();
+  lista.push(hora + ' - ' + med + ' (' + dosis + ')');
+  localStorage.setItem('misMeds', JSON.stringify(lista));
+  document.getElementById('medicamento').value = '';
+  input.style.border = "";
   mostrarMeds();
 }
 function borrarHistorialMed(){
