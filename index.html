@@ -443,8 +443,7 @@ let elMantra=document.getElementById('mantra'); if(elMantra) elMantra.innerText=
   let cuerpo='Hola Alba, soy '+nom+' - Mi experiencia: '+txt;
   window.location.href='mailto:'+correo+'?subject='+encodeURIComponent(asunto)+'&body='+encodeURIComponent(cuerpo);
   document.getElementById('msgSuger').innerText='¡Gracias '+nom+'! Se abrió tu correo para enviar 💙';
-  document.getElementById('textoSuger').value='';
-}</script>
+let mS=document.getElementById('msgSuger'); if(mS) mS.innerText='¡Gracias '+nom+'! Se abrió tu correo';}</script>
   <script>
 respiActivo = false;
 
