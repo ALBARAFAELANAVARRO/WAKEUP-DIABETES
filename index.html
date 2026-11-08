@@ -413,11 +413,6 @@ function agregarComidaInput(){
   document.getElementById('listaComidasInputs').appendChild(div);
 }
 function borrarComida(){
-  let n = localStorage.getItem('miNombre') || '';
-  let saludo = n ? 'Bienvenid@, ' + n + ' 💙' : 'Bienvenid@ 💙';
-  if(!confirm(saludo + ' ¿Seguro que quieres borrar tu historial de comidas?')){
-    return;
-  }
   localStorage.removeItem('histComida');
   // Esta es tu misma función que usas para pintar, mi capitán
   if(typeof pintarComida === 'function'){
@@ -426,7 +421,7 @@ function borrarComida(){
     let hist = document.getElementById('historialComida');
     if(hist) hist.innerHTML = 'Sin comidas todavía';
   }
-  alert('¡Listo! ' + saludo + ' Historial de comidas borrado 💙');
+}
 }function respirar(){ let c=document.getElementById('circulo'); let t=document.getElementById('textoRespira'); t.innerText='Inhala... 4 segundos'; c.style.transform='scale(1.3)'; c.innerText='Inhala 4'; setTimeout(()=>{ t.innerText='Sostén... 4 segundos'; c.innerText='Sostén 4'; },4000); setTimeout(()=>{ t.innerText='Exhala... 6 segundos'; c.style.transform='scale(1)'; c.innerText='Exhala 6'; },8000); setTimeout(()=>{ t.innerText='¡Muy bien! Repite si quieres 💙'; c.innerText='Respira'; },14000); }
 vasosTomados=parseInt(localStorage.getItem('vasos')||'0');
 function pintarVasos(){ let vasos=document.querySelectorAll('.vaso'); vasos.forEach((v,i)=>{ if(i<vasosTomados) v.classList.add('activo'); else v.classList.remove('activo'); }); document.getElementById('msgAgua').innerText='Llevas '+vasosTomados+' de 8 vasos 💧'; }
