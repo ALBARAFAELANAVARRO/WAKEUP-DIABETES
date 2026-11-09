@@ -590,13 +590,14 @@ function guardarGlucosa(){
 
 function borrarGlucosa(){
   localStorage.removeItem('glucosaAlba');
+  localStorage.removeItem('misGlucosa');
+  localStorage.removeItem('glucosa');
+  localStorage.removeItem('historialGlucosa');
   document.getElementById('historialGlucosa').innerHTML = 'Sin registros todavía';
   document.getElementById('msgGlucosa').innerText = '';
-  document.getElementById('cajitaGlucosa').innerText = 'Aquí saldrá tu color 💙';
+  document.getElementById('cajitaGlucosa').innerText = 'RANGO DE GLUCOSA';
   document.getElementById('cajitaGlucosa').style.background = '#eee';
-  alert('¡Listo! Historial de glucosa borrado 💙');
-   } 
-function guardarComida(){
+}function guardarComida(){
   let tipoEl = document.querySelector('.tipoComida');
   let queEl = document.querySelector('.queComi');
   let tipo = tipoEl ? tipoEl.value : 'Comida';
