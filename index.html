@@ -607,27 +607,37 @@ function borrarGlucosa(){
   alert('¡Listo! Historial de glucosa borrado 💙');
    } 
 function guardarComida(){
-  let tipo=document.getElementById('tipoComida').value;
-  let que=document.getElementById('queComi').value;
-  if(!que){ alert('Escribe qué comiste, mi capitana 💙'); return; }
-  let lista=JSON.parse(localStorage.getItem('misComidas')||'[]');
-  let hora=new Date().toLocaleString();
-  lista.push(hora+' - '+tipo+': '+que);
-  localStorage.setItem('misComidas',JSON.stringify(lista));
-  document.getElementById('queComi').value='';
+  let tipoEl = document.querySelector('.tipoComida');
+  let queEl = document.querySelector('.queComi');
+  let tipo = tipoEl ? tipoEl.value : 'Comida';
+  let que = queEl ? queEl.value.trim() : '';
+  if(!que){
+    document.getElementById('historialComida').innerText = 'Escribe qué comiste, mi capitana 💙';
+    return;
+  }
+  let lista = JSON.parse(localStorage.getItem('misComidas') || '[]');
+  let hora = new Date().toLocaleString();
+  lista.push(hora + ' - ' + tipo + ': ' + que);
+  localStorage.setItem('misComidas', JSON.stringify(lista));
+  if(queEl) queEl.value = '';
   mostrarComidas();
 }
+
 function mostrarComidas(){
-  let lista=JSON.parse(localStorage.getItem('misComidas')||'[]');
-  let div=document.getElementById('historialComida');
-  if(lista.length==0){ div.innerText='Sin comidas todavía'; return; }
-  div.innerHTML=lista.map(c=>'<p>🍽️ '+c+'</p>').join('');
+  let lista = JSON.parse(localStorage.getItem('misComidas') || '[]');
+  let h = document.getElementById('historialComida');
+  if(!h) return;
+  if(lista.length === 0){ h.innerText = 'Sin comidas todavía'; return; }
+  h.innerHTML = lista.map(function(c){ return c; }).join('<br>');
 }
-function borrarHistorialComidas(){
+
+function borrarComidas(){
   localStorage.removeItem('misComidas');
-  document.getElementById('historialComidas').innerText = 'Sin comidas todavía';
-}
-      function guardarMedicamento(){
+  let h = document.getElementById('historialComida');
+  if(h) h.innerText = 'Sin comidas todavía';
+  let q = document.querySelector('.queComi');
+  if(q) q.value = '';
+}      function guardarMedicamento(){
   let input = document.getElementById('medicamento');
   let med = input.value.trim();
 let dosisEl = document.getElementById('dosisTomada');
