@@ -417,7 +417,9 @@ function borrarComidas(){
   localStorage.removeItem('misComidas');
   localStorage.removeItem('comidas');
   localStorage.removeItem('historialComida');
+  localStorage.removeItem('historialComidas');
   document.getElementById('historialComida').innerText = 'Sin comidas todavía';
+  document.querySelectorAll('.queComi').forEach(function(i){ i.value = ''; });
 }
 }
 }function respirar(){ let c=document.getElementById('circulo'); let t=document.getElementById('textoRespira'); t.innerText='Inhala... 4 segundos'; c.style.transform='scale(1.3)'; c.innerText='Inhala 4'; setTimeout(()=>{ t.innerText='Sostén... 4 segundos'; c.innerText='Sostén 4'; },4000); setTimeout(()=>{ t.innerText='Exhala... 6 segundos'; c.style.transform='scale(1)'; c.innerText='Exhala 6'; },8000); setTimeout(()=>{ t.innerText='¡Muy bien! Repite si quieres 💙'; c.innerText='Respira'; },14000); }
