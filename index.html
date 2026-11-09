@@ -584,10 +584,12 @@ function guardarGlucosa(){
 }
 
 function borrarGlucosa(){
-  if(!confirm('¿Seguro que quieres borrar tu historial de glucosa?')){
-    return;
-  }
+  function borrarGlucosa(){
   localStorage.removeItem('glucosaAlba');
+  document.getElementById('historialGlucosa').innerHTML = 'Sin registros todavía';
+  document.getElementById('msgGlucosa').innerText = '';
+  alert('¡Listo! A empezar de cero 💙');
+}
   document.getElementById('historialGlucosa').innerHTML = 'Sin registros todavía';
   document.getElementById('msgGlucosa').innerText = '';
   alert('¡Listo! Historial de glucosa borrado 💙');
