@@ -604,8 +604,11 @@ function borrarGlucosa(){
   let tipo = tipoEl ? tipoEl.value : 'Comida';
   let que = queEl ? queEl.value.trim() : '';
   if(!que){
-    document.getElementById('historialComida').innerText = 'Escribe qué comiste, mi capitana 💙';
-    return;
+    if(!que){
+  var nombreAfiliado = localStorage.getItem('nombreUsuario') || (document.querySelector('.nombreUser') ? document.querySelector('.nombreUser').textContent : 'mi capitana');
+  document.getElementById('historialComida').innerText = 'Escribe qué comiste, ' + nombreAfiliado + ' 💙';
+  return;
+}    return;
   }
   let lista = JSON.parse(localStorage.getItem('misComidas') || '[]');
   let hora = new Date().toLocaleString();
