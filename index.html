@@ -581,20 +581,32 @@ function guardarGlucosa(){
   localStorage.setItem('glucosaAlba', JSON.stringify(lista));
   document.getElementById('msgGlucosa').innerText = '';
   document.getElementById('glucosa').value = '';
+  let cajita = document.getElementById('cajitaGlucosa');
+  let numero = parseInt(valor);
+  if(numero < 70){
+    cajita.style.background = '#ff9999';
+    cajita.innerText = '¡Baja! ' + numero + ' - Come algo 💙';
+  } else if(numero >= 70 && numero <= 180){
+    cajita.style.background = '#99ff99';
+    cajita.innerText = '¡Muy bien! ' + numero + ' - En rango ✅';
+  } else if(numero > 180 && numero <= 250){
+    cajita.style.background = '#ffff99';
+    cajita.innerText = '¡Alta! ' + numero + ' - Cuidado ⚠️';
+  } else {
+    cajita.style.background = '#ff6666';
+    cajita.innerText = '¡Muy alta! ' + numero + ' - Habla con tu doctor 🚨';
+  }
   document.getElementById('historialGlucosa').innerHTML = lista.join("<br>");
 }
 
 function borrarGlucosa(){
-  function borrarGlucosa(){
   localStorage.removeItem('glucosaAlba');
   document.getElementById('historialGlucosa').innerHTML = 'Sin registros todavía';
   document.getElementById('msgGlucosa').innerText = '';
-  alert('¡Listo! A empezar de cero 💙');
-}
-  document.getElementById('historialGlucosa').innerHTML = 'Sin registros todavía';
-  document.getElementById('msgGlucosa').innerText = '';
+  document.getElementById('cajitaGlucosa').innerText = 'Aquí saldrá tu color 💙';
+  document.getElementById('cajitaGlucosa').style.background = '#eee';
   alert('¡Listo! Historial de glucosa borrado 💙');
-}function guardarComida(){
+}}function guardarComida(){
   let tipo=document.getElementById('tipoComida').value;
   let que=document.getElementById('queComi').value;
   if(!que){ alert('Escribe qué comiste, mi capitana 💙'); return; }
