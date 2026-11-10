@@ -372,7 +372,6 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
 <textarea id="textoSuger" placeholder="Escribe aquí tu sugerencia o tu experiencia..."></textarea>
 <br><button class="morado" onclick="enviarSugerenciaCorreo()">📧 ENVIAR POR CORREO</button>
 <p id="msgSuger" style="color:green;font-size:12px"></p>
-<p style="font-size:11px;color:#888"></p>
 </div>
 
 <div class="card"><p style="font-size:11px;color:#888">WAKEUP DIABETES 💙 No sustituye a tu doctor. Si te sientes mal, llama a emergencia.</p></div>
@@ -391,7 +390,9 @@ function enviarSugerenciaCorreo(){
   window.open(link, "_blank");
   document.getElementById("msgSuger").innerText = "¡Gracias! Se abrió tu correo para enviar 💙";
 }
-    
+</script>
+</body>
+</html>    
     function actualizarSaludo(){ 
   let n = localStorage.getItem('miNombre') || ''; 
   // Si es afiliado con nombre, sale su nombre. Si no tiene nombre, sale solo Bienvenid@
