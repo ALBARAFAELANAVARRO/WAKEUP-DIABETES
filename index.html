@@ -387,10 +387,10 @@ function enviarSugerenciaCorreo(){
   }
   var asunto = "Sugerencia WAKEUP DIABETES de " + nombre;
   var cuerpo = "Nombre: " + nombre + "\n\nSugerencia: " + texto;
-  window.location.href = "mailto:navarroalba66@gmail.com?subject=" + encodeURIComponent(asunto) + "&body=" + encodeURIComponent(cuerpo);
+  var link = "mailto:navarroalba66@gmail.com?subject=" + encodeURIComponent(asunto) + "&body=" + encodeURIComponent(cuerpo);
+  window.open(link, "_blank");
   document.getElementById("msgSuger").innerText = "¡Gracias! Se abrió tu correo para enviar 💙";
 }
-
     
     function actualizarSaludo(){ 
   let n = localStorage.getItem('miNombre') || ''; 
