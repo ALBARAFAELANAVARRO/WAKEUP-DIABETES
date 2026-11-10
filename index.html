@@ -131,15 +131,16 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 <button class="verde" onclick="guardarMedicamento()">Guardar medicamentos</button>
 <br><button onclick="borrarHistorialMed()" style="background:#ff6b6b; color:white; margin-top:8px;">🗑️ Borrar Todo el Historial</button>
 <div id="historialMed" class="historial">Sin medicamentos todavía</div>
-</div></div>  <h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
+<div class="card">
+  <h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
   <p style="font-size:13px; color:#555;">Respira conmigo, despacito, <span class="nombreUser">mi capitana</span> 💜</p>
   <p id="textoRespira" style="font-size:16px; font-weight:bold;">Pulsa COMENZAR para respirar conmigo 💙</p>
 
   <div id="circuloRespira" style="width:120px; height:120px; background:#A569BD; border-radius:50%; margin:15px auto; display:flex; align-items:center; justify-content:center; color:white; font-size:30px; transition: all 4s ease;">😊</div>
 
   <button id="btnRespira" onclick="iniciarRespira()" style="background:#8E44AD; color:white; padding:12px 25px; border-radius:20px; border:none; font-weight:bold; font-size:16px;">▶️ COMENZAR</button>
-  <button id="btnPararRespira" style="background:#888; color:white; padding:12px 20px; border-radius:20px; border:none;">⏹️ Parar</button>
-<button onclick="tocarFanfarria()">🎺 PROBAR FANFARRIA</button>
+  <button id="btnPararRespira" onclick="pararRespira()" style="background:#888; color:white; padding:12px 20px; border-radius:20px; border:none;">⏹️ Parar</button>
+  <button onclick="tocarFanfarria()">🎺 PROBAR FANFARRIA</button>
     
   <p style="font-size:12px; color:#777; margin-top:10px;">Inhala 4 segundos • Exhala 4 segundos<br>Tu cuerpo se calma, tu mente descansa</p>
 </div>
@@ -214,13 +215,8 @@ function pararRespira() {
   circulo.style.width = '120px';
   circulo.style.height = '120px';
 }
-
-window.pararRespira = pararRespira;
-window.iniciarRespira = iniciarRespira;
-document.getElementById('btnPararRespira').addEventListener('click', pararRespira);
 </script>
-<div style="text-align:center; background:#D6EAF8; padding:15px; border-radius:15px; border:2px solid #AED6F1;">
-  <h2>💧 MI AGUA</h2>
+<div style="text-align:center; background:#D6EAF8; padding:15px; border-radius:15px; border:2px solid #AED6F1;">  <h2>💧 MI AGUA</h2>
   <p id="mensajeAgua" style="font-size:14px; color:#1A5276;">Pulsa COMENZAR para empezar tu día de agua 💙</p>
   
   <button id="btnIniciar" onclick="iniciarAgua()" style="background:#2196F3; color:white; padding:12px 25px; border-radius:20px; border:none; font-size:16px; font-weight:bold;">▶️ COMENZAR</button>
