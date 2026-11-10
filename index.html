@@ -797,37 +797,5 @@ function cerrarVentana(){
   document.getElementById('ventanaRosada').style.display = 'none';
 }
 </script>
-<!-- BLOQUE GAMMA - PEGAR ANTES DE </body> -->
-<div class="card" style="text-align:center">
-<h1>🌬️ OXIGENA TUS CÉLULAS CON LA RESPIRACIÓN GAMMA</h1>
-<img src="gamma.jpg" style="width:100%;border-radius:16px;margin:8px 0">
-<p>13 respiraciones • Inhala 4 seg • Exhala 4 seg</p>
-
-<div id="circuloGamma" style="width:170px;height:170px;margin:14px auto;border-radius:50%;background:#1a9ed0;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:bold;transition:transform 4s">Listo</div>
-<div id="pasoGamma" style="font-weight:bold;margin:8px 0">Pulsa EMPEZAR</div>
-<div id="contadorGamma">Respiración 0 de 13</div>
-<button onclick="empezarGamma()" style="background:#1a9ed0;color:#fff;border:0;padding:14px 22px;border-radius:30px;font-weight:bold;margin-top:10px">▶️ EMPEZAR GAMMA</button>
-</div>
-
-<script>
-const pasosGamma=["Inhala por la boca • Exhala por la boca","Inhala por la boca • Exhala por la nariz","Inhala por la nariz • Exhala por la nariz","Inhala por la nariz • Exhala por la boca","Inhala por la boca • Exhala por la boca","Inhala por la boca • Exhala por la nariz","Inhala por la nariz • Exhala por la nariz","Inhala por la nariz • Exhala por la boca","Inhala por la boca • Exhala por la boca","Inhala por la boca • Exhala por la nariz","Inhala por la nariz • Exhala por la nariz","Inhala por la nariz • Exhala por la boca","Inhala por la boca • Exhala por la boca"];
-function esperar(ms){return new Promise(r=>setTimeout(r,ms))}
-async function empezarGamma(){
-let c=document.getElementById('circuloGamma');
-let p=document.getElementById('pasoGamma');
-let co=document.getElementById('contadorGamma');
-for(let i=0;i<13;i++){
-co.textContent='Respiración '+(i+1)+' de 13';
-p.textContent=(i+1)+'. INHALA - '+pasosGamma[i].split('•')[0];
-c.textContent='INHALA'; c.style.transform='scale(1.35)';
-await esperar(4000);
-p.textContent=(i+1)+'. EXHALA - '+pasosGamma[i].split('•')[1];
-c.textContent='EXHALA'; c.style.transform='scale(0.85)';
-await esperar(4000);
-}
-c.textContent='¡Listo! ✨'; p.textContent='¡Felicidades! Oxigenaste tus células.';
-}
-</script>
-<!-- FIN GAMMA -->
 </body>
 </html>
