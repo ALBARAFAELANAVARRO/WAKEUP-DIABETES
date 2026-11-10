@@ -378,7 +378,21 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
 <div class="card"><p style="font-size:11px;color:#888">WAKEUP DIABETES 💙 No sustituye a tu doctor. Si te sientes mal, llama a emergencia.</p></div>
 
 <script>
-function actualizarSaludo(){ 
+function enviarSugerenciaCorreo(){
+  var nombre = document.getElementById("nombreSuger").value;
+  var texto = document.getElementById("textoSuger").value;
+  if(!texto){
+    document.getElementById("msgSuger").innerText = "Escribe tu sugerencia primero 💙";
+    return;
+  }
+  var asunto = "Sugerencia WAKEUP DIABETES de " + nombre;
+  var cuerpo = "Nombre: " + nombre + "\n\nSugerencia: " + texto;
+  window.location.href = "mailto:navarroalba66@gmail.com?subject=" + encodeURIComponent(asunto) + "&body=" + encodeURIComponent(cuerpo);
+  document.getElementById("msgSuger").innerText = "¡Gracias! Se abrió tu correo para enviar 💙";
+}
+
+    
+    function actualizarSaludo(){ 
   let n = localStorage.getItem('miNombre') || ''; 
   // Si es afiliado con nombre, sale su nombre. Si no tiene nombre, sale solo Bienvenid@
   document.getElementById('saludo').innerHTML = n ? 'Bienvenid@, ' + n + ' <span style="font-size:35px;">💙</span>' : 'Bienvenid@ <span style="font-size:35px;">💙</span>'; 
