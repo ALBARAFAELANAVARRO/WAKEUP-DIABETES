@@ -123,17 +123,30 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
   </div>
 <div class="card">
 <h2>💊 MIS MEDICAMENTOS</h2>
-<div id="listaMedsInputs">
-  <div class="filaMed">
-    <input class="nombreMed" id="medicamento" placeholder="Ej: Metformina">
-    <select class="dosisMed" id="dosisTomada"><option>Tomada ✅</option><option>No tomada ❌</option></select>
-  </div>
-</div>
-<br><button class="verde" onclick="guardarMedicamento()">Guardar medicamentos</button>
-<br><button onclick="borrarHistorialMed()" style="background:#ff6b6b; color:white; margin-top:8px;">🗑️ Borrar Historial</button>
+<p>Escoge tu medicamento con la flechita.</p>
+
+<select id="medicamento" style="width:100%; padding:12px; border-radius:12px; font-size:16px;">
+  <option value="">👇 Escoge tu medicamento</option>
+  <option>Metformina</option>
+  <option>Glucophage</option>
+  <option>Gliclazida</option>
+  <option>Glimepirida</option>
+  <option>Insulina</option>
+  <option>Otros medicamentos</option>
+</select>
+
+<br><br>
+
+<select id="dosisTomada" style="width:100%; padding:12px; border-radius:12px; font-size:16px;">
+  <option>Tomada ✅</option>
+  <option>No tomada ❌</option>
+</select>
+
+<br><br>
+<button class="verde" onclick="guardarMedicamento()">Guardar medicamentos</button>
+<br><button onclick="borrarHistorialMed()" style="background:#ff6b6b; color:white; margin-top:8px;">🗑️ Borrar Todo el Historial</button>
 <div id="historialMed" class="historial">Sin medicamentos todavía</div>
-</div>    <div class="card" style="background:#E8DAEF;">
-  <h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
+</div>  <h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
   <p style="font-size:13px; color:#555;">Respira conmigo, despacito, <span class="nombreUser">mi capitana</span> 💜</p>
   <p id="textoRespira" style="font-size:16px; font-weight:bold;">Pulsa COMENZAR para respirar conmigo 💙</p>
 
