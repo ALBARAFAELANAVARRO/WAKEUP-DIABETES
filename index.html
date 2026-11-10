@@ -368,32 +368,14 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
 <div class="card" style="border:2px solid #6a4c93">
 <h2>💌 CUÉNTAME TU EXPERIENCIA</h2>
 <p>¿Te ayudó la app? ¿Qué le agregarías?</p>
-<input id="nombreSuger" placeholder="Tu nombre">
-<textarea id="textoSuger" placeholder="Escribe aquí tu sugerencia o tu experiencia..."></textarea>
-<br><button class="morado" onclick="enviarSugerenciaCorreo()">📧 ENVIAR POR CORREO</button>
-<p id="msgSuger" style="color:green;font-size:12px"></p>
-</div>
-
-<div class="card"><p style="font-size:11px;color:#888">WAKEUP DIABETES 💙 No sustituye a tu doctor. Si te sientes mal, llama a emergencia.</p></div>
-
-<script>
-function enviarSugerenciaCorreo(){
-  var nombre = document.getElementById("nombreSuger").value;
-  var texto = document.getElementById("textoSuger").value;
-  if(!texto){
-    document.getElementById("msgSuger").innerText = "Escribe tu sugerencia primero 💙";
-    return;
-  }
-  var asunto = "Sugerencia WAKEUP DIABETES de " + nombre;
-  var cuerpo = "Nombre: " + nombre + "\n\nSugerencia: " + texto;
-  var link = "mailto:navarroalba66@gmail.com?subject=" + encodeURIComponent(asunto) + "&body=" + encodeURIComponent(cuerpo);
-  window.open(link, "_blank");
-  document.getElementById("msgSuger").innerText = "¡Gracias! Se abrió tu correo para enviar 💙";
-}
-</script>
-</body>
-</html>    
-    function actualizarSaludo(){ 
+<form action="mailto:navarroalba66@gmail.com" method="post" enctype="text/plain">
+<input name="Nombre" placeholder="Tu nombre" style="width:100%;padding:10px;margin-bottom:8px;border-radius:8px;border:1px solid #ccc">
+<textarea name="Sugerencia" placeholder="Escribe aquí tu sugerencia o tu experiencia..." style="width:100%;height:80px;padding:10px;border-radius:8px;border:1px solid #ccc"></textarea>
+<br><br>
+<button type="submit" class="morado" style="padding:12px 20px;border:none;border-radius:10px;font-weight:bold;cursor:pointer">📧 ENVIAR POR CORREO</button>
+</form>
+<p style="font-size:11px;color:#888">Se abrirá tu correo con tu mensaje listo para enviar 💙</p>
+</div>    function actualizarSaludo(){ 
   let n = localStorage.getItem('miNombre') || ''; 
   // Si es afiliado con nombre, sale su nombre. Si no tiene nombre, sale solo Bienvenid@
   document.getElementById('saludo').innerHTML = n ? 'Bienvenid@, ' + n + ' <span style="font-size:35px;">💙</span>' : 'Bienvenid@ <span style="font-size:35px;">💙</span>'; 
