@@ -373,17 +373,20 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
 <br><button class="morado" onclick="enviarSugerenciaCorreo()">📧 ENVIAR POR CORREO</button>
 <p id="msgSuger" style="color:green;font-size:12px"></p>
 </div>
-</div>    function actualizarSaludo(){ 
-  let n = localStorage.getItem('miNombre') || ''; 
-  // Si es afiliado con nombre, sale su nombre. Si no tiene nombre, sale solo Bienvenid@
-  document.getElementById('saludo').innerHTML = n ? 'Bienvenid@, ' + n + ' <span style="font-size:35px;">💙</span>' : 'Bienvenid@ <span style="font-size:35px;">💙</span>'; 
+</div>
+
+<script>
+function actualizarSaludo(){
+  let n = localStorage.getItem('miNombre') || '';
+  document.getElementById('saludo').innerHTML = n ? 'Bienvenid@, ' + n + ' <span style="font-size:35px;">💙</span>' : 'Bienvenid@ <span style="font-size:35px;">💙</span>';
   document.querySelectorAll('.nombreUser').forEach(el => el.textContent = n);
-  document.getElementById('nombre').value = n; 
-  document.getElementById('emergencia').value = localStorage.getItem('miEmergencia') || ''; 
+  let campoNombre = document.getElementById('nombre');
+  if(campoNombre) campoNombre.value = n;
+  let campoEmerg = document.getElementById('emergencia');
+  if(campoEmerg) campoEmerg.value = localStorage.getItem('miEmergencia') || '';
   cambiarPais();
 }
 actualizarSaludo();
-
 function tocarFanfarria(){
   try{
     var ctx = new (window.AudioContext || window.webkitAudioContext)();
