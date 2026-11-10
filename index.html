@@ -452,7 +452,7 @@ function actualizarSaludo(){
 }
 actualizarSaludo();
 function tocarFanfarria(){
-  alert("¡Me tocaste! Voy a sonar");
+  mostrarVentanaRosada();
   try{
     var ctx = new (window.AudioContext || window.webkitAudioContext)();
     ctx.resume();
