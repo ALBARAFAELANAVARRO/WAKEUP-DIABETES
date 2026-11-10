@@ -562,15 +562,7 @@ let elMantra = document.getElementById('mantra');
 if(elMantra) elMantra.innerText = '"' + mantraHoy + '"';
 let coloresMantra = ['#4facfe','#43e97b','#a18cd1','#fbc2eb','#ff9a9e','#f6d365','#84fab0'];
 if(elMantra) elMantra.style.color = coloresMantra[diaHoy % coloresMantra.length];
-  let nom=document.getElementById('nombreSuger').value||'Anónimo';
-  let txt=document.getElementById('textoSuger').value;
-  if(!txt) return alert('Escribe tu sugerencia primero 💙');
-  let correo='navarroalba66@gmail.com';
-  let asunto='Sugerencia WAKEUP DIABETES de '+nom;
-  let cuerpo='Hola Alba, soy '+nom+' - Mi experiencia: '+txt;
-  window.location.href='mailto:'+correo+'?subject='+encodeURIComponent(asunto)+'&body='+encodeURIComponent(cuerpo);
-  document.getElementById('msgSuger').innerText='¡Gracias '+nom+'! Se abrió tu correo para enviar 💙';
-let mS=document.getElementById('msgSuger'); if(mS) mS.innerText='¡Gracias '+nom+'! Se abrió tu correo';}</script>
+  </script>
   <script>
 respiActivo = false;
 
