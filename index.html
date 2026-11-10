@@ -91,7 +91,22 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 <div id="cajitaGlucosa" style="padding:10px;border-radius:10px;text-align:center;font-weight:bold;margin-top:8px;background:#eee;">RANGO DE GLUCOSA</div>    <div id="historialGlucosa" class="historial">Sin registros todavía</div>
 <button class="medicamento" onclick="borrarGlucosa()">Borrar historial</button>
 </div>
+<div class="card">
+  <h2>💊 MIS MEDICAMENTOS</h2>
+  <p>¿Cuáles de estos medicamentos tomas?<br>Selecciona uno o varios.</p>
 
+  <button class="med" onclick="elegir(this)">Metformina</button><br><br>
+  <button class="med" onclick="elegir(this)">Glucophage</button><br><br>
+  <button class="med" onclick="elegir(this)">Gliclazida</button><br><br>
+  <button class="med" onclick="elegir(this)">Glimepirida</button><br><br>
+  <button class="med" onclick="elegir(this)">Insulina</button><br><br>
+  <button class="med" onclick="elegir(this)">Otros medicamentos</button><br><br>
+  <button class="med" onclick="elegir(this)">No tomo nada en este momento</button><br><br>
+
+  <button onclick="guardarMeds()">Continuar</button>
+  <p id="resultadoMeds"></p>
+</div>
+    
 <div class="card">
 <h2>🍽️ MIS COMIDAS</h2>
 <div id="listaComidasInputs">
