@@ -478,7 +478,7 @@ function enviarSugerenciaCorreo(){
   let mensaje = 'Hola Alba, soy ' + n + '. Te quiero contar mi experiencia: ' + t;
   let linkWhats = 'https://wa.me/18298684410?text=' + encodeURIComponent(mensaje);
   window.open(linkWhats, '_blank');
-  document.getElementById('msgSuger').innerText = '¡Gracias! Se abrió tu WhatsApp 💙';}
+  document.getElementById('msgSuger').innerText = '¡Gracias! Se abrió tu WhatsApp 💙';
 function pintarGlucosa(){ document.getElementById('historialGlucosa').innerHTML=localStorage.getItem('histGlucosa')||'Sin registros todavía'; } pintarGlucosa();
 function guardarGlucosa(){ let v=document.getElementById('glucosa').value; let m=document.getElementById('momentoGlucosa').value; if(!v) return alert('Escribe tu glucosa'); let hoy=new Date().toLocaleString(); let color=v<70?'🔴 MUY BAJA':v<=180?'🟢 Bien':'🟡 Alta'; document.getElementById('msgGlucosa').innerText=v+' - '+m+' '+color; let hist=localStorage.getItem('histGlucosa')||''; hist='• '+hoy+' - <b>'+v+'</b> ('+m+') '+color+'<br>'+hist; localStorage.setItem('histGlucosa',hist); pintarGlucosa(); document.getElementById('glucosa').value=''; }
 function borrarGlucosa(){ if(confirm('¿Borrar historial?')){ localStorage.removeItem('histGlucosa'); pintarGlucosa(); } }
