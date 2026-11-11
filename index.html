@@ -410,8 +410,8 @@ function actualizarSaludo(){
 }
 actualizarSaludo();
 function tocarFanfarria(){
-  mostrarVentanaRosada();
   try{
+    mostrarVentanaRosada();
     var ctx = new (window.AudioContext || window.webkitAudioContext)();
     ctx.resume();
     var notas = [523, 659, 784, 1046];
