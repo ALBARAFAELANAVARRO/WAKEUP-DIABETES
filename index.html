@@ -703,32 +703,72 @@ function borrarComidas(){
   if(h) h.innerText = 'Sin comidas todavía';
   let q = document.querySelector('.queComi');
   if(q) q.value = '';
-}      function guardarMedicamento(){
+<script>
+function mostrarCajaInsulina() {
+  var med = document.getElementById('medicamento').value;
+  var caja = document.getElementById('cajaInsulina');
+  if (caja) {
+    if (med === "Insulina") {
+      caja.style.display = "block";
+    } else {
+      caja.style.display = "none";
+    }
+  }
+}
+
+function guardarMedicamento(){
   let input = document.getElementById('medicamento');
   let med = input.value.trim();
-let dosisEl = document.getElementById('dosisTomada');
-let dosis = dosisEl ? dosisEl.value : "";
+  let dosisEl = document.getElementById('dosisTomada');
+  let dosis = dosisEl ? dosisEl.value : "";
+  let cantidadEl = document.getElementById('cantidadInsulina');
+  let cantidad = cantidadEl ? cantidadEl.value.trim() : "";
+
   if(!med){
     input.style.border = "2px solid red";
-    input.placeholder = "Escribe tu medicamento aquí, genio querido";
     input.focus();
     return;
+  }
+  input.style.border = "";
+
+  // SI ES INSULINA, PEDIR UNIDADES
+  let textoMed = med;
+  if(med === "Insulina"){
+    if(!cantidad){
+      cantidadEl.style.border = "2px solid red";
+      cantidadEl.focus();
+      alert("Mi capitana, escribe cuántas unidades te pusiste 💉");
+      return;
+    }
+    cantidadEl.style.border = "";
+    textoMed = "Insulina - " + cantidad + " unidades";
   }
 
   let lista = JSON.parse(localStorage.getItem('misMeds') || "[]");
   let hora = new Date().toLocaleString();
-  lista.unshift(hora + ' - ' + med + ' (' + dosis + ')');
+  lista.unshift(hora + ' - ' + textoMed + ' (' + dosis + ')');
   localStorage.setItem('misMeds', JSON.stringify(lista));
   
   input.style.border = "";
+  if(cantidadEl) cantidadEl.value = "";
+  let caja = document.getElementById('cajaInsulina');
+  if(caja) caja.style.display = "none";
+  input.value = "";
   mostrarMeds();
-}function mostrarMeds(){
+}
+
+function mostrarMeds(){
   let lista = JSON.parse(localStorage.getItem('misMeds') || "[]");
   let donde = document.getElementById('historialMed');
   if(donde){
-    donde.innerHTML = lista.join("<br>");
+    if(lista.length === 0){
+      donde.innerHTML = "Sin medicamentos todavía";
+    } else {
+      donde.innerHTML = lista.join("<br>");
+    }
   }
 }
+
 function borrarHistorialMed(){
   localStorage.removeItem('misMeds');
   localStorage.removeItem('meds');
@@ -737,8 +777,12 @@ function borrarHistorialMed(){
   localStorage.removeItem('misMedicamentos');
   document.getElementById('historialMed').innerHTML = "Sin medicamentos todavía";
   document.getElementById('medicamento').value = "";
+  let caja = document.getElementById('cajaInsulina');
+  if(caja) caja.style.display = "none";
 }
-      mostrarComidas();
+
+mostrarMeds();
+</script>      mostrarComidas();
 mostrarMeds();
   </script>
 <div id="ventanaRosada" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:9999;">
