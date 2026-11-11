@@ -468,6 +468,14 @@ function cambiarPais(){
   boton.href='tel:'+numero;
   boton.innerText='🚨 EMERGENCIA '+numero;
 }
+function guardarEmergencia(){
+  var nombre = document.getElementById('nombreFamiliar').value;
+  var numero = document.getElementById('emergencia').value;
+  localStorage.setItem('nombreFamiliar', nombre);
+  localStorage.setItem('emergencia', numero);
+  document.getElementById('msgDatos2').textContent = 'Guardado: ' + nombre + ' - ' + numero;
+}
+
 function enviarSugerenciaCorreo(){
   let n = document.getElementById('nombreSuger').value;
   let t = document.getElementById('textoSuger').value;
