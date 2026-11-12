@@ -107,7 +107,6 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 </div>
 
 <div class="card">
-<div class="card">
 <h2>💊 MIS MEDICAMENTOS</h2>
 <p>Escoge tu medicamento con la flechita.</p>
 
@@ -118,6 +117,14 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
   <option>Gliclazida</option>
   <option>Glimepirida</option>
   <option>Insulina</option>
+  <option>Insulina Rápida</option>
+  <option>Insulina NPH</option>
+  <option>Insulina Glargina</option>
+  <option>Losartán</option>
+  <option>Enalapril</option>
+  <option>Amlodipino</option>
+  <option>Atorvastatina</option>
+  <option>Omeprazol</option>
   <option>Otros medicamentos</option>
 </select>
 
@@ -130,7 +137,7 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
   <p style="font-size:13px; color:#555; margin:8px 0 0 0;">Escribe la cantidad aplicada, mi capitana.</p>
 </div>
 
-<!-- CAJITA NUEVA PARA OTROS MEDICAMENTOS -->
+<!-- CAJITA PARA OTROS MEDICAMENTOS -->
 <div id="cajaOtros" style="display:none; background:#FFFBEA; padding:12px; border-radius:12px; border:2px solid #FFD700; margin-top:10px;">
   <p style="margin:0 0 8px 0; font-weight:bold;">✍️ ¿Cuál otro medicamento, mi capitana?</p>
   <input id="otroMedicamento" type="text" placeholder="Ej: Losartan, Omeprazol, Atorvastatina..." style="width:100%; padding:12px; border-radius:12px; font-size:16px; border:1px solid #ccc;">
@@ -156,8 +163,10 @@ function mostrarCajas() {
   var cajaIns = document.getElementById("cajaInsulina");
   var cajaOtros = document.getElementById("cajaOtros");
 
-  // Mostrar solo la que toca
-  if (med === "Insulina") {
+  // LOGICA BUENA: Cualquier Insulina pide unidades
+  var esInsulina = med.includes("Insulina");
+
+  if (esInsulina) {
     cajaIns.style.display = "block";
     cajaOtros.style.display = "none";
   } else if (med === "Otros medicamentos") {
@@ -172,14 +181,13 @@ function mostrarCajas() {
 function guardarMedicamento() {
   var med = document.getElementById("medicamento").value;
   var dosis = document.getElementById("dosisTomada").value;
-  var historial = document.getElementById("historialMed");
 
   if (med === "") {
     alert("Escoge primero tu medicamento, mi capitana");
     return;
   }
 
-  // Si es Otros, usar lo que escribió en la cajita
+  // Si es Otros, usar lo que escribió
   if (med === "Otros medicamentos") {
     var otro = document.getElementById("otroMedicamento").value.trim();
     if (otro === "") {
@@ -189,21 +197,25 @@ function guardarMedicamento() {
     med = otro;
   }
 
-  // Si es Insulina, agregar las unidades
-  if (med === "Insulina") {
+  // Si es CUALQUIER Insulina, agregar las unidades
+  if (med.includes("Insulina")) {
     var cant = document.getElementById("cantidadInsulina").value;
-    if (cant !== "") {
-      med = "Insulina - " + cant + " unidades";
+    if (cant === "") {
+      alert("Escribe cuántas unidades, mi capitana");
+      return;
     }
+    med = med + " - " + cant + " unidades";
   }
 
   var fecha = new Date().toLocaleString();
   var nuevo = fecha + " - " + med + " - " + dosis;
 
-  if (historial.innerHTML === "Sin medicamentos todavía") {
-    historial.innerHTML = "";
-  }
-  historial.innerHTML = nuevo + "<br>" + historial.innerHTML;
+  // GUARDAR DE VERDAD EN misMeds - PARA QUE EL REPORTE LO VEA
+  var lista = JSON.parse(localStorage.getItem('misMeds') || '[]');
+  lista.unshift(nuevo);
+  localStorage.setItem('misMeds', JSON.stringify(lista));
+
+  mostrarMeds();
 
   // Limpiar
   document.getElementById("medicamento").value = "";
@@ -213,10 +225,25 @@ function guardarMedicamento() {
   document.getElementById("cajaOtros").style.display = "none";
 }
 
-function borrarHistorialMed() {
-  document.getElementById("historialMed").innerHTML = "Sin medicamentos todavía";
+function mostrarMeds() {
+  var lista = JSON.parse(localStorage.getItem('misMeds') || '[]');
+  var historial = document.getElementById("historialMed");
+  if (!historial) return;
+  if (lista.length === 0) {
+    historial.innerHTML = "Sin medicamentos todavía";
+  } else {
+    historial.innerHTML = lista.join("<br>");
+  }
 }
-</script></script><div class="card">
+
+function borrarHistorialMed() {
+  localStorage.removeItem('misMeds');
+  mostrarMeds();
+}
+
+// Al cargar, mostrar lo guardado
+mostrarMeds();
+</script></script></script><div class="card">
   <h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
   <p style="font-size:13px; color:#555;">Respira conmigo, despacito, <span class="nombreUser">mi capitana</span> 💜</p>
   <p id="textoRespira" style="font-size:16px; font-weight:bold;">Pulsa COMENZAR para respirar conmigo 💙</p>
