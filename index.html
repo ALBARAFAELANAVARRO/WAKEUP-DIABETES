@@ -906,6 +906,17 @@ function mostrarVentanaRosada(){
 function cerrarVentana(){
   document.getElementById('ventanaRosada').style.display = 'none';
 }
+<script>
+function imprimirReporte(){
+  var contenido = document.getElementById('reporte').innerHTML;
+  var ventana = window.open('', '', 'width=800,height=600');
+  ventana.document.write('<html><head><title>REPORTE DE SALUD</title></head><body>');
+  ventana.document.write(contenido);
+  ventana.document.write('</body></html>');
+  ventana.document.close();
+  ventana.print();
+}
+</script>
 </script>
 </body>
 </html>
