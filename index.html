@@ -455,6 +455,34 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
 <div class="remedio"><b>10. Manzana, Banana, Fresa y Avena</b><br>Aportan vitamina C y mucha energía.</div>
 <div class="remedio"><b>11. Zanahoria, Avena y Naranja</b><br>Para apoyar la vista y dar energía.</div>
 <div class="remedio"><b>12. Kiwi, Pepino y Limón</b><br>Ayudan a tu regularidad intestinal.</div>
+<!-- REPORTE PARA EL MEDICO - DESPUES DE LOS JUGOS -->
+<div style="background:white; padding:20px; border-radius:15px; margin:20px; border:2px solid #0078b4;">
+  <h2>💊 REPORTE PARA EL MEDICO</h2>
+  <p>📅 ¿DE QUE FECHA A QUE FECHA?</p>
+
+  <p><b>ELIGE, MI CAPITANA:</b></p>
+  <button onclick="mostrarReporte('SEMANAL')" style="background:#00b45a; color:white; padding:12px; border-radius:15px; border:none; font-weight:bold;">📅 SEMANAL - 7 días</button>
+  <button onclick="mostrarReporte('QUINCENAL')" style="background:#0078b4; color:white; padding:12px; border-radius:15px; border:none; font-weight:bold;">📅 QUINCENAL - 15 días</button>
+  <button onclick="mostrarReporte('MENSUAL')" style="background:#6a4c93; color:white; padding:12px; border-radius:15px; border:none; font-weight:bold;">📅 MENSUAL - 30 días</button>
+
+  <div id="reporte" style="margin-top:20px; display:none;">
+    <h3>REPORTE - Mi Capitana</h3>
+    <p>💊 <b>TU MEDICAMENTO:</b> Aqui sale el medicamento que tu registraste</p>
+    <p>💊 Insulina: Aqui sale tu dosis</p>
+    <p>🩸 Glucosa: Aqui sale tu glucosa</p>
+    <p>🍽️ Comida: Aqui sale tu comida</p>
+
+    <button onclick="window.print()" style="background:#00b45a; color:white; padding:12px; border-radius:15px; border:none; font-weight:bold;">🖨️ IMPRIMIR REPORTE</button>
+    <button onclick="document.getElementById('reporte').style.display='none'" style="background:#ff8c00; color:white; padding:12px; border-radius:15px; border:none; font-weight:bold;">🧹 LIMPIAR PANTALLA</button>
+    <p>✅ LIMPIAR solo limpia la pantalla. NADA se borra. TODO se guarda.</p>
+  </div>
+</div>
+
+<script>
+function mostrarReporte(tipo){
+  document.getElementById('reporte').style.display='block';
+}
+</script>
 <div class="card" style="border:2px solid #e63946">
 <div class="card" style="border:2px solid #e63946">
 <h2>🔗 LINK DE SALUD</h2>
