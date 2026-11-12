@@ -510,7 +510,70 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
 
 <script>
 function mostrarReporte(tipo){
-  document.getElementById('reporte').style.display='block';
+  var reporte = document.getElementById('reporte');
+  reporte.style.display = 'block';
+
+  // Fecha
+  var fechaEl = document.getElementById('reporteFecha');
+  if(fechaEl) fechaEl.innerHTML = "<b>Fecha:</b> " + new Date().toLocaleString() + " | <b>Periodo:</b> " + tipo;
+
+  // Buscamos tus datos REALES
+  function buscarDatos(idsPosibles, palabrasClave){
+    // 1. Busca en la pantalla por ID
+    for(var i=0; i<idsPosibles.length; i++){
+      var el = document.getElementById(idsPosibles[i]);
+      if(el && el.innerHTML.trim() !== ""){
+        return el.innerHTML;
+      }
+    }
+    // 2. Si no está en pantalla, busca en lo guardado en el equipo
+    var texto = "";
+    for(var j=0; j<localStorage.length; j++){
+      var clave = localStorage.key(j);
+      var valor = localStorage.getItem(clave);
+      var claveLow = clave.toLowerCase();
+      var coincide = false;
+      for(var k=0; k<palabrasClave.length; k++){
+        if(claveLow.includes(palabrasClave[k])) coincide = true;
+      }
+      if(coincide){
+        try{
+          var datos = JSON.parse(valor);
+          if(Array.isArray(datos)){
+            datos.forEach(function(item){
+              texto += "<p>• " + JSON.stringify(item).replaceAll('"','').replaceAll('{','').replaceAll('}','').replaceAll(',',' - ') + "</p>";
+            });
+          } else {
+            texto += "<p>• " + valor + "</p>";
+          }
+        }catch(e){
+          texto += "<p>• " + valor + "</p>";
+        }
+      }
+    }
+    return texto;
+  }
+
+  var med = buscarDatos(['listaMedicamentos','historialMedicamentos','listaMedicamento','medicamentos'], ['medic','medica','insulina','pastilla']);
+  var glu = buscarDatos(['listaGlucosa','historialGlucosa','listaAzucar','glucosa'], ['gluc','azucar','glucosa']);
+  var com = buscarDatos(['listaComida','historialComida','listaComidas','comida'], ['comid','comida','alimento']);
+
+  if(!med) med = "<p>Sin medicamentos registrados</p>";
+  if(!glu) glu = "<p>Sin glucosa registrada</p>";
+  if(!com) com = "<p>Sin comida registrada</p>";
+
+  var elMed = document.getElementById('reporteMedicamentos');
+  var elGlu = document.getElementById('reporteGlucosa');
+  var elCom = document.getElementById('reporteComida');
+  if(elMed) elMed.innerHTML = med;
+  if(elGlu) elGlu.innerHTML = glu;
+  if(elCom) elCom.innerHTML = com;
+
+  reporte.scrollIntoView();
+}
+
+function imprimirReporte(){
+  window.print();
 }
 </script>
 <div class="card" style="border:2px solid #e63946">
