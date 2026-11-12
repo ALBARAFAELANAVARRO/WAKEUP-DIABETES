@@ -107,10 +107,11 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 </div>
 
 <div class="card">
+<div class="card">
 <h2>💊 MIS MEDICAMENTOS</h2>
 <p>Escoge tu medicamento con la flechita.</p>
 
-<select id="medicamento" onchange="mostrarCajaInsulina()" style="width:100%; padding:12px; border-radius:12px; font-size:16px;">
+<select id="medicamento" onchange="mostrarCajas()" style="width:100%; padding:12px; border-radius:12px; font-size:16px;">
   <option value="">👇 Escoge tu medicamento</option>
   <option>Metformina</option>
   <option>Glucophage</option>
@@ -129,6 +130,13 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
   <p style="font-size:13px; color:#555; margin:8px 0 0 0;">Escribe la cantidad aplicada, mi capitana.</p>
 </div>
 
+<!-- CAJITA NUEVA PARA OTROS MEDICAMENTOS -->
+<div id="cajaOtros" style="display:none; background:#FFFBEA; padding:12px; border-radius:12px; border:2px solid #FFD700; margin-top:10px;">
+  <p style="margin:0 0 8px 0; font-weight:bold;">✍️ ¿Cuál otro medicamento, mi capitana?</p>
+  <input id="otroMedicamento" type="text" placeholder="Ej: Losartan, Omeprazol, Atorvastatina..." style="width:100%; padding:12px; border-radius:12px; font-size:16px; border:1px solid #ccc;">
+  <p style="font-size:13px; color:#555; margin:8px 0 0 0;">Escríbelo aquí para guardarlo.</p>
+</div>
+
 <br>
 
 <select id="dosisTomada" style="width:100%; padding:12px; border-radius:12px; font-size:16px;">
@@ -143,16 +151,72 @@ label{font-size:12px;font-weight:bold;color:#0077b6;display:block;margin-top:6px
 </div>
 
 <script>
-function mostrarCajaInsulina() {
+function mostrarCajas() {
   var med = document.getElementById("medicamento").value;
-  var caja = document.getElementById("cajaInsulina");
+  var cajaIns = document.getElementById("cajaInsulina");
+  var cajaOtros = document.getElementById("cajaOtros");
+
+  // Mostrar solo la que toca
   if (med === "Insulina") {
-    caja.style.display = "block";
+    cajaIns.style.display = "block";
+    cajaOtros.style.display = "none";
+  } else if (med === "Otros medicamentos") {
+    cajaIns.style.display = "none";
+    cajaOtros.style.display = "block";
   } else {
-    caja.style.display = "none";
+    cajaIns.style.display = "none";
+    cajaOtros.style.display = "none";
   }
 }
-</script><div class="card">
+
+function guardarMedicamento() {
+  var med = document.getElementById("medicamento").value;
+  var dosis = document.getElementById("dosisTomada").value;
+  var historial = document.getElementById("historialMed");
+
+  if (med === "") {
+    alert("Escoge primero tu medicamento, mi capitana");
+    return;
+  }
+
+  // Si es Otros, usar lo que escribió en la cajita
+  if (med === "Otros medicamentos") {
+    var otro = document.getElementById("otroMedicamento").value.trim();
+    if (otro === "") {
+      alert("Escribe cuál otro medicamento, mi capitana");
+      return;
+    }
+    med = otro;
+  }
+
+  // Si es Insulina, agregar las unidades
+  if (med === "Insulina") {
+    var cant = document.getElementById("cantidadInsulina").value;
+    if (cant !== "") {
+      med = "Insulina - " + cant + " unidades";
+    }
+  }
+
+  var fecha = new Date().toLocaleString();
+  var nuevo = fecha + " - " + med + " - " + dosis;
+
+  if (historial.innerHTML === "Sin medicamentos todavía") {
+    historial.innerHTML = "";
+  }
+  historial.innerHTML = nuevo + "<br>" + historial.innerHTML;
+
+  // Limpiar
+  document.getElementById("medicamento").value = "";
+  document.getElementById("cantidadInsulina").value = "";
+  document.getElementById("otroMedicamento").value = "";
+  document.getElementById("cajaInsulina").style.display = "none";
+  document.getElementById("cajaOtros").style.display = "none";
+}
+
+function borrarHistorialMed() {
+  document.getElementById("historialMed").innerHTML = "Sin medicamentos todavía";
+}
+</script></script><div class="card">
   <h2>🌬️ RESPIRACIÓN CONSCIENTE</h2>
   <p style="font-size:13px; color:#555;">Respira conmigo, despacito, <span class="nombreUser">mi capitana</span> 💜</p>
   <p id="textoRespira" style="font-size:16px; font-weight:bold;">Pulsa COMENZAR para respirar conmigo 💙</p>
