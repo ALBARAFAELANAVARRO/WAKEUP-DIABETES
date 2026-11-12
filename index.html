@@ -934,7 +934,24 @@ function cerrarVentana(){
   document.getElementById('ventanaRosada').style.display = 'none';
 }
 function imprimirReporte(){
-  var contenido = document.getElementById('reporte').innerHTML;
+  // 1. Buscamos tus datos reales que ya están guardados en la página
+  var fecha = new Date().toLocaleString();
+  
+  // 2. Agarramos lo que ya se ve en tu pantalla
+  var reporteDiv = document.getElementById('reporte');
+  
+  // 3. Si la cajita reporte está vacía, la llenamos con todo lo de la página
+  var contenido = "";
+  contenido += "<h1>WAKE UP DIABETES - REPORTE DE SALUD</h1>";
+  contenido += "<p>Fecha: " + fecha + "</p><hr>";
+  contenido += "<h2>MIS MEDICAMENTOS, GLUCOSA Y COMIDAS</h2>";
+  contenido += reporteDiv ? reporteDiv.innerHTML : "";
+  
+  // Si todavía sale vacío, copiamos toda la página principal
+  if(contenido.includes("Aquí sale") || contenido.length < 200){
+    contenido += document.body.innerHTML;
+  }
+
   var ventana = window.open('', '', 'width=800,height=600');
   ventana.document.write('<html><head><title>REPORTE DE SALUD</title></head><body>');
   ventana.document.write(contenido);
