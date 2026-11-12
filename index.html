@@ -493,16 +493,19 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
   <button onclick="mostrarReporte('MENSUAL')" style="background:#6a4c93; color:white; padding:12px; border-radius:15px; border:none; font-weight:bold;">📅 MENSUAL - 30 días</button>
 
   <div id="reporte" style="margin-top:20px; display:none;">
-<h3>REPORTE DE SALUD</h3>  
-    <p>💊 <b>TU MEDICAMENTO:</b> Aqui sale el medicamento que tu registraste</p>
-    <p>💊 Insulina: Aqui sale tu dosis</p>
-    <p>🩸 Glucosa: Aqui sale tu glucosa</p>
-    <p>🍽️ Comida: Aqui sale tu comida</p>
-
-    <button onclick="imprimirReporte()" style="background:#00b45a; color:white; padding:12px; border-radius:15px; border:none; font-weight:bold;">🖨️ IMPRIMIR REPORTE</button>
-    <button onclick="document.getElementById('reporte').style.display='none'" style="background:#ff8c00; color:white; padding:12px; border-radius:15px; border:none; font-weight:bold;">🧹 LIMPIAR PANTALLA</button>
-    <p>✅ LIMPIAR solo limpia la pantalla. NADA se borra. TODO se guarda.</p>
-  </div>
+<h3>REPORTE DE SALUD - WAKE UP DIABETES</h3>
+<p id="reporteFecha"></p>
+<h4>💊 TUS MEDICAMENTOS</h4>
+<div id="reporteMedicamentos"></div>
+<h4>🩸 TU GLUCOSA</h4>
+<div id="reporteGlucosa"></div>
+<h4>🍽️ TU COMIDA</h4>
+<div id="reporteComida"></div>
+<br>
+<button onclick="imprimirReporte()" style="background:#00b45a; color:white; padding:10px;">🖨️ IMPRIMIR REPORTE</button>
+<button onclick="document.getElementById('reporte').style.display='none'" style="background:gray; color:white; padding:10px;">CERRAR</button>
+<p>✅ LIMPIAR solo limpia la pantalla. NADA se borra. TODO se guarda en tu equipo.</p>
+</div>
 </div>
 
 <script>
