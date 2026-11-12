@@ -554,8 +554,7 @@ function mostrarReporte(tipo){
     return texto;
   }
 
-  var med = buscarDatos(['listaMedicamentos','historialMedicamentos','listaMedicamento','medicamentos'], ['medic','medica','insulina','pastilla']);
-  var glu = buscarDatos(['listaGlucosa','historialGlucosa','listaAzucar','glucosa'], ['gluc','azucar','glucosa']);
+var med = ""; var listaMed = document.getElementById('listaMedicamentos') || document.getElementById('historialMedicamentos') || document.getElementById('medicamentos'); if(listaMed && listaMed.innerText.trim() !== ""){ med = listaMed.innerHTML; } else { for(var j=0; j<localStorage.length; j++){ var clave = localStorage.key(j); if(clave.toLowerCase().includes('medic') || clave.toLowerCase().includes('pastilla') || clave.toLowerCase().includes('insulina')){ try{ var datos = JSON.parse(localStorage.getItem(clave)); if(Array.isArray(datos)){ datos.forEach(function(item){ if(typeof item === 'object'){ var nombre = item.medicamento || item.nombre || item.pastilla || item.insulina || ""; var dosis = item.dosis || item.cantidad || ""; var hora = item.hora || item.fecha || ""; if(nombre || dosis){ med += "<p>• " + nombre + " - Dosis: " + dosis + " - " + hora + "</p>"; } else { var txt = JSON.stringify(item).replaceAll('"','').replaceAll('{','').replaceAll('}',''); if(txt.trim() !== ":" && txt.trim() !== ""){ med += "<p>• " + txt + "</p>"; } } } else { med += "<p>• " + item + "</p>"; } }); } }catch(e){} } } }  var glu = buscarDatos(['listaGlucosa','historialGlucosa','listaAzucar','glucosa'], ['gluc','azucar','glucosa']);
   var com = buscarDatos(['listaComida','historialComida','listaComidas','comida'], ['comid','comida','alimento']);
 
   if(!med) med = "<p>Sin medicamentos registrados</p>";
