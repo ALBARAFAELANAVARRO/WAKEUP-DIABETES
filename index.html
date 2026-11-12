@@ -934,23 +934,31 @@ function cerrarVentana(){
   document.getElementById('ventanaRosada').style.display = 'none';
 }
 function imprimirReporte(){
-  // 1. Buscamos tus datos reales que ya están guardados en la página
   var fecha = new Date().toLocaleString();
-  
-  // 2. Agarramos lo que ya se ve en tu pantalla
-  var reporteDiv = document.getElementById('reporte');
-  
-  // 3. Si la cajita reporte está vacía, la llenamos con todo lo de la página
   var contenido = "";
   contenido += "<h1>WAKE UP DIABETES - REPORTE DE SALUD</h1>";
   contenido += "<p>Fecha: " + fecha + "</p><hr>";
-  contenido += "<h2>MIS MEDICAMENTOS, GLUCOSA Y COMIDAS</h2>";
-  contenido += reporteDiv ? reporteDiv.innerHTML : "";
+
+  // Buscamos TODOS tus historiales reales en la página
+  // Medicamentos, Glucosa y Comidas
+  var secciones = document.querySelectorAll('[id*="historial"], [id*="lista"], [id*="Historial"], [id*="Lista"]');
   
-  // Si todavía sale vacío, copiamos toda la página principal
-  if(contenido.includes("Aquí sale") || contenido.length < 200){
-    contenido += document.body.innerHTML;
+  if(secciones.length > 0){
+    secciones.forEach(function(sec){
+      contenido += "<h3>" + sec.id + "</h3>";
+      contenido += sec.innerHTML + "<hr>";
+    });
+  } else {
+    // Si no encuentra por ID, agarra todo el texto visible de la página sin el ejemplo
+    contenido += "<h2>MIS DATOS GUARDADOS</h2>";
+    contenido += document.getElementById('reporte').parentElement.innerHTML;
   }
+
+  // Quitamos el texto de ejemplo para que no salga más
+  contenido = contenido.replaceAll("Aquí sale el medicamento que tu registraste", "");
+  contenido = contenido.replaceAll("Aquí sale tu dosis", "");
+  contenido = contenido.replaceAll("Aquí sale tu glucosa", "");
+  contenido = contenido.replaceAll("Aquí sale tu comida", "");
 
   var ventana = window.open('', '', 'width=800,height=600');
   ventana.document.write('<html><head><title>REPORTE DE SALUD</title></head><body>');
@@ -958,7 +966,7 @@ function imprimirReporte(){
   ventana.document.write('</body></html>');
   ventana.document.close();
   ventana.print();
-}
+}}
 </script>
 </body>
 </html>
