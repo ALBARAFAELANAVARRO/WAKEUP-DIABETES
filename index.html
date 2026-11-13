@@ -842,9 +842,8 @@ let elMantra = document.getElementById('mantra');
 if(elMantra) elMantra.innerText = '"' + mantraHoy + '"';
 let coloresMantra = ['#4facfe','#43e97b','#a18cd1','#fbc2eb','#ff9a9e','#f6d365','#84fab0'];
 if(elMantra) elMantra.style.color = coloresMantra[diaHoy % coloresMantra.length];
-  </script>
-  <script>
-respiActivo = false;
+  
+let respiActivo = false;
 
 function sonidoRespira(tipo) {
   try {
