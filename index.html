@@ -949,13 +949,6 @@ function mostrarComidas(){
   h.innerHTML = lista.map(function(c){ return c; }).join('<br>');
 }
 
-function borrarComidas(){
-  localStorage.removeItem('misComidas');
-  let h = document.getElementById('historialComida');
-  if(h) h.innerText = 'Sin comidas todavía';
-  let q = document.querySelector('.queComi');
-  if(q) q.value = '';
-}
 function mostrarCajaInsulina() {
   var med = document.getElementById('medicamento').value;
   var caja = document.getElementById('cajaInsulina');
