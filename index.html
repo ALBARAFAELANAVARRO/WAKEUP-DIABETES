@@ -495,15 +495,28 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
   <div id="reporte" style="margin-top:20px; display:none;">
 <h3>REPORTE DE SALUD - WAKE UP DIABETES</h3>
 <p id="reporteFecha"></p>
+
 <h4>💊 TUS MEDICAMENTOS</h4>
-<div id="reporteMedicamentos"></div>
+<table border="1" width="100%">
+<tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>
+<tbody id="reporteMedicamentos"></tbody>
+</table>
+
 <h4>🩸 TU GLUCOSA</h4>
-<div id="reporteGlucosa"></div>
+<table border="1" width="100%">
+<tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>
+<tbody id="reporteGlucosa"></tbody>
+</table>
+
 <h4>🍽️ TU COMIDA</h4>
-<div id="reporteComida"></div>
+<table border="1" width="100%">
+<tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>
+<tbody id="reporteComida"></tbody>
+</table>
+
 <br>
 <button onclick="imprimirReporte()" style="background:#00b45a; color:white; padding:10px;">🖨️ IMPRIMIR REPORTE</button>
-<button onclick="document.getElementById('reporte').style.display='none'" style="background:gray; color:white; padding:10px;">CERRAR</button>
+<button onclick="document.getElementById('reporte').style.display='none'">CERRAR</button>
 <p>✅ LIMPIAR solo limpia la pantalla. NADA se borra. TODO se guarda en tu equipo.</p>
 </div>
 </div>
