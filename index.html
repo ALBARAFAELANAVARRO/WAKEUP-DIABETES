@@ -745,6 +745,52 @@ function pintarComida(){
       return '• ' + c.fecha + ' - <b>' + c.producto + '</b> (' + c.cantidad + ')';
     }).join("<br>");
   }
+// ===== COMIDA - TODO JUNTO - SIN PINTAR (YA LA TIENES EN LÍNEA 734) =====
+function agregarComidaInput(){
+  let div = document.createElement('div');
+  div.className = 'filaComida';
+  div.innerHTML = '<select class="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select> ' +
+    '<input class="queComida" placeholder="¿Qué comiste? Ej: PAN"> ' +
+    '<input class="cantComida" placeholder="Cantidad Ej: 1 unidad / 1 taza" style="width:160px;"> ' +
+    '<button onclick="this.parentElement.remove()">❌</button>';
+  document.getElementById('listaComidasInputs').appendChild(div);
+}
+
+function guardarComida(){
+  let filas = document.querySelectorAll('.filaComida');
+  if(filas.length === 0) return alert('Agrega una comida primero');
+  let hoy = new Date().toLocaleDateString();
+  let lista = JSON.parse(localStorage.getItem('misComidas') || "[]");
+  if(!Array.isArray(lista)) lista = [];
+  let guardadas = 0;
+  filas.forEach(f => {
+    let tipo = f.querySelector('.tipoComida').value;
+    let que = f.querySelector('.queComida').value.trim();
+    let cant = f.querySelector('.cantComida') ? f.querySelector('.cantComida').value.trim() : '';
+    if(!que) return;
+    if(!cant) cant = '1 porción';
+    lista.unshift({ fecha: hoy, producto: que + ' (' + tipo + ')', cantidad: cant });
+    guardadas++;
+  });
+  if(guardadas === 0) return alert('Escribe qué comiste');
+  localStorage.setItem('misComidas', JSON.stringify(lista));
+  pintarComida();
+  document.getElementById('listaComidasInputs').innerHTML = '';
+  agregarComidaInput();
+  document.getElementById('msgComida').innerText = '¡Guardado! ' + guardadas + ' comida(s)';
+}
+
+function borrarComidas(){
+  if(!confirm('¿Borrar historial de comidas?')) return;
+  localStorage.removeItem('misComidas');
+  let h = document.getElementById('historialComida');
+  if(h) h.innerText = 'Sin comidas todavía';
+  let cont = document.getElementById('listaComidasInputs');
+  if(cont) cont.innerHTML = '';
+  agregarComidaInput();
+  let msg = document.getElementById('msgComida');
+  if(msg) msg.innerText = 'Historial borrado';
+}
 }function respirar(){ let c=document.getElementById('circulo'); let t=document.getElementById('textoRespira'); t.innerText='Inhala... 4 segundos'; c.style.transform='scale(1.3)'; c.innerText='Inhala 4'; setTimeout(()=>{ t.innerText='Sostén... 4 segundos'; c.innerText='Sostén 4'; },4000); setTimeout(()=>{ t.innerText='Exhala... 6 segundos'; c.style.transform='scale(1)'; c.innerText='Exhala 6'; },8000); setTimeout(()=>{ t.innerText='¡Muy bien! Repite si quieres 💙'; c.innerText='Respira'; },14000); }
 vasosTomados=parseInt(localStorage.getItem('vasos')||'0');
 function pintarVasos(){
