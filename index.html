@@ -745,11 +745,6 @@ function pintarComida(){
       return '• ' + c.fecha + ' - <b>' + c.producto + '</b> (' + c.cantidad + ')';
     }).join("<br>");
   }
-}function agregarComidaInput(){
-  let div = document.createElement('div');
-  div.className = 'filaComida';
-  div.innerHTML = '<select class="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select> <input class="queComida" placeholder="¿Qué comiste?">';
-  document.getElementById('listaComidasInputs').appendChild(div);
 }function respirar(){ let c=document.getElementById('circulo'); let t=document.getElementById('textoRespira'); t.innerText='Inhala... 4 segundos'; c.style.transform='scale(1.3)'; c.innerText='Inhala 4'; setTimeout(()=>{ t.innerText='Sostén... 4 segundos'; c.innerText='Sostén 4'; },4000); setTimeout(()=>{ t.innerText='Exhala... 6 segundos'; c.style.transform='scale(1)'; c.innerText='Exhala 6'; },8000); setTimeout(()=>{ t.innerText='¡Muy bien! Repite si quieres 💙'; c.innerText='Respira'; },14000); }
 vasosTomados=parseInt(localStorage.getItem('vasos')||'0');
 function pintarVasos(){
