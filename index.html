@@ -684,21 +684,68 @@ function enviarSugerenciaCorreo(){
   let linkWhats = 'https://wa.me/18298684410?text=' + encodeURIComponent(mensaje);
   window.open(linkWhats, '_blank');
   document.getElementById('msgSuger').innerText = '¡Gracias! Se abrió tu WhatsApp 💙';
-function pintarGlucosa(){ document.getElementById('historialGlucosa').innerHTML=localStorage.getItem('histGlucosa')||'Sin registros todavía'; } pintarGlucosa();
-function guardarGlucosa(){ let v=document.getElementById('glucosa').value; let m=document.getElementById('momentoGlucosa').value; if(!v) return alert('Escribe tu glucosa'); let hoy=new Date().toLocaleString(); let color=v<70?'🔴 MUY BAJA':v<=180?'🟢 Bien':'🟡 Alta'; document.getElementById('msgGlucosa').innerText=v+' - '+m+' '+color; let hist=localStorage.getItem('histGlucosa')||''; hist='• '+hoy+' - <b>'+v+'</b> ('+m+') '+color+'<br>'+hist; localStorage.setItem('histGlucosa',hist); pintarGlucosa(); document.getElementById('glucosa').value=''; }
-function borrarGlucosa(){ if(confirm('¿Borrar historial?')){ localStorage.removeItem('histGlucosa'); pintarGlucosa(); } }
+// ===== GLUCOSA - YA COORDINADA =====
+function pintarGlucosa(){
+  let donde = document.getElementById('historialGlucosa');
+  if(!donde) return;
+  let guardado = localStorage.getItem('histGlucosa') || '';
+  // Si es texto viejo, lo mostramos tal cual una sola vez
+  if(!guardado.startsWith('[')){
+    donde.innerHTML = guardado || 'Sin registros todavía';
+    return;
+  }
+  let lista = JSON.parse(guardado);
+  if(lista.length === 0){
+    donde.innerHTML = 'Sin registros todavía';
+  } else {
+    donde.innerHTML = lista.map(h => 
+      '• ' + h.fecha + ' - <b>' + h.cantidad + '</b> (' + h.producto + ') ' + h.color
+    ).join('<br>');
+  }
+}
+pintarGlucosa();
+
+function guardarGlucosa(){
+  let v=document.getElementById('glucosa').value;
+  let m=document.getElementById('momentoGlucosa').value;
+  if(!v) return alert('Escribe tu glucosa');
+  let hoy=new Date().toLocaleDateString();
+  let color=v<70?'🔴 MUY BAJA':v<=180?'🟢 Bien':'🟡 Alta';
+  document.getElementById('msgGlucosa').innerText=v+' - '+m+' '+color;
+
+  // ¡ARREGLO! Guardamos separadito
+  let lista = [];
+  try{ lista = JSON.parse(localStorage.getItem('histGlucosa')||'[]'); }catch(e){ lista = []; }
+  if(!Array.isArray(lista)) lista = []; // si era texto viejo, empezamos limpio
+  lista.unshift({fecha: hoy, producto: m, cantidad: v, color: color});
+  localStorage.setItem('histGlucosa', JSON.stringify(lista));
+
+  pintarGlucosa();
+  document.getElementById('glucosa').value='';
+}
+
+function borrarGlucosa(){
+  if(confirm('¿Borrar historial?')){
+    localStorage.removeItem('histGlucosa');
+    pintarGlucosa();
+  }
+}
+
+// ===== COMIDA - YA COORDINADA =====
 function pintarComida(){
   let lista = JSON.parse(localStorage.getItem('misComidas') || "[]");
   let donde = document.getElementById('historialComida');
-  if(donde){
-    if(lista.length === 0){
-      donde.innerHTML = "Sin comidas todavía";
-    } else {
-      donde.innerHTML = lista.join("<br>");
-    }
+  if(!donde) return;
+  if(lista.length === 0){
+    donde.innerHTML = "Sin comidas todavía";
+  } else {
+    // Si es texto viejo, lo muestra tal cual. Si es objeto, lo separa bien
+    donde.innerHTML = lista.map(c => {
+      if(typeof c === 'string') return '• ' + c;
+      return '• ' + c.fecha + ' - <b>' + c.producto + '</b> (' + c.cantidad + ')';
+    }).join("<br>");
   }
-}
-function agregarComidaInput(){
+}function agregarComidaInput(){
   let div = document.createElement('div');
   div.className = 'filaComida';
   div.innerHTML = '<select class="tipoComida"><option>Desayuno</option><option>Almuerzo</option><option>Cena</option><option>Merienda</option></select> <input class="queComida" placeholder="¿Qué comiste?">';
