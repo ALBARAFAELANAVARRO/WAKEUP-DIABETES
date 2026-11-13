@@ -921,15 +921,6 @@ function guardarGlucosa(){
   document.getElementById('historialGlucosa').innerHTML = lista.join("<br>");
 }
 
-function borrarGlucosa(){
-  localStorage.removeItem('glucosaAlba');
-  localStorage.removeItem('misGlucosa');
-  localStorage.removeItem('glucosa');
-  localStorage.removeItem('historialGlucosa');
-  document.getElementById('historialGlucosa').innerHTML = 'Sin registros todavía';
-  document.getElementById('msgGlucosa').innerText = '';
-  document.getElementById('cajitaGlucosa').innerText = 'RANGO DE GLUCOSA';
-  document.getElementById('cajitaGlucosa').style.background = '#eee';
 }function guardarComida(){
   let tipoEl = document.querySelector('.tipoComida');
   let queEl = document.querySelector('.queComi');
