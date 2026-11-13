@@ -534,8 +534,7 @@ function mostrarReporte(tipo){
     var el = document.getElementById(id);
     if(!el) return "";
     var t = el.innerText.trim();
-    if(t=="" || t.includes("Sin medicamentos") || t.includes("Sin datos") || t.includes("Sin glucosa") || t.includes("Sin comida")) return "";
-    var h = "";
+if(t=="" || t.includes("Sin medicamentos") || t.includes("Sin datos") || t.includes("Sin glucosa") || t.includes("Sin comida") || t.includes("Sin registros") || t.includes("Sin comidas")) return "";    var h = "";
     t.split("\n").forEach(function(linea){
       if(linea.trim()!=""){
         h += "<tr><td>"+new Date().toLocaleDateString()+"</td><td>"+linea.trim()+"</td><td>---</td></tr>";
