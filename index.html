@@ -526,60 +526,60 @@ function mostrarReporte(tipo){
   var reporte = document.getElementById('reporte');
   reporte.style.display = 'block';
 
-  // Fecha
   var fechaEl = document.getElementById('reporteFecha');
   if(fechaEl) fechaEl.innerHTML = "<b>Fecha:</b> " + new Date().toLocaleString() + " | <b>Periodo:</b> " + tipo;
 
-  // Buscamos tus datos REALES
-  function buscarDatos(idsPosibles, palabrasClave){
-    // 1. Busca en la pantalla por ID
-    for(var i=0; i<idsPosibles.length; i++){
-      var el = document.getElementById(idsPosibles[i]);
-      if(el && el.innerHTML.trim() !== ""){
-        return el.innerHTML;
+  // Convierte lo que se ve en pantalla en filas de Excel
+  function filasDePantalla(id){
+    var el = document.getElementById(id);
+    if(!el) return "";
+    var t = el.innerText.trim();
+    if(t=="" || t.includes("Sin medicamentos") || t.includes("Sin datos") || t.includes("Sin glucosa") || t.includes("Sin comida")) return "";
+    var h = "";
+    t.split("\n").forEach(function(linea){
+      if(linea.trim()!=""){
+        h += "<tr><td>"+new Date().toLocaleDateString()+"</td><td>"+linea.trim()+"</td><td>---</td></tr>";
       }
-    }
-    // 2. Si no está en pantalla, busca en lo guardado en el equipo
-    var texto = "";
-    for(var j=0; j<localStorage.length; j++){
-      var clave = localStorage.key(j);
-      var valor = localStorage.getItem(clave);
-      var claveLow = clave.toLowerCase();
-      var coincide = false;
-      for(var k=0; k<palabrasClave.length; k++){
-        if(claveLow.includes(palabrasClave[k])) coincide = true;
-      }
-      if(coincide){
-        try{
-          var datos = JSON.parse(valor);
-          if(Array.isArray(datos)){
-            datos.forEach(function(item){
-              texto += "<p>• " + JSON.stringify(item).replaceAll('"','').replaceAll('{','').replaceAll('}','').replaceAll(',',' - ') + "</p>";
-            });
-          } else {
-            texto += "<p>• " + valor + "</p>";
-          }
-        }catch(e){
-          texto += "<p>• " + valor + "</p>";
-        }
-      }
-    }
-    return texto;
+    });
+    return h;
   }
 
-var med = ""; var listaMed = document.getElementById('listaMedicamentos') || document.getElementById('historialMedicamentos') || document.getElementById('medicamentos'); if(listaMed && listaMed.innerText.trim() !== ""){ med = listaMed.innerHTML; } else { for(var j=0; j<localStorage.length; j++){ var clave = localStorage.key(j); if(clave.toLowerCase().includes('medic') || clave.toLowerCase().includes('pastilla') || clave.toLowerCase().includes('insulina')){ try{ var datos = JSON.parse(localStorage.getItem(clave)); if(Array.isArray(datos)){ datos.forEach(function(item){ if(typeof item === 'object'){ var nombre = item.medicamento || item.nombre || item.pastilla || item.insulina || ""; var dosis = item.dosis || item.cantidad || ""; var hora = item.hora || item.fecha || ""; if(nombre || dosis){ med += "<p>• " + nombre + " - Dosis: " + dosis + " - " + hora + "</p>"; } else { var txt = JSON.stringify(item).replaceAll('"','').replaceAll('{','').replaceAll('}',''); if(txt.trim() !== ":" && txt.trim() !== ""){ med += "<p>• " + txt + "</p>"; } } } else { med += "<p>• " + item + "</p>"; } }); } }catch(e){} } } }  var glu = buscarDatos(['listaGlucosa','historialGlucosa','listaAzucar','glucosa'], ['gluc','azucar','glucosa']);
-  var com = buscarDatos(['listaComida','historialComida','listaComidas','comida'], ['comid','comida','alimento']);
+  // Si no está en pantalla, busca en lo guardado
+  function filasDeGuardado(palabra){
+    var h = "";
+    for(var j=0; j<localStorage.length; j++){
+      var clave = localStorage.key(j);
+      if(clave.toLowerCase().includes(palabra)){
+        try{
+          var datos = JSON.parse(localStorage.getItem(clave));
+          if(Array.isArray(datos)){
+            datos.forEach(function(x){
+              var f = x.fecha || x.hora || x.dia || new Date().toLocaleDateString();
+              var p = x.medicamento || x.nombre || x.producto || x.comida || x.alimento || x.valor || x.glucosa || JSON.stringify(x);
+              var c = x.dosis || x.cantidad || x.porcion || x.dosisTomada || "---";
+              h += "<tr><td>"+f+"</td><td>"+p+"</td><td>"+c+"</td></tr>";
+            });
+          }
+        }catch(e){}
+      }
+    }
+    return h;
+  }
 
-  if(!med) med = "<p>Sin medicamentos registrados</p>";
-  if(!glu) glu = "<p>Sin glucosa registrada</p>";
-  if(!com) com = "<p>Sin comida registrada</p>";
+  // MEDICAMENTOS - usa tu ID real: historialMed
+  var med = filasDePantalla('historialMed') || filasDeGuardado('medic');
+  // GLUCOSA
+  var glu = filasDePantalla('historialGlucosa') || filasDePantalla('historialGluc') || filasDeGuardado('gluc');
+  // COMIDA
+  var com = filasDePantalla('historialComida') || filasDeGuardado('comid');
 
-  var elMed = document.getElementById('reporteMedicamentos');
-  var elGlu = document.getElementById('reporteGlucosa');
-  var elCom = document.getElementById('reporteComida');
-  if(elMed) elMed.innerHTML = med;
-  if(elGlu) elGlu.innerHTML = glu;
-  if(elCom) elCom.innerHTML = com;
+  if(!med) med = "<tr><td colspan='3'>Sin medicamentos registrados</td></tr>";
+  if(!glu) glu = "<tr><td colspan='3'>Sin glucosa registrada</td></tr>";
+  if(!com) com = "<tr><td colspan='3'>Sin comida registrada</td></tr>";
+
+  document.getElementById('reporteMedicamentos').innerHTML = med;
+  document.getElementById('reporteGlucosa').innerHTML = glu;
+  document.getElementById('reporteComida').innerHTML = com;
 
   reporte.scrollIntoView();
 }
