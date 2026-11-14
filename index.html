@@ -1064,39 +1064,33 @@ function mostrarVentanaRosada(){
 function cerrarVentana(){
   document.getElementById('ventanaRosada').style.display = 'none';
 }
+<script>
 function imprimirReporte(){
   var fecha = new Date().toLocaleString();
   var contenido = "";
   contenido += "<h1>WAKE UP DIABETES - REPORTE DE SALUD</h1>";
   contenido += "<p>Fecha: " + fecha + "</p><hr>";
 
-  // Buscamos TODOS tus historiales reales en la página
-  // Medicamentos, Glucosa y Comidas
-  var secciones = document.querySelectorAll('[id*="historial"], [id*="lista"], [id*="Historial"], [id*="Lista"]');
-  
-  if(secciones.length > 0){
-    secciones.forEach(function(sec){
-      contenido += "<h3>" + sec.id + "</h3>";
-      contenido += sec.innerHTML + "<hr>";
-    });
-  } else {
-    // Si no encuentra por ID, agarra todo el texto visible de la página sin el ejemplo
-    contenido += "<h2>MIS DATOS GUARDADOS</h2>";
-    contenido += document.getElementById('reporte').parentElement.innerHTML;
-  }
+  // SOLO agarramos las 3 tablitas del reporte, nada más
+  var med = document.getElementById('reporteMedicamentos') ? document.getElementById('reporteMedicamentos').innerHTML : "Sin medicamentos";
+  var glu = document.getElementById('reporteGlucosa') ? document.getElementById('reporteGlucosa').innerHTML : "Sin glucosa";
+  var com = document.getElementById('reporteComida') ? document.getElementById('reporteComida').innerHTML : "Sin comida";
 
-  // Quitamos el texto de ejemplo para que no salga más
-  contenido = contenido.replaceAll("Aquí sale el medicamento que tu registraste", "");
-  contenido = contenido.replaceAll("Aquí sale tu dosis", "");
-  contenido = contenido.replaceAll("Aquí sale tu glucosa", "");
-  contenido = contenido.replaceAll("Aquí sale tu comida", "");
+  contenido += "<h2>💊 MEDICAMENTOS</h2>";
+  contenido += "<table border='1' cellpadding='8' cellspacing='0' style='width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + med + "</table><br>";
+
+  contenido += "<h2>🩸 GLUCOSA</h2>";
+  contenido += "<table border='1' cellpadding='8' cellspacing='0' style='width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + glu + "</table><br>";
+
+  contenido += "<h2>🥗 COMIDA</h2>";
+  contenido += "<table border='1' cellpadding='8' cellspacing='0' style='width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + com + "</table>";
 
   var ventana = window.open('', '', 'width=800,height=600');
-  ventana.document.write('<html><head><title>REPORTE DE SALUD</title></head><body>');
+  ventana.document.write('<html><head><title>REPORTE DE SALUD</title><style>body{font-family:Arial; padding:20px} h1{color:#0077b6} table{border-collapse:collapse}</style></head><body>');
   ventana.document.write(contenido);
   ventana.document.write('</body></html>');
   ventana.document.close();
-  ventana.print();
+  setTimeout(function(){ ventana.print(); }, 500);
 }
 </script>
 </body>
