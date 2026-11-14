@@ -541,66 +541,44 @@ function filasDePantalla(id){
     t.split("\n").forEach(function(linea){
       linea = linea.trim();
       if(linea!=""){
-        // 1. Saca SOLO la fecha, sin hora: 11/11/2026
         var fechaEncontrada = linea.match(/\d{1,2}\/\d{1,2}\/\d{4}/);
         var fecha = fechaEncontrada ? fechaEncontrada[0] : new Date().toLocaleDateString();
-        // 2. ELIMINAMOS LA HORA: quitamos fecha + hora como "11/11/2026, 10:06:49 PM"
         var producto = linea.replace(/\d{1,2}\/\d{1,2}\/\d{4},?\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M?/i, "").replace(fecha, "").replace(/^\s*[-,]\s*/, "").trim();
+
+        // 1. COMIDA: si dice Desayuno / Almuerzo / Cena -> SECCION | PRODUCTO
+        var mComida = producto.match(/(Desayuno|Almuerzo|Cena|Merienda)/i);
+        if(mComida){
+          var seccion = mComida[1].charAt(0).toUpperCase() + mComida[1].slice(1).toLowerCase();
+          var prodComida = producto.replace(/.*?(Desayuno|Almuerzo|Cena|Merienda)\s*[:\-]\s*/i, "").trim();
+          if(prodComida=="") prodComida = producto;
+          h += "<tr><td>"+fecha+"</td><td>"+seccion+"</td><td>"+prodComida+"</td></tr>";
+          return;
+        }
+
+        // 2. MEDICAMENTO: "Insulina - 30 unidades" -> PRODUCTO Insulina | CANTIDAD 30 unidades
+        var mUnidades = producto.match(/(\d+\s*unidades)/i);
+        if(mUnidades){
+          var cantU = mUnidades[1];
+          var prodU = producto.replace(mUnidades[1], "").replace(/\s*-\s*$/, "").replace(/\(.*\)/g,"").trim();
+          h += "<tr><td>"+fecha+"</td><td>"+prodU+"</td><td>"+cantU+"</td></tr>";
+          return;
+        }
+
+        // 3. GLUCOSA: "110 - En ayunas" -> PRODUCTO En ayunas | CANTIDAD 110
+        var partes = producto.split(" - ");
+        if(partes.length >= 2 && partes[0].replace(/[^0-9]/g,"")!=""){
+          var cantG = partes[0].replace(/[^0-9]/g,"").trim();
+          var prodG = partes.slice(1).join(" - ").replace(/\(.*\)/g,"").trim();
+          h += "<tr><td>"+fecha+"</td><td>"+prodG+"</td><td>"+cantG+"</td></tr>";
+          return;
+        }
+
+        // 4. Si no tiene nada que separar, queda normal
         h += "<tr><td>"+fecha+"</td><td>"+producto+"</td><td>---</td></tr>";
       }
     });
     return h;
-  }
-
-  // Si no está en pantalla, busca en lo guardado
-  function filasDeGuardado(palabra){
-    var h = "";
-    for(var j=0; j<localStorage.length; j++){
-      var clave = localStorage.key(j);
-      if(clave.toLowerCase().includes(palabra)){
-        try{
-          var datos = JSON.parse(localStorage.getItem(clave));
-          if(Array.isArray(datos)){
-            datos.forEach(function(x){
-              // SIN HORA: si la fecha viene con hora, solo dejamos la fecha
-              var fCompleta = x.fecha || x.hora || x.dia || new Date().toLocaleDateString();
-              var fMatch = String(fCompleta).match(/\d{1,2}\/\d{1,2}\/\d{4}/);
-              var f = fMatch ? fMatch[0] : new Date().toLocaleDateString();
-              var p = x.medicamento || x.nombre || x.producto || x.comida || x.alimento || x.valor || x.glucosa || JSON.stringify(x);
-              // Quitamos la hora que venga pegada en el producto también
-              p = String(p).replace(/\d{1,2}:\d{2}:\d{2}\s*[AP]M?/gi, "").replace(/\d{1,2}\/\d{1,2}\/\d{4},?\s*/g, "").trim();
-              var c = x.dosis || x.cantidad || x.porcion || x.dosisTomada || "---";
-              h += "<tr><td>"+f+"</td><td>"+p+"</td><td>"+c+"</td></tr>";
-            });
-          }
-        }catch(e){}
-      }
-    }
-    return h;
-  }
-
-  // MEDICAMENTOS - usa tu ID real: historialMed
-  var med = filasDePantalla('historialMed') || filasDeGuardado('medic');
-  // GLUCOSA
-  var glu = filasDePantalla('historialGlucosa') || filasDePantalla('historialGluc') || filasDeGuardado('gluc');
-  // COMIDA
-  var com = filasDePantalla('historialComida') || filasDeGuardado('comid');
-
-  if(!med) med = "<tr><td colspan='3'>Sin medicamentos registrados</td></tr>";
-  if(!glu) glu = "<tr><td colspan='3'>Sin glucosa registrada</td></tr>";
-  if(!com) com = "<tr><td colspan='3'>Sin comida registrada</td></tr>";
-
-  document.getElementById('reporteMedicamentos').innerHTML = med;
-  document.getElementById('reporteGlucosa').innerHTML = glu;
-  document.getElementById('reporteComida').innerHTML = com;
-
-  reporte.scrollIntoView();
-}
-
-function imprimirReporte(){
-  window.print();
-}
-</script>
+  }</script>
 <div class="card" style="border:2px solid #e63946">
 <div class="card" style="border:2px solid #e63946">
 <h2>🔗 LINK DE SALUD</h2>
