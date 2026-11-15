@@ -526,68 +526,88 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
 <script>
 function mostrarReporte(tipo){
   var reporte = document.getElementById('reporte');
-  reporte.style.display = 'block';
-
+  if(reporte) reporte.style.display = 'block';
   var fechaEl = document.getElementById('reporteFecha');
-  if(fechaEl) fechaEl.innerHTML = "<b>Fecha:</b> " + new Date().toLocaleString();
- }
-    // Convierte lo que se ve en pantalla en filas de Excel
+  if(fechaEl) fechaEl.innerHTML = "<b>Fecha:</b> " + new Date().toLocaleString() + " - " + tipo;
+  generarReporte(); // ¡ESTA ES LA QUE FALTABA, MI BELLA!
+}
+
+// Convierte lo que se ve en pantalla en filas
 function filasDePantalla(id){
-    var el = document.getElementById(id);
-    if(!el) return "";
-    var t = el.innerText.trim();
-    if(t=="" || t.includes("Sin medicamentos") || t.includes("Sin datos") || t.includes("Sin glucosa") || t.includes("Sin comida") || t.includes("Sin registros") || t.includes("Sin comidas")) return "";
-    var h = "";
-    t.split("\n").forEach(function(linea){
-      linea = linea.trim();
-      if(linea!=""){
-        var fechaEncontrada = linea.match(/\d{1,2}\/\d{1,2}\/\d{4}/);
-        var fecha = fechaEncontrada ? fechaEncontrada[0] : new Date().toLocaleDateString();
-        var producto = linea.replace(/\d{1,2}\/\d{1,2}\/\d{4},?\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M?/i, "").replace(fecha, "").replace(/^\s*[-,]\s*/, "").trim();
+  var el = document.getElementById(id);
+  if(!el) return "";
+  var t = el.innerText.trim();
+  if(t=="" || t.includes("Sin medicamentos") || t.includes("Sin comidas") || t.includes("Sin registros")) return "";
+  var h = "";
+  t.split("\n").forEach(function(linea){
+    linea = linea.trim();
+    if(linea=="") return;
+    var fechaEncontrada = linea.match(/\d{1,2}\/\d{1,2}\/\d{4}/);
+    var fecha = fechaEncontrada ? fechaEncontrada[0] : new Date().toLocaleDateString();
+    var producto = linea.replace(/\d{1,2}\/\d{1,2}\/\d{4},?\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M?/i, "").replace(fecha, "").replace(/^\s*[-,]\s*/, "").trim();
+    // COMIDA
+    var mComida = producto.match(/(Desayuno|Almuerzo|Cena|Merienda)/i);
+    if(mComida){
+      var seccion = mComida[1].charAt(0).toUpperCase() + mComida[1].slice(1).toLowerCase();
+      var prodComida = producto.replace(/.*?(Desayuno|Almuerzo|Cena|Merienda)\s*[:\-]\s*/i, "").trim();
+      if(prodComida=="") prodComida = producto;
+      h += "<tr><td>"+fecha+"</td><td>"+seccion+"</td><td>"+prodComida+"</td></tr>";
+      return;
+    }
+    // MEDICAMENTO con unidades
+    var mUnidades = producto.match(/(\d+\s*unidades)/i);
+    if(mUnidades){
+      var cantU = mUnidades[1];
+      var prodU = producto.replace(mUnidades[1], "").replace(/\s*-\s*$/, "").trim();
+      h += "<tr><td>"+fecha+"</td><td>"+prodU+"</td><td>"+cantU+"</td></tr>";
+      return;
+    }
+    // GLUCOSA: "110 - En ayunas"
+    var partes = producto.split(" - ");
+    if(partes.length >= 2 && partes[0].replace(/[^0-9]/g,"")!=""){
+      var cantG = partes[0].replace(/[^0-9]/g,"").trim();
+      var prodG = partes.slice(1).join(" - ").trim();
+      h += "<tr><td>"+fecha+"</td><td>"+prodG+"</td><td>"+cantG+"</td></tr>";
+      return;
+    }
+    h += "<tr><td>"+fecha+"</td><td>"+producto+"</td><td>---</td></tr>";
+  });
+  return h;
+}
 
-        // 1. COMIDA: si dice Desayuno / Almuerzo / Cena -> SECCION | PRODUCTO
-        var mComida = producto.match(/(Desayuno|Almuerzo|Cena|Merienda)/i);
-        if(mComida){
-          var seccion = mComida[1].charAt(0).toUpperCase() + mComida[1].slice(1).toLowerCase();
-          var prodComida = producto.replace(/.*?(Desayuno|Almuerzo|Cena|Merienda)\s*[:\-]\s*/i, "").trim();
-          if(prodComida=="") prodComida = producto;
-          h += "<tr><td>"+fecha+"</td><td>"+seccion+"</td><td>"+prodComida+"</td></tr>";
-          return;
-        }
+function filasDeGuardado(palabra){
+  return ""; // Ya no lo necesitamos, mi bella, todo se lee de pantalla
+}
 
-        // 2. MEDICAMENTO: "Insulina - 30 unidades" -> PRODUCTO Insulina | CANTIDAD 30 unidades
-        var mUnidades = producto.match(/(\d+\s*unidades)/i);
-        if(mUnidades){
-          var cantU = mUnidades[1];
-          var prodU = producto.replace(mUnidades[1], "").replace(/\s*-\s*$/, "").replace(/\(.*\)/g,"").trim();
-          h += "<tr><td>"+fecha+"</td><td>"+prodU+"</td><td>"+cantU+"</td></tr>";
-          return;
-        }
+function generarReporte(){
+  try{
+    var med = document.getElementById('reporteMedicamentos');
+    var glu = document.getElementById('reporteGlucosa');
+    var com = document.getElementById('reporteComida');
+    // ¡AQUÍ ESTÁ EL ID BUENO, MI BELLA! historialMed, NO historialMedicamentos
+    if(med) med.innerHTML = filasDePantalla("historialMed");
+    if(glu) glu.innerHTML = filasDePantalla("historialGlucosa");
+    if(com) com.innerHTML = filasDePantalla("historialComida");
+  }catch(e){ console.log("Error: " + e.message); }
+}
 
-        // 3. GLUCOSA: "110 - En ayunas" -> PRODUCTO En ayunas | CANTIDAD 110
-        var partes = producto.split(" - ");
-        if(partes.length >= 2 && partes[0].replace(/[^0-9]/g,"")!=""){
-          var cantG = partes[0].replace(/[^0-9]/g,"").trim();
-          var prodG = partes.slice(1).join(" - ").replace(/\(.*\)/g,"").trim();
-          h += "<tr><td>"+fecha+"</td><td>"+prodG+"</td><td>"+cantG+"</td></tr>";
-          return;
-        }
-
-        // 4. Si no tiene nada que separar, queda normal
-        h += "<tr><td>"+fecha+"</td><td>"+producto+"</td><td>---</td></tr>";
-      }
-    });
-    return h;
-      function imprimirReporte(){
-    var contenido = "";
-    contenido += "<h3>💊 TUS MEDICAMENTOS</h3><table border='1' style='border-collapse:collapse;width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + filasDePantalla("historialMedicamentos") + filasDeGuardado("medicamento") + "</table>";
-    contenido += "<h3>🩸 TU GLUCOSA</h3><table border='1' style='border-collapse:collapse;width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + filasDePantalla("historialGlucosa") + filasDeGuardado("glucosa") + "</table>";
-    contenido += "<h3>🍽️ TU COMIDA</h3><table border='1' style='border-collapse:collapse;width:100%'><tr><th>FECHA</th><th>SECCIÓN</th><th>PRODUCTO</th></tr>" + filasDePantalla("historialComida") + filasDeGuardado("comida") + "</table>";
-    var ventana = window.open("", "_blank");
-    ventana.document.write(contenido);
-    ventana.print();
-  }
-  }</script>
+function imprimirReporte(){
+  generarReporte();
+  var fecha = new Date().toLocaleString();
+  var med = document.getElementById('reporteMedicamentos') ? document.getElementById('reporteMedicamentos').innerHTML : "";
+  var glu = document.getElementById('reporteGlucosa') ? document.getElementById('reporteGlucosa').innerHTML : "";
+  var com = document.getElementById('reporteComida') ? document.getElementById('reporteComida').innerHTML : "";
+  var contenido = "<h1>WAKE UP DIABETES - REPORTE DE SALUD</h1><p>Fecha: " + fecha + "</p><hr>";
+  contenido += "<h2>💊 MEDICAMENTOS</h2><table border='1' cellpadding='8' style='width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + med + "</table><br>";
+  contenido += "<h2>🩸 GLUCOSA</h2><table border='1' cellpadding='8' style='width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + glu + "</table><br>";
+  contenido += "<h2>🥗 COMIDA</h2><table border='1' cellpadding='8' style='width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + com + "</table>";
+  var ventana = window.open('', '', 'width=800,height=600');
+  ventana.document.write('<html><head><title>REPORTE</title><style>body{font-family:Arial;padding:20px}table{border-collapse:collapse}</style></head><body>');
+  ventana.document.write(contenido);
+  ventana.document.write('</body></html>');
+  ventana.document.close();
+  setTimeout(function(){ ventana.print(); }, 500);
+}  }</script>
 <div class="card" style="border:2px solid #e63946">
 <div class="card" style="border:2px solid #e63946">
 <h2>🔗 LINK DE SALUD</h2>
