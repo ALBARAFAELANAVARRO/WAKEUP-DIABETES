@@ -578,6 +578,15 @@ function filasDePantalla(id){
       }
     });
     return h;
+      function imprimirReporte(){
+    var contenido = "";
+    contenido += "<h3>💊 TUS MEDICAMENTOS</h3><table border='1' style='border-collapse:collapse;width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + filasDePantalla("historialMedicamentos") + filasDeGuardado("medicamento") + "</table>";
+    contenido += "<h3>🩸 TU GLUCOSA</h3><table border='1' style='border-collapse:collapse;width:100%'><tr><th>FECHA</th><th>PRODUCTO</th><th>CANTIDAD</th></tr>" + filasDePantalla("historialGlucosa") + filasDeGuardado("glucosa") + "</table>";
+    contenido += "<h3>🍽️ TU COMIDA</h3><table border='1' style='border-collapse:collapse;width:100%'><tr><th>FECHA</th><th>SECCIÓN</th><th>PRODUCTO</th></tr>" + filasDePantalla("historialComida") + filasDeGuardado("comida") + "</table>";
+    var ventana = window.open("", "_blank");
+    ventana.document.write(contenido);
+    ventana.print();
+  }
   }</script>
 <div class="card" style="border:2px solid #e63946">
 <div class="card" style="border:2px solid #e63946">
