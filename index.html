@@ -529,9 +529,9 @@ function mostrarReporte(tipo){
   reporte.style.display = 'block';
 
   var fechaEl = document.getElementById('reporteFecha');
-  if(fechaEl) fechaEl.innerHTML = "<b>Fecha:</b> " + new Date().toLocaleString() + " | <b>Periodo:</b> " + tipo;
-
-  // Convierte lo que se ve en pantalla en filas de Excel
+  if(fechaEl) fechaEl.innerHTML = "<b>Fecha:</b> " + new Date().toLocaleString();
+ }
+    // Convierte lo que se ve en pantalla en filas de Excel
 function filasDePantalla(id){
     var el = document.getElementById(id);
     if(!el) return "";
