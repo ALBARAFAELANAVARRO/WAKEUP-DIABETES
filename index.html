@@ -504,20 +504,8 @@ Licuar 3 rábanos en trocitos, con 300 ml de agua hervida y fría, agregar el ju
 </table>
 
 <br>
-<button onclick="imprimirReporte()" style="background:#00b45a; color:white; padding:10px;">🖨️ IMPRIMIR REPORTE</button>
-<button onclick="document.getElementById('reporte').style.display='none'">CERRAR</button>
-<p>✅ LIMPIAR solo limpia la pantalla. NADA se borra. TODO se guarda en tu equipo.</p>
-</div>
-</div>
 
 <script>
-function mostrarReporte(tipo){
-  var reporte = document.getElementById('reporte');
-  if(reporte) reporte.style.display = 'block';
-  var fechaEl = document.getElementById('reporteFecha');
-  if(fechaEl) fechaEl.innerHTML = "<b>Fecha:</b> " + new Date().toLocaleString() + " - " + tipo;
-  generarReporte(); // ¡ESTA ES LA QUE FALTABA, MI BELLA!
-}
 
 // Convierte lo que se ve en pantalla en filas
 function filasDePantalla(id){
