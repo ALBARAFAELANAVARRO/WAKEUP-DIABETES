@@ -1091,18 +1091,20 @@ function imprimirReporte(){
   ventana.document.close();
   setTimeout(function(){ ventana.print(); }, 500);
 }
-    function generarReporte(){
-    var med = document.getElementById('reporteMedicamentos');
-    var glu = document.getElementById('reporteGlucosa');
-    var com = document.getElementById('reporteComida');
-    if(med) med.innerHTML = filasDePantalla("historialMedicamentos") + filasDeGuardado("medicamento");
-    if(glu) glu.innerHTML = filasDePantalla("historialGlucosa") + filasDeGuardado("glucosa");
-    if(com) com.innerHTML = filasDePantalla("historialComida") + filasDeGuardado("comida");
+      function generarReporte(){
+    try{
+      var med = document.getElementById('reporteMedicamentos');
+      var glu = document.getElementById('reporteGlucosa');
+      var com = document.getElementById('reporteComida');
+      if(med) med.innerHTML = (typeof filasDePantalla === 'function' ? filasDePantalla("historialMedicamentos") : "") + (typeof filasDeGuardado === 'function' ? filasDeGuardado("medicamento") : "");
+      if(glu) glu.innerHTML = (typeof filasDePantalla === 'function' ? filasDePantalla("historialGlucosa") : "") + (typeof filasDeGuardado === 'function' ? filasDeGuardado("glucosa") : "");
+      if(com) com.innerHTML = (typeof filasDePantalla === 'function' ? filasDePantalla("historialComida") : "") + (typeof filasDeGuardado === 'function' ? filasDeGuardado("comida") : "");
+    }catch(e){ console.log("Error en generarReporte: " + e.message); }
   }
 
   function imprimirReporteSemanal(){ generarReporte(); imprimirReporte(); }
   function imprimirReporteQuincenal(){ generarReporte(); imprimirReporte(); }
-  function imprimirReporteMensual(){ generarReporte(); imprimirReporte(); }  
+  function imprimirReporteMensual(){ generarReporte(); imprimirReporte(); }
 </script>
 </body>
 </html>
