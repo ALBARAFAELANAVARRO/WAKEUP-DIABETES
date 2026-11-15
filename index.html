@@ -1105,7 +1105,56 @@ function imprimirReporte(){
   function imprimirReporteSemanal(){ generarReporte(); imprimirReporte(); }
   function imprimirReporteQuincenal(){ generarReporte(); imprimirReporte(); }
   function imprimirReporteMensual(){ generarReporte(); imprimirReporte(); }
+  // ESTE ES EL QUE FALTABA, MI BELLA - EL QUE SI IMPRIME
+  function imprimirReporte(){
+    var reporte = document.getElementById('reporte');
+    if(reporte) reporte.style.display = 'block';
+    generarReporte();
+    setTimeout(function(){ window.print(); }, 300);
+  }
 
+  // ESTOS SON LOS AYUDANTES ARREGLADOS, MI BELLA - AHORA SI BUSCAN BIEN
+  function filasDePantalla(id){
+    var el = document.getElementById(id);
+    if(!el) return "";
+    var filas = el.querySelectorAll("tr");
+    if(filas.length === 0) return el.innerHTML;
+    var html = "";
+    for(var i=0;i<filas.length;i++){
+      var texto = filas[i].innerText || filas[i].textContent || "";
+      // No copiar el encabezado FECHA - PRODUCTO - CANTIDAD
+      if(texto.indexOf("FECHA") !== -1) continue;
+      if(texto.trim() === "") continue;
+      html += "<tr>" + filas[i].innerHTML + "</tr>";
+    }
+    return html;
+  }
+
+  function filasDeGuardado(palabra){
+    var html = "";
+    for(var k=0;k<localStorage.length;k++){
+      var llave = localStorage.key(k);
+      if(!llave) continue;
+      if(llave.toLowerCase().indexOf(palabra.toLowerCase()) === -1) continue;
+      try{
+        var datos = JSON.parse(localStorage.getItem(llave));
+        if(Array.isArray(datos)){
+          for(var d=0;d<datos.length;d++){
+            var it = datos[d];
+            if(typeof it === "string"){
+              html += "<tr><td>" + it + "</td><td></td><td></td></tr>";
+            } else {
+              var f = it.fecha || it.date || it.dia || "";
+              var n = it.nombre || it.producto || it.medicamento || it.comida || it.valor || it.glucosa || "";
+              var c = it.cantidad || it.dosis || it.cant || "";
+              if(n !== "" || f !== "") html += "<tr><td>" + f + "</td><td>" + n + "</td><td>" + c + "</td></tr>";
+            }
+          }
+        }
+      }catch(e){}
+    }
+    return html;
+  }
 </script>
 </body>
 </html>
