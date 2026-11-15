@@ -1091,6 +1091,18 @@ function imprimirReporte(){
   ventana.document.close();
   setTimeout(function(){ ventana.print(); }, 500);
 }
+    function generarReporte(){
+    var med = document.getElementById('reporteMedicamentos');
+    var glu = document.getElementById('reporteGlucosa');
+    var com = document.getElementById('reporteComida');
+    if(med) med.innerHTML = filasDePantalla("historialMedicamentos") + filasDeGuardado("medicamento");
+    if(glu) glu.innerHTML = filasDePantalla("historialGlucosa") + filasDeGuardado("glucosa");
+    if(com) com.innerHTML = filasDePantalla("historialComida") + filasDeGuardado("comida");
+  }
+
+  function imprimirReporteSemanal(){ generarReporte(); imprimirReporte(); }
+  function imprimirReporteQuincenal(){ generarReporte(); imprimirReporte(); }
+  function imprimirReporteMensual(){ generarReporte(); imprimirReporte(); }  
 </script>
 </body>
 </html>
