@@ -1105,14 +1105,7 @@ function imprimirReporte(){
   function imprimirReporteSemanal(){ generarReporte(); imprimirReporte(); }
   function imprimirReporteQuincenal(){ generarReporte(); imprimirReporte(); }
   function imprimirReporteMensual(){ generarReporte(); imprimirReporte(); }
-  // ESTE ES EL QUE FALTABA, MI BELLA - EL QUE SI IMPRIME
-  function imprimirReporte(){
-    var reporte = document.getElementById('reporte');
-    if(reporte) reporte.style.display = 'block';
-    generarReporte();
-    setTimeout(function(){ window.print(); }, 300);
-  }
-
+  
   // ESTOS SON LOS AYUDANTES ARREGLADOS, MI BELLA - AHORA SI BUSCAN BIEN
   function filasDePantalla(id){
     var el = document.getElementById(id);
