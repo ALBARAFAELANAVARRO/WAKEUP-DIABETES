@@ -704,9 +704,11 @@ function borrarGlucosa(){
   if(confirm('¿Borrar historial?')){
     localStorage.removeItem('histGlucosa');
     localStorage.removeItem('glucosaAlba');
-    document.getElementById('historialGlucosa').innerHTML = '';
+    document.getElementById('historialGlucosa').innerHTML = 'Sin registros todavía';
     let cajita = document.getElementById('cajitaGlucosa');
     if(cajita){ cajita.innerText = ''; cajita.style.background = ''; }
+    let msg = document.getElementById('msgGlucosa');
+    if(msg){ msg.innerText = ''; }
     if(typeof pintarGlucosa === 'function'){ pintarGlucosa(); }
   }
 }
@@ -719,14 +721,13 @@ function pintarComida(){
   if(lista.length === 0){
     donde.innerHTML = "Sin comidas todavía";
   } else {
-    // Si es texto viejo, lo muestra tal cual. Si es objeto, lo separa bien
     donde.innerHTML = lista.map(c => {
       if(typeof c === 'string') return '• ' + c;
       return '• ' + c.fecha + ' - <b>' + c.producto + '</b> (' + c.cantidad + ')';
     }).join("<br>");
   }
 }
-// ===== COMIDA - TODO JUNTO - SIN PINTAR (YA LA TIENES EN LÍNEA 734) =====
+
 function agregarComidaInput(){
   let div = document.createElement('div');
   div.className = 'filaComida';
@@ -736,7 +737,6 @@ function agregarComidaInput(){
     '<button onclick="this.parentElement.remove()">❌</button>';
   document.getElementById('listaComidasInputs').appendChild(div);
 }
-
 function guardarComida(){
   let filas = document.querySelectorAll('.filaComida');
   if(filas.length === 0) return alert('Agrega una comida primero');
