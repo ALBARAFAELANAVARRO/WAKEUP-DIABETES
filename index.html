@@ -1049,7 +1049,6 @@ function cerrarVentana(){
 </script>
 <script>
 function borrarGlucosa(){
-  if(confirm('¿Borrar historial de glucosa?')){
     localStorage.removeItem('histGlucosa');
     localStorage.removeItem('glucosaAlba');
     let h = document.getElementById('historialGlucosa');
@@ -1057,10 +1056,10 @@ function borrarGlucosa(){
     let cajita = document.getElementById('cajitaGlucosa');
     if(cajita){ cajita.innerText = ''; cajita.style.background = ''; }
     let msg = document.getElementById('msgGlucosa');
-    if(msg){ msg.innerText = ''; }
-  }
+    if(msg){ msg.innerText = ''; 
 }
-function guardarComida(){
+
+  function guardarComida(){
   let tipoEl = document.querySelector('.tipoComida');
   let comidaEl = document.querySelector('.queComida');
   let cantEl = document.querySelector('.cantComida');
