@@ -1061,16 +1061,10 @@ function borrarGlucosa(){
   }
 }
 function guardarComida(){
-  let seccion = document.body.innerHTML;
-  // Buscamos los campos de comidas
-  let tipoEl = document.querySelector('select');
-  let inputs = document.querySelectorAll('input');
-  let comidaEl = null, cantEl = null;
-  inputs.forEach(function(inp){
-    if((inp.placeholder||'').includes('Qué comiste')) comidaEl = inp;
-    if((inp.placeholder||'').includes('Cantidad')) cantEl = inp;
-  });
-  let tipo = tipoEl ? tipoEl.value : 'Comida';
+  let tipoEl = document.querySelector('.tipoComida');
+  let comidaEl = document.querySelector('.queComida');
+  let cantEl = document.querySelector('.cantComida');
+  let tipo = tipoEl ? tipoEl.value : 'Desayuno';
   let comida = comidaEl ? comidaEl.value.trim() : '';
   let cant = cantEl ? cantEl.value.trim() : '';
   if(!comida){ alert('Escribe qué comiste, mi bella'); return; }
@@ -1080,26 +1074,25 @@ function guardarComida(){
   localStorage.setItem('histComidas', JSON.stringify(lista));
   if(comidaEl) comidaEl.value = '';
   if(cantEl) cantEl.value = '';
-  pintarComidas();
+  pintarComida();
   alert('¡Guardado, mi bella! ' + comida);
 }
-function pintarComidas(){
+function pintarComida(){
   let lista = JSON.parse(localStorage.getItem('histComidas') || '[]');
-  let h = document.getElementById('historialComidas');
-  if(!h){
-    // Si no tiene ID, buscamos el div que está debajo de Borrar comidas
-    return;
-  }
+  let h = document.getElementById('historialComida') || document.getElementById('historialComidas');
+  if(!h) return;
   if(lista.length === 0){ h.innerHTML = 'Sin comidas todavía'; return; }
-  h.innerHTML = lista.map(function(x){ return '<div>'+x+'</div>'; }).join('');
+  h.innerHTML = lista.map(function(x){ return '<div>🍽️ ' + x + '</div>'; }).join('');
 }
 function borrarComidas(){
   if(confirm('¿Borrar historial de comidas?')){
     localStorage.removeItem('histComidas');
-    let h = document.getElementById('historialComidas');
+    let h = document.getElementById('historialComida') || document.getElementById('historialComidas');
     if(h){ h.innerHTML = 'Sin comidas todavía'; }
   }
 }
+// Pintar al abrir la página
+pintarComida(); 
 </script>
 </body>
 </html>
