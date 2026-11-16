@@ -1084,12 +1084,11 @@ function pintarComida(){
   h.innerHTML = lista.map(function(x){ return '<div>🍽️ ' + x + '</div>'; }).join('');
 }
 function borrarComidas(){
-  if(confirm('¿Borrar historial de comidas?')){
-    localStorage.removeItem('histComidas');
+   localStorage.removeItem('histComidas');
     let h = document.getElementById('historialComida') || document.getElementById('historialComidas');
     if(h){ h.innerHTML = 'Sin comidas todavía'; }
   }
-}
+
 // Pintar al abrir la página
 pintarComida(); 
 </script>
