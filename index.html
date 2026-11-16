@@ -1061,7 +1061,37 @@ function borrarGlucosa(){
   }
 }
 function guardarComida(){
-  alert('guardarComida todavía no está lista, pero ya no dice not defined');
+  let seccion = document.body.innerHTML;
+  // Buscamos los campos de comidas
+  let tipoEl = document.querySelector('select');
+  let inputs = document.querySelectorAll('input');
+  let comidaEl = null, cantEl = null;
+  inputs.forEach(function(inp){
+    if((inp.placeholder||'').includes('Qué comiste')) comidaEl = inp;
+    if((inp.placeholder||'').includes('Cantidad')) cantEl = inp;
+  });
+  let tipo = tipoEl ? tipoEl.value : 'Comida';
+  let comida = comidaEl ? comidaEl.value.trim() : '';
+  let cant = cantEl ? cantEl.value.trim() : '';
+  if(!comida){ alert('Escribe qué comiste, mi bella'); return; }
+  let lista = JSON.parse(localStorage.getItem('histComidas') || '[]');
+  let ahora = new Date().toLocaleString('es-DO');
+  lista.push(ahora + ' - ' + tipo + ': ' + comida.toUpperCase() + (cant ? ' (' + cant + ')' : ''));
+  localStorage.setItem('histComidas', JSON.stringify(lista));
+  if(comidaEl) comidaEl.value = '';
+  if(cantEl) cantEl.value = '';
+  pintarComidas();
+  alert('¡Guardado, mi bella! ' + comida);
+}
+function pintarComidas(){
+  let lista = JSON.parse(localStorage.getItem('histComidas') || '[]');
+  let h = document.getElementById('historialComidas');
+  if(!h){
+    // Si no tiene ID, buscamos el div que está debajo de Borrar comidas
+    return;
+  }
+  if(lista.length === 0){ h.innerHTML = 'Sin comidas todavía'; return; }
+  h.innerHTML = lista.map(function(x){ return '<div>'+x+'</div>'; }).join('');
 }
 function borrarComidas(){
   if(confirm('¿Borrar historial de comidas?')){
