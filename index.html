@@ -1047,5 +1047,29 @@ function cerrarVentana(){
 }
 
 </script>
+<script>
+function borrarGlucosa(){
+  if(confirm('¿Borrar historial de glucosa?')){
+    localStorage.removeItem('histGlucosa');
+    localStorage.removeItem('glucosaAlba');
+    let h = document.getElementById('historialGlucosa');
+    if(h){ h.innerHTML = 'Sin registros todavía'; }
+    let cajita = document.getElementById('cajitaGlucosa');
+    if(cajita){ cajita.innerText = ''; cajita.style.background = ''; }
+    let msg = document.getElementById('msgGlucosa');
+    if(msg){ msg.innerText = ''; }
+  }
+}
+function guardarComida(){
+  alert('guardarComida todavía no está lista, pero ya no dice not defined');
+}
+function borrarComidas(){
+  if(confirm('¿Borrar historial de comidas?')){
+    localStorage.removeItem('histComidas');
+    let h = document.getElementById('historialComidas');
+    if(h){ h.innerHTML = 'Sin comidas todavía'; }
+  }
+}
+</script>
 </body>
 </html>
