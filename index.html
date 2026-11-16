@@ -703,7 +703,11 @@ function guardarGlucosa(){
 function borrarGlucosa(){
   if(confirm('¿Borrar historial?')){
     localStorage.removeItem('histGlucosa');
-    pintarGlucosa();
+    localStorage.removeItem('glucosaAlba');
+    document.getElementById('historialGlucosa').innerHTML = '';
+    let cajita = document.getElementById('cajitaGlucosa');
+    if(cajita){ cajita.innerText = ''; cajita.style.background = ''; }
+    if(typeof pintarGlucosa === 'function'){ pintarGlucosa(); }
   }
 }
 
