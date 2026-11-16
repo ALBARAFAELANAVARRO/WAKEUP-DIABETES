@@ -1074,8 +1074,7 @@ function borrarGlucosa(){
   if(comidaEl) comidaEl.value = '';
   if(cantEl) cantEl.value = '';
   pintarComida();
-  alert('¡Guardado, mi bella! ' + comida);
-}
+  }
 function pintarComida(){
   let lista = JSON.parse(localStorage.getItem('histComidas') || '[]');
   let h = document.getElementById('historialComida') || document.getElementById('historialComidas');
