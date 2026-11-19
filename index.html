@@ -200,7 +200,7 @@ function guardarMedicamento() {
   }
 
   // Si es CUALQUIER Insulina, agregar las unidades
-  if (med.includes("Insulina")) {
+  if (med.toLowerCase().includes("insulina")) {
     var cant = document.getElementById("cantidadInsulina").value;
     if (cant === "") {
       alert("Escribe cuántas unidades, mi capitana");
@@ -208,7 +208,6 @@ function guardarMedicamento() {
     }
     med = med + " - " + cant + " unidades";
   }
-
   var fecha = new Date().toLocaleString();
   var nuevo = fecha + " - " + med + " - " + dosis;
 
