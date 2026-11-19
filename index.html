@@ -166,8 +166,7 @@ function mostrarCajas() {
   var cajaOtros = document.getElementById("cajaOtros");
 
   // LOGICA BUENA: Cualquier Insulina pide unidades
-var esInsulina = med.toLowerCase().includes("insulina");
-    
+var esInsulina = med.toLowerCase().includes("insulina") || med.toLowerCase().includes("novolin") || med.toLowerCase().includes("lantus") || med.toLowerCase().includes("humalog") || med.toLowerCase().includes("levemir") || med.toLowerCase().includes("tresiba") || med.toLowerCase().includes("apidra");    
   if (esInsulina) {
     cajaIns.style.display = "block";
     cajaOtros.style.display = "none";
